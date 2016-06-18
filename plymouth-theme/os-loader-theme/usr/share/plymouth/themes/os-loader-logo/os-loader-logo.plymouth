@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Ubuntu GNOME Logo
+Description=A theme that features an animated Ubuntu GNOME logo.
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/os-loader-logo
+ScriptFile=/usr/share/plymouth/themes/os-loader-logo/os-loader-logo.script
