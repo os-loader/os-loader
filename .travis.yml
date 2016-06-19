@@ -3,7 +3,6 @@ node_js:
   - "6"
   - "6.1"
   - "5.11"
-  - "0.6"
 before_script:
   - cd gui;npm i;cd ..
   - cd server;npm i;cd ..
