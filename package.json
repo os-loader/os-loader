@@ -1,0 +1,27 @@
+{
+  "name": "os-loader",
+  "version": "1.0.0",
+  "description": "Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkg20001/os-loader.git"
+  },
+  "keywords": [
+    "os-loader",
+    "portable",
+    "os"
+  ],
+  "author": "Maciej Krüger <mkg20001@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mkg20001/os-loader/issues"
+  },
+  "homepage": "https://github.com/mkg20001/os-loader#readme",
+  "dependencies": {
+    "mocha": "^2.5.3"
+  }
+}
