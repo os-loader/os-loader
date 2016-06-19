@@ -258,6 +258,7 @@ systemimage() {
   chstd "useradd osloader --password='osloader'
   addgroup osloader root
   addgroup osloader sudo"
+  mkdir -p $curch/etc/lightdm/lightdm.conf.d/
   cp -v $data/lightdm.conf $curch/etc/lightdm/lightdm.conf.d/90-autologin.conf
   mkdir -p $curch/osloader/.config/openbox
   cp $data/openbox.autostart $curch/osloader/.config/openbox/autostart
