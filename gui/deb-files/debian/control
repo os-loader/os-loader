@@ -1,0 +1,15 @@
+Source: os-loader-gui
+Section: unknown
+Priority: optional
+Maintainer: Maciej Krüger <mkg20001@gmail.com>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.6
+Homepage: https://github.com/mkg20001/os-loader
+Vcs-Git: git://github.com/mkg20001/os-loader.git
+Vcs-Browser: https://github.com/mkg20001/os-loader
+
+Package: os-loader-gui
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: OS Loader Gui
+ Controls the OS Loader

@@ -5,6 +5,8 @@ _OLD
 .log
 .deb
 
+os-loader-gui-*-*
+
 # Logs
 logs
 *.log
