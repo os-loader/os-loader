@@ -1,0 +1,11 @@
+
+                                  70OS Loader Help
+
+78Multiple Portable and Live Operating Systems
+isolated from each other on a single HDD/USB.
+
+This media contains also a memtest86+ image, which can be used
+to test the ram of this computer.
+
+74Built on {HOST}
+71Version: {VER}
