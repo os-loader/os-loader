@@ -10,6 +10,10 @@ if [ $(id -u) -ne 0 ]; then
   err "Only root can run this" 5
 fi
 
+if [ -z "$VERBOSE" ]; then
+  slient=true
+fi
+
 #Travis Fix
 if [ -z "$TRAVIS" ]; then
   execp=$(realpath $0)
@@ -81,7 +85,11 @@ else
 fi
 
 CMPsquashfs() {
-  mksquashfs $1 $2
+  if [ -z "$VERBOSE" ]; then
+    mksquashfs $1 $2 -no-progress
+  else
+    mksquashfs $1 $2
+  fi
   return $?
 }
 
@@ -232,6 +240,7 @@ initscript() {
 
 systemimage() {
   #Install Software
+  echo 'Dpkg::Progress-Fancy "0";' > $curch/etc/apt/apt.conf.d/99progressbar
   chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
   chinstall openbox xorg lightdm
   chinstall curl apt-transport-https
