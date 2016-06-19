@@ -23,4 +23,5 @@ addons:
       - gzip
       - make
       - debootstrap
-      - chroot
+      - schroot
+      - isolinux
