@@ -4,7 +4,7 @@ image: builddir os-gui theme debs
 	@echo "Soon..."
 	#make -C image build
 debs:
-	#Collect build .deb files
+	#Collect built .deb files
 	mkdir -p $(BDIR)/deb
 	cp -r -v $(BDIR)/*.deb $(BDIR)/deb
 builddir:
