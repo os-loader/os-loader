@@ -10,9 +10,14 @@ if [ $(id -u) -ne 0 ]; then
   err "Only root can run this" 5
 fi
 
-#Internal
-execp=$(realpath $0)
-execd=$(dirname $execp)
+#Travis Fix
+if [ -z "$TRAVIS" ]; then
+  execp=$(realpath $0)
+  execd=$(dirname $execp)
+else
+  execd="/home/travis/build/mkg20001/os-loader/image"
+  execp="/home/travis/build/mkg20001/os-loader/image/imagecreater.sh"
+fi
 data=$execd/data
 
 if [ -z $1 ]; then
