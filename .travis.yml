@@ -6,6 +6,7 @@ node_js:
 before_script:
   - cd gui;npm i;cd ..
   - cd server;npm i;cd ..
+  - sudo dpkg -x isolinux.deb /
 sudo: required
 script: make
 env:
@@ -24,4 +25,4 @@ addons:
       - make
       - debootstrap
       - schroot
-      - isolinux
+#      - isolinux N/A
