@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "6"
+  - "6.1"
+  - "5.11"
+  - "0.6"
+before_script:
+  - cd gui;npm i;cd ..
+  - cd server;npm i;cd ..
+script: make
+env:
+  - CXX=g++-4.8
+  - TRAVIS=true
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+      - genisoimage
+      - squashfs-tools
+      - tar
+      - cpio
+      - gzip
+      - make
