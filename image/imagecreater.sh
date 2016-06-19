@@ -260,7 +260,7 @@ systemimage() {
 #Execute Everything
 
 #wch "installtmp" installimage "parted" "squashfs" "install.img"
-wch "installtmp" cpimage "$cache" "squashfs" "system.img"
+wch "installtmp" systemimage "$cache" "squashfs" "system.img"
 #lch "inittmp" initscript "$data/installinit" "initrd.install"
 
 if [ -f $stage.ready ]; then
