@@ -6,8 +6,8 @@ Goal: Multiple Portable and Live Operating Systems isolated from each other on a
 
 More in idea.md
 
-# Build ENV
-Currently Ubuntu 16.04 is the recommendet Build ENV
+# Build Environment
+Currently Ubuntu 16.04 is the recommended Build Environment
 
 # Dependencies
 You need the following installed to Build the Image:
