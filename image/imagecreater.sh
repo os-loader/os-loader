@@ -176,6 +176,8 @@ lch() { #wch "installtmp" installimage "parted" "install.img"
   fi
 }
 
+#ISO functions
+
 preiso() {
   #Prepare iso
   rm -rf $stage
@@ -215,11 +217,7 @@ geniso() {
   -boot-info-table -r -V "OS-Loader" -cache-inodes -J -l $stage
 }
 
-#Pre Workers
-
-clientimage() {
-  :
-}
+#Main Functions
 
 initscript() {
   echo $(cat $2/init) >> $curch/init
@@ -227,15 +225,23 @@ initscript() {
 
 systemimage() {
   chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
+  chinstall openbox xorg
+  chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+  VERSION=node_6.x
+  DISTRO=xenial
+  echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | tee /etc/apt/sources.list.d/nodesource.list
+  echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | tee -a /etc/apt/sources.list.d/nodesource.list
+  apt-get update'
+  chinstall nodejs bash sudo
   cp -r -v $BDIR/deb $curch/deb
   chstd "apt install /deb/*.deb"
+  rm -rf $curch/deb
   cp $1/boot/vmlinuz* $2/vmlinuz
   cp $1/boot/initrd.img* $2/initrd.img
   cp $1/boot/memtest86+.bin $2/memtest86+.bin
 }
 
-
-#Do the work
+#Execute Everything
 
 #wch "installtmp" installimage "parted" "squashfs" "install.img"
 wch "installtmp" cpimage "$cache" "squashfs" "system.img"
