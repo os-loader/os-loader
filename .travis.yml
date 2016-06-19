@@ -25,4 +25,5 @@ addons:
       - make
       - debootstrap
       - schroot
+      - coreutils
 #      - isolinux N/A
