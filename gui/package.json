@@ -1,0 +1,35 @@
+{
+  "name": "os-loader-gui",
+  "version": "1.0.0",
+  "description": "A GUI for os-loader",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkg20001/os-loader.git"
+  },
+  "keywords": [
+    "os-loader",
+    "gui",
+    "bootloader",
+    "settings"
+  ],
+  "author": "Maciej Krüger <mkg20001@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mkg20001/os-loader/issues"
+  },
+  "homepage": "https://github.com/mkg20001/os-loader#readme",
+  "devDependencies": {
+    "electron-packager": "^7.0.4",
+    "electron-prebuilt": "^1.2.3"
+  },
+  "dependencies": {
+    "app-module-path": "^1.1.0",
+    "bunyan": "^1.8.1",
+    "colors": "^1.1.2"
+  }
+}

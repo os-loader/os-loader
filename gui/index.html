@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>OS Loader Settings</title>
+    <link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./bower_components/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="./main.css">
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./bower_components/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        var inapp=require("./core/inapp");
+        for (var p in inapp) {
+          this[p]=inapp[p];
+        }
+    </script>
+  </head>
+  <body>
+    <body>
+    	<header role="banner" id="fh5co-header">
+    			<div class="container">
+    				<!-- <div class="row"> -->
+    			    <nav class="navbar navbar-default">
+    		        <div class="navbar-header">
+    		        	<!-- Mobile Toggle Menu Button -->
+    					<adata-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+    		         <a class="navbar-brand">OS Loader</a>
+    		        </div>
+                <div id="navbar" class="navbar-collapse collapse">
+    		          <ul class="nav navbar-nav navbar-left">
+                    <li><a onclick="nav('os')"><span>OSes</span></a></li>
+                    <li><a onclick="nav('live')"><span>Live CDs</span></a></li>
+                    <li><a onclick="nav('design')"><span>Apperance</span></a></li>
+                    <li><a onclick="nav('help')"><span>Help</span></a></li>
+    		          </ul>
+    		        </div>
+    		          <ul class="nav navbar-nav navbar-right">
+                    <li><a onclick="askExit()"><img class="poweroff-btn" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iMTI4cHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMjggMTI4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgd2lkdGg9IjEyOHB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMTAwLjE0MywzMi45MTFjLTYuNTIxLTYuNTI4LTE0LjgzOS0xMS4yOTMtMjQuMTI3LTEzLjUzNHYxNC4yNzcgICBjNS40ODMsMS44NiwxMC4zOTUsNC45NTEsMTQuNDE3LDguOTY3YzYuNzc1LDYuNzg3LDEwLjk0NSwxNi4wODgsMTAuOTQ4LDI2LjQzM2MtMC4wMDMsMTAuMzQ2LTQuMTczLDE5LjY0Ny0xMC45NDgsMjYuNDMzICAgYy02Ljc4Niw2Ljc3NC0xNi4wODgsMTAuOTQ1LTI2LjQzMywxMC45NDljLTEwLjM0NC0wLjAwNC0xOS42NDYtNC4xNzUtMjYuNDMzLTEwLjk0OWMtNi43NzUtNi43ODUtMTAuOTQ1LTE2LjA4Ny0xMC45NDktMjYuNDMzICAgYzAuMDAzLTEwLjM0NCw0LjE3My0xOS42NDYsMTAuOTQ5LTI2LjQzM2M0LjAyMy00LjAxNyw4LjkzNC03LjEwNiwxNC40MTctOC45NjdWMTkuMzc2Yy05LjI4OCwyLjI0MS0xNy42MDcsNy4wMDYtMjQuMTI3LDEzLjUzNCAgIGMtOS4yMzksOS4yMjktMTQuOTc0LDIyLjA1LTE0Ljk3MSwzNi4xNDNjLTAuMDAzLDE0LjA5NCw1LjczMSwyNi45MTYsMTQuOTcxLDM2LjE0M2M5LjIyOSw5LjIzOCwyMi4wNSwxNC45NzQsMzYuMTQzLDE0Ljk3MiAgIGMxNC4wOTMsMC4wMDIsMjYuOTE1LTUuNzMzLDM2LjE0My0xNC45NzJjOS4yNC05LjIyNywxNC45NzUtMjIuMDQ5LDE0Ljk3MS0zNi4xNDNDMTE1LjExNyw1NC45NjEsMTA5LjM4Myw0Mi4xMzksMTAwLjE0MywzMi45MTF6IiBzdHlsZT0iZmlsbDojMkYzNDM1OyIvPjxnPjxwb2x5bGluZSBwb2ludHM9IjcwLjg2NSw2MS41MjEgNzAuODY1LDcuODMzIDU3LjEzNCw3LjgzMyA1Ny4xMzQsNjEuNTIxICAgIiBzdHlsZT0iZmlsbDojMkYzNDM1OyIvPjwvZz48L2c+PC9zdmc+"></img></a></li>
+    		          </ul>
+    			    </nav>
+    			  <!-- </div> -->
+    		  </div>
+    	</header>
+
+    	<section id="fh5co-home" data-section="home" style="background-image: url(&quot;images/full_image_2.jpg&quot;); background-position: 0px 0px;" data-stellar-background-ratio="0.5" class="animated">
+    		<div class="gradient"></div>
+    		<div class="container">
+    			<div class="text-wrap">
+    				<div class="text-inner">
+    					<div class="row">
+    						<div class="col-md-8 col-md-offset-2">
+    							<h1 class="to-animate fadeInUp animated">OS Loader</h1>
+    							<h2 class="to-animate fadeInUp animated">Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB</h2>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="slant"></div>
+    	</section>
+
+      <footer class="footer">
+        <div class="container">
+          <p class="text-muted">Place sticky footer content here.</p>
+        </div>
+      </footer>
+
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>

@@ -1,0 +1,33 @@
+{
+  "name": "os-loader-gui",
+  "description": "A GUI for os-loader",
+  "main": "main.js",
+  "authors": [
+    "Maciej Krüger <mkg20001@gmail.com>"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "os-loader",
+    "gui",
+    "bootloader",
+    "settings"
+  ],
+  "homepage": "https://github.com/mkg20001/os-loader",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "jquery": "^3.0.0"
+  },
+  "dependencies": {
+    "jquery": "^3.0.0",
+    "font-awesome": "fontawesome#^4.6.3",
+    "bootstrap": "^3.3.6",
+    "sweetalert": "^1.1.3"
+  }
+}
