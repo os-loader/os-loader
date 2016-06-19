@@ -227,9 +227,9 @@ initscript() {
 
 systemimage() {
   #Install Software
-  #chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
-  chinstall openbox xorg ligthdm
-  chinstall curl
+  chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
+  chinstall openbox xorg lightdm
+  chinstall curl apt-transport-https
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
   DISTRO=xenial
