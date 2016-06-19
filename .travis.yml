@@ -31,4 +31,6 @@ addons:
       - schroot
       - coreutils
       - curl
+      - debhelper
+      - dpkg-dev
 #      - isolinux N/A
