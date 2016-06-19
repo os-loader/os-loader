@@ -53,7 +53,7 @@ dist=xenial
 today=$(date)
 host=$(hostname)
 user=$SUDO_USER
-mirror=http://10.0.3.1:8084
+mirror=http://archive.ubuntu.com/ubuntu  #http://10.0.3.1:8084
 curch=""
 ver=$(date +%s)
 
