@@ -1,0 +1,2 @@
+export ISINOSMODE=true
+/usr/bin/os-loader-gui

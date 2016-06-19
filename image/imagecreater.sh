@@ -226,8 +226,9 @@ initscript() {
 }
 
 systemimage() {
+  #Install Software
   chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
-  chinstall openbox xorg
+  chinstall openbox xorg ligthdm
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
   DISTRO=xenial
@@ -235,9 +236,22 @@ systemimage() {
   echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | tee -a /etc/apt/sources.list.d/nodesource.list
   apt-get update'
   chinstall nodejs bash sudo
+
+  #Set up user
+  chstd "useradd osloader --password='osloader'
+  addgroup osloader root
+  addgroup osloader sudo"
+  cp -v $data/lightdm.conf $curch/etc/lightdm/lightdm.conf.d/90-autologin.conf
+  mkdir -p $curch/osloader/.config/openbox
+  cp $data/openbox.autostart $curch/osloader/.config/openbox/autostart
+  chmod +x $curch/osloader/.config/openbox/autostart
+
+  #Install internal .debs
   cp -r -v $BDIR/deb $curch/deb
   chstd "apt install /deb/*.deb"
   rm -rf $curch/deb
+
+  #Copy everything
   cp $1/boot/vmlinuz* $2/vmlinuz
   cp $1/boot/initrd.img* $2/initrd.img
   cp $1/boot/memtest86+.bin $2/memtest86+.bin
