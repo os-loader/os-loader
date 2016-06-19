@@ -1,7 +1,7 @@
 #!/bin/sh
 # Will Build the os-loader image
 
-set -e
+#set -e - no
 
 err() {
   echo "E: $1"
