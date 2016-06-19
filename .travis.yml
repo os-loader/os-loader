@@ -7,7 +7,6 @@ node_js:
 before_script:
   - cd gui;npm i;cd ..
   - cd server;npm i;cd ..
-  - sudo apt-get install genisoimage -y
 sudo: required
 script: make
 env:
@@ -24,3 +23,5 @@ addons:
       - cpio
       - gzip
       - make
+      - debootstrap
+      - chroot
