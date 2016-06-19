@@ -227,8 +227,9 @@ initscript() {
 
 systemimage() {
   #Install Software
-  chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
+  #chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
   chinstall openbox xorg ligthdm
+  chinstall curl
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
   DISTRO=xenial
@@ -248,7 +249,7 @@ systemimage() {
 
   #Install internal .debs
   cp -r -v $BDIR/deb $curch/deb
-  chstd "apt install /deb/*.deb"
+  chstd "apt install /deb/*.deb -y"
   rm -rf $curch/deb
 
   #Copy everything

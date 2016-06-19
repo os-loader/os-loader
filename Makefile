@@ -1,8 +1,7 @@
 #The final Makefile
 BDIR="/tmp/os-loader-builddir"
 image: builddir os-gui theme debs
-	@echo "Soon..."
-	#make -C image build
+	sudo make -C image build BDIR=$(BDIR)
 debs:
 	#Collect built .deb files
 	mkdir -p $(BDIR)/deb
