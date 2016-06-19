@@ -17,8 +17,10 @@ data=$execd/data
 
 if [ -z $1 ]; then
   cur=$PWD/IMAGE
+  BDIR="/tmp/os-loader-builddir"
 else
   cur=$1
+  BDIR=$1
 fi
 mkdir -p $cur
 cd $cur
