@@ -266,3 +266,8 @@ body {
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
 }
+#footer {
+  padding: 50px 0;
+  color: #7f7f7f;
+  position: relative;
+}

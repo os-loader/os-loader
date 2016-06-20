@@ -31,6 +31,7 @@
   "dependencies": {
     "app-module-path": "^1.1.0",
     "bunyan": "^1.8.1",
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "jsonfile": "^2.3.1"
   }
 }

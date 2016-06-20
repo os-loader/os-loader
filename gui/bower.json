@@ -22,7 +22,7 @@
     "tests"
   ],
   "resolutions": {
-    "jquery": "^3.0.0"
+    "jquery": "^2.2"
   },
   "dependencies": {
     "jquery": "^3.0.0",

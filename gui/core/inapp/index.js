@@ -1,7 +1,21 @@
 global.app=require("electron").remote.app;
 global.isos=process.env.ISINOSMODE=="true";
+
+
+function async() {
+  var isdev=true; //anyway indev
+  if (isdev) $("#devReload").show();
+}
+setTimeout(async,5);
+
 function nav(to) {
 
+}
+function actions() {
+  function tutorial() {
+    $(".tutorial").fadeOut("fast");
+  }
+  this.tutorial=tutorial;
 }
 function askExit() {
   swal({
@@ -28,4 +42,4 @@ function askExit() {
       }
     });
 }
-module.exports={nav:nav,askExit:askExit};
+module.exports={nav:nav,askExit:askExit,action:new actions()};

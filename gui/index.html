@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./bower_components/sweetalert/dist/sweetalert.css">
     <link rel="stylesheet" href="./main.css">
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script> <!-- no idea why, but it works -->
     <script src="./bower_components/sweetalert/dist/sweetalert.min.js"></script>
     <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
@@ -37,6 +38,7 @@
     		          </ul>
     		          <ul class="nav navbar-nav navbar-right">
                     <li><a onclick="askExit()"><i class="fa fa-2x fa-power-off"></i></a></li>
+                    <li id="devReload" style="display:none;"><a onclick="window.location.reload()"><i class="fa fa-2x fa-refresh"></i></a></li>
     		          </ul>
     		        </div>
     			    </nav>
@@ -44,7 +46,7 @@
     		  </div>
     	</header>
 
-    	<section id="fh5co-home" data-section="home" style="background-image: url(&quot;images/full_image_2.jpg&quot;); background-position: 0px 0px;" data-stellar-background-ratio="0.5" class="animated">
+    	<section id="fh5co-home" class="tutorial" data-section="home">
     		<div class="gradient"></div>
     		<div class="container">
     			<div class="text-wrap">
@@ -53,6 +55,7 @@
     						<div class="col-md-8 col-md-offset-2">
     							<h1 class="to-animate fadeInUp animated">OS Loader</h1>
     							<h2 class="to-animate fadeInUp animated">Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB</h2>
+                  <h3 onclick="action.tutorial()"><u>Get Started »</u></h3>
     						</div>
     					</div>
     				</div>
@@ -61,7 +64,7 @@
     		<div class="slant"></div>
     	</section>
 
-      <footer class="footer">
+      <footer id="footer" class="footer">
         <div class="container">
           <p class="text-muted">Place sticky footer content here.</p>
         </div>
