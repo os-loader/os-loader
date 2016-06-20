@@ -24,17 +24,6 @@ body {
   height: 60px;
   background-color: #f5f5f5;
 }
-/* Exit BTN */
-.poweroff-btn {
-  color:#2b4db2;
-  opacity:0.5;
-  width:64px;
-  height:64px;
-}
-.poweroff-btn:hover {
-  color:#5dcadb;
-  opacity:1;
-}
 
 
 /* Header Style*/
