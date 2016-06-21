@@ -1,21 +1,40 @@
-global.app=require("electron").remote.app;
+global.mainapp=require("electron").remote.app;
 global.isos=process.env.ISINOSMODE=="true";
 
+var ee=require("events").EventEmitter;
+var events=new ee();
+var safeClose=false;
+
+var isdev=true; //anyway indev
+window.rReload=false;
+app.isDev=isdev;
 
 function async() {
-  var isdev=true; //anyway indev
-  if (isdev) $("#devReload").show();
+  events.emit("updateFound");
 }
 setTimeout(async,5);
 
-function nav(to) {
-
-}
 function actions() {
   function tutorial() {
     $(".tutorial").fadeOut("fast");
   }
   this.tutorial=tutorial;
+}
+function doExit(isConfirm){
+  if (isConfirm) {
+    swal({
+      title:"Shutdown...",
+      text:isos?"Rebooting into BootLoader...":"Closing the App...",
+      showConfirmButton: false
+    });
+    app.$.mainContent.hidden=true;
+    safeClose=true;
+    if (isos) {
+      spawn("reboot");
+    } else {
+      setTimeout(mainapp.quit,10);
+    }
+  }
 }
 function askExit() {
   swal({
@@ -27,19 +46,9 @@ function askExit() {
     cancelButtonText: "No",
     closeOnConfirm: false
   },
-    function(isConfirm){
-      if (isConfirm) {
-        swal({
-          title:"Shutdown...",
-          text:isos?"Rebooting into BootLoader...":"Closing the App...",
-          showConfirmButton: false
-        });
-        if (isos) {
-          spawn("reboot");
-        } else {
-          setTimeout(app.quit,250);
-        }
-      }
-    });
+    doExit);
 }
-module.exports={nav:nav,askExit:askExit,action:new actions()};
+window.onbeforeunload = (e) => {
+  if (!window.rReload) if (!safeClose) { e.returnValue = false;return isos?askExit():doExit(true);}
+};
+module.exports={ee:ee,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};

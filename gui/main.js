@@ -4,6 +4,8 @@ const app= electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+const dd='app'; //data dir (build script changes this)
+
 global.isos=process.env.ISINOSMODE=="true";
 
 require("app-module-path").addPath(__dirname);
@@ -19,7 +21,7 @@ function createWindow () {
   mainWindow.maximize();
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`)
+  mainWindow.loadURL(`file://${__dirname}/${dd}/index.html`)
 
   // Open the DevTools.
   if (!isos) mainWindow.webContents.openDevTools();

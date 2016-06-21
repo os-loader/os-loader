@@ -1,0 +1,41 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="%name%">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+    </style>
+
+      <template is="dom-repeat" items="{{items}}">
+        <p>{{item.name}}</p>
+      </template>
+  </template>
+
+  <script>
+      Polymer({
+        is: '%name%',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+            observer:"_ob"
+          }
+        },
+        _ob:function(e) {
+
+        },
+
+        ready: function() {
+
+        }
+      });
+  </script>
+</dom-module>

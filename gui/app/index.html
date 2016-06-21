@@ -1,0 +1,152 @@
+<!doctype html>
+
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="OS Loader Settings">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OS Loader Settings</title>
+
+  <!-- Place favicon.ico in the `app/` directory -->
+
+  <!-- Chrome for Android theme color -->
+  <meta name="theme-color" content="#2E3AA1">
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="./bower_components/sweetalert/dist/sweetalert.css">
+  <!-- endbuild-->
+
+  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <!-- endbuild -->
+
+  <!-- Because this project uses vulcanize this should be your only html import
+       in this file. All other imports should go in elements.html -->
+  <link rel="import" href="elements/elements.html">
+
+  <!-- For shared styles, shared-styles.html import in elements.html -->
+  <style is="custom-style" include="shared-styles"></style>
+</head>
+
+<body unresolved>
+  <!-- build:remove -->
+  <span id="browser-sync-binding"></span>
+  <!-- endbuild -->
+
+  <template is="dom-bind" id="app">
+
+    <paper-drawer-panel id="paperDrawerPanel" responsive-width="84000px">
+      <!-- Drawer Scroll Header Panel -->
+      <paper-scroll-header-panel class="bg" drawer fixed>
+
+        <!-- Drawer Toolbar -->
+        <paper-toolbar id="drawerToolbar">
+          <span class="menu-name">OS Loader</span>
+        </paper-toolbar>
+
+        <!-- Drawer Content -->
+        <paper-menu class="app-menu transparent" attr-for-selected="data-route" selected="[[route]]">
+          <template is="dom-repeat" items="{{navbar}}">
+            <a data-route="{{item.page}}" page="{{item.page}}" on-click="navPage">
+              <iron-icon icon="{{item.ico}}"></iron-icon>
+              <span>{{item.name}}</span>
+            </a>
+          </template>
+        </paper-menu>
+      </paper-scroll-header-panel>
+
+      <!-- Main Area -->
+      <paper-scroll-header-panel main id="headerPanelMain">
+        <!-- Main Toolbar -->
+        <paper-toolbar id="mainToolbar">
+          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+
+          <span class="space"></span>
+
+          <!-- Application name -->
+          <div class="middle middle-container">
+            <div class="app-name">OS Loader</div>
+          </div>
+
+          <template is="dom-repeat" items="{{navbar}}">
+            <paper-icon-button icon="{{item.ico}}" page="{{item.page}}" on-click="navPage"></paper-icon-button>
+            <span style="margin:5px;"></span>
+          </template>
+          <paper-icon-button icon="fa:power-off" on-click="askExit"></paper-icon-button>
+        </paper-toolbar>
+
+        <!-- Main Content -->
+        <div class="content">
+          <iron-pages id="mainContent" attr-for-selected="data-route" selected="{{route}}">
+            <section data-route="home">
+              <center style="color:white;">
+                <h1 style="font-size:3em;">OS Loader</h1>
+                <p style="opacity:0.5;font-size:1.5em;">Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB</p>
+                <paper-button page$="os" on-click="navPage">Get Started »</paper-button>
+              </center>
+            </section>
+            <section data-route="os">
+              <paper-material elevation="1">
+                <h2 class="page-title">OSes</h2>
+                <p>WIP...</p>
+              </paper-material>
+            </section>
+
+            <section data-route="live">
+              <paper-material elevation="1">
+                <h2 class="page-title">Live CDs</h2>
+                <p>WIP...</p>
+              </paper-material>
+            </section>
+
+            <section data-route="design">
+              <paper-material elevation="1">
+                <h2 class="page-title">Designs</h2>
+                <p>WIP...</p>
+              </paper-material>
+            </section>
+          </iron-pages>
+        </div>
+      </paper-scroll-header-panel>
+    </paper-drawer-panel>
+
+    <paper-toast id="toast">
+      <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
+    </paper-toast>
+
+    <!-- Uncomment next block to enable Service Worker support (1/2) -->
+    <!--
+    <paper-toast id="caching-complete"
+                 duration="6000"
+                 text="Caching complete! This app will work offline.">
+    </paper-toast>
+
+    <platinum-sw-register auto-register
+                          clients-claim
+                          skip-waiting
+                          base-uri="bower_components/platinum-sw/bootstrap"
+                          on-service-worker-installed="displayInstalledToast">
+      <platinum-sw-cache default-cache-strategy="fastest"
+                         cache-config-file="cache-config.json">
+      </platinum-sw-cache>
+    </platinum-sw-register>
+    -->
+
+  </template>
+
+  <!-- build:js scripts/app.js -->
+  <script>
+  var inapp=require("../core/inapp");
+  for (var p in inapp) {
+    this[p]=inapp[p];
+    app[p]=inapp[p];
+  }
+  </script>
+  <script src="scripts/app.js"></script>
+  <script src="./bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- endbuild-->
+</body>
+
+</html>

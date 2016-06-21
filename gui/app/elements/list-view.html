@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<!-- show elements of a repo using filter -->
+<dom-module id="list-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+    </style>
+
+      <template is="dom-repeat" items="{{list}}">
+        <p>{{item.name}}</p>
+      </template>
+  </template>
+
+  <script>
+      Polymer({
+        is: 'list-view',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+            observer:"runFilter"
+          },
+          filter: {
+            type: Object,
+            notify: true,
+            observer:"runFilter"
+          }
+        },
+        runFilter:function() {
+          list=items.filter(function(e) {
+            var ok=true;
+            for (var p in e) {
+              if (filter[p]) if (!e[p]==filter[p]) ok=false;
+            }
+            if (ok) return e;
+          });
+        }
+
+        ready: function() {
+          if (!this.filter) this.filter={};
+          runFilter();
+        }
+      });
+  </script>
+</dom-module>
