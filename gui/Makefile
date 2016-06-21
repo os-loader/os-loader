@@ -2,6 +2,7 @@ BDIR="/tmp/os-loader-builddir"
 OUTDIR="os-loader-gui-linux-x64"
 build:
 	npm i
+	bower i
 	rm -rf os-loader-gui* buildtmp
 	cp -r ./ ../gui.cp
 	mv ../gui.cp ./buildtmp

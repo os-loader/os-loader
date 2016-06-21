@@ -3,10 +3,7 @@ node_js:
   - "6"
   - "6.1"
   - "5.11"
-before_script:
-  - cd gui;npm i;cd ..
-  - cd server;npm i;cd ..
-  - sudo dpkg -x isolinux.deb /
+before_script: bash .travis/prepare.sh
 sudo: required
 script: make
 dist: trusty
