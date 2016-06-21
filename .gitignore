@@ -5,6 +5,7 @@ _OLD
 .log
 .deb
 
+dist
 os-loader-gui-*-*
 
 IMAGE
