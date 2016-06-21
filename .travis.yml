@@ -10,9 +10,7 @@ before_script:
 sudo: required
 script: make
 dist: trusty
-after_script:
-  - echo "Upload as `md5sum /tmp/os-loader-builddir/IMAGE/output/image.iso | fold -w 32 | head -n 1`"
-  - curl -X POST -F 'iso=@/tmp/os-loader-builddir/IMAGE/output/image.iso' -F "ap=`md5sum /tmp/os-loader-builddir/IMAGE/output/image.iso | fold -w 32 | head -n 1`" https://mkg20001.sytes.net/os-loader/iso.php
+after_script: bash .travis/upload.sh
 env:
   - CXX=g++-4.8
 addons:
