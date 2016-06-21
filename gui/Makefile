@@ -3,8 +3,8 @@ OUTDIR="os-loader-gui-linux-x64"
 build:
 	npm i
 	rm -rf os-loader-gui* buildtmp
-	cp -r ./* ./buildtmp
-	make -C buildtmp distbuild
+	cp -r ./ ./buildtmp
+	make -C buildtmp distbuild BDIR=$(BDIR)
 distbuild: # This is seperate because it deletes/changes some files
 	npm run gulp
 	rm -rf app
