@@ -1,3 +1,4 @@
+sudo npm i bower -g
 cd gui
   npm i
   bower i
