@@ -1,17 +1,21 @@
 # OS-Loader
+[![Build Status](https://travis-ci.org/mkg20001/os-loader.svg?branch=master)](https://travis-ci.org/mkg20001/os-loader)
+
+Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB
 
 ![Screenshot](/OS-Loader.png?raw=true)
 
-Goal: Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB
-
 More in idea.md
+
+# Images
+Images built by Travis are available [here](https://os-loader.mkg20001.sytes.net/?C=M;O=A) (last recent=newest)
 
 # Build Environment
 Currently Ubuntu 16.04 is the recommended Build Environment
 
 # Dependencies
 You need the following installed to Build the Image:
- - nodeJS (6+)
+ - nodeJS (v6+)
  - make
  - squashfs-tools
  - genisoimage
