@@ -8,7 +8,7 @@ Multiple Portable and Live Operating Systems isolated from each other on a singl
 More in idea.md
 
 # Images
-Images built by Travis are available [here](https://os-loader.mkg20001.sytes.net/?C=M;O=A) (last recent=newest)
+Images built by Travis are available [here](https://os-loader.mkg20001.sytes.net/?C=M;O=D) (last recent=newest)
 
 # Build Environment
 Currently Ubuntu 16.04 is the recommended Build Environment
