@@ -265,7 +265,7 @@ systemimage() {
   addgroup osloader root
   addgroup osloader sudo"
   for f in `find $data/copy/ -type f`; do
-    r=${f/"$data/copy/",""}
+    r=${f/"$data/copy/"/""}
     log "Copy config /$r"
     mkdir -p `dirname $f`
     cp $f $curch/$r
