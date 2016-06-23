@@ -246,7 +246,7 @@ systemimage() {
   #Install Software
   export DEBIAN_FRONTEND=noninteractive
   echo 'Dpkg::Progress-Fancy "0";' > $curch/etc/apt/apt.conf.d/99progressbar
-  chstd ""
+  chstd "apt-get update"
   chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools \
   plymouth plymouth-label grub2 linux-base linux-generic \
   openbox xorg lightdm \
@@ -276,6 +276,9 @@ systemimage() {
   chstd "export DEBIAN_FRONTEND=noninteractive
 apt install /deb/*.deb -y"
   rm -rf $curch/deb
+
+  #Clean
+  chstd "apt-get clean"
 
   #Copy everything
   cp $1/boot/vmlinuz* $2/vmlinuz
