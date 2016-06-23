@@ -268,7 +268,7 @@ systemimage() {
     r=${f/"$data/copy/"/""}
     log "Copy config /$r"
   done
-  cp -r -v $data/copy $curch
+  cp -r -v $data/copy/* $curch
   chmod +x $curch/home/osloader/.config/openbox/autostart
 
   #Install internal .debs
