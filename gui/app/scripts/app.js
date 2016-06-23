@@ -1,3 +1,8 @@
+var inapp=require("../core/inapp");
+for (var p in inapp) {
+  this[p]=inapp[p];
+  app[p]=inapp[p];
+}
 (function(document) {
   'use strict';
 
