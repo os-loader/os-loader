@@ -261,13 +261,15 @@ systemimage() {
   chinstall nodejs
 
   #Set up user
-  chstd "useradd osloader --password='"$(echo "osloader" | openssl passwd -1 -stdin)"'
+  chstd "useradd osloader -m --password='"$(echo "osloader" | openssl passwd -1 -stdin)"'
   addgroup osloader root
   addgroup osloader sudo"
-  mkdir -p $curch/etc/lightdm/lightdm.conf.d/
-  cp -v $data/lightdm.conf $curch/etc/lightdm/lightdm.conf.d/90-autologin.conf
-  mkdir -p $curch/osloader/.config/openbox
-  cp $data/openbox.autostart $curch/osloader/.config/openbox/autostart
+  for f in `find $data/copy/ -type f`; do
+    r=${f/"$data/copy",""}
+    log "Copy config $r"
+    mkdir -p `dirname $f`
+    cp $f $curch/$r
+  done
   chmod +x $curch/osloader/.config/openbox/autostart
 
   #Install internal .debs
