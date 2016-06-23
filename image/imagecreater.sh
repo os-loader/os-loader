@@ -250,7 +250,7 @@ systemimage() {
   chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools \
   plymouth plymouth-label grub2 linux-base linux-generic \
   openbox xorg lightdm \
-  bash sudo \
+  bash sudo menu ubuntu-desktop \
   curl apt-transport-https
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
