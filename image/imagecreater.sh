@@ -208,10 +208,12 @@ preiso() {
   echo "$about" > $stage/isolinux/f1.txt
 
   mkdir -p $stage/live
-  for f in system.img; do
-    log "Copy $f to stage"
-    cp $cache/$f $stage/live/$f
-  done
+  #for f in system.img; do
+  #  log "Copy $f to stage"
+  #  cp $cache/$f $stage/live/$f
+  #done
+  log "Copy system.img to filesystem.squashfs"
+  cp $cache/system.img $stage/live/filesystem.squashfs
 
   mkdir -p $stage/boot
   cp $cache/memtest86+.bin $stage/boot
