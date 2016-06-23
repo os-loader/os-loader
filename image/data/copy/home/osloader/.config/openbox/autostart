@@ -1,2 +1,1 @@
-export ISINOSMODE=true
-sudo /usr/bin/os-loader-gui
+sudo bash /start.sh
