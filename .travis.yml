@@ -5,14 +5,14 @@ sudo: required
 script: make
 dist: trusty
 after_script: bash .travis/upload.sh
-env:
-  - CXX=g++-4.8
+#env:
+#  - CXX=g++-4.8
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
+#    sources:
+#      - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+#      - g++-4.8
       - genisoimage
       - squashfs-tools
       - tar
@@ -25,4 +25,5 @@ addons:
       - curl
       - debhelper
       - dpkg-dev
+      - openssl
 #      - isolinux N/A

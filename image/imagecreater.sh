@@ -145,13 +145,13 @@ chroot() {
 
 chstd() {
   chroot /bin/bash -x <<ffff
-export DEBIAN_FRONTEND=noninteractive
 $*
 ffff
 }
 
 chinstall() {
-  chstd "apt-get install $* -y"
+  chstd "export DEBIAN_FRONTEND=noninteractive
+apt-get install $* -y"
 }
 wch() { #wch "installtmp" installimage "parted" "squashfs" "install.img"
   local where=$tmp/$1
@@ -244,20 +244,24 @@ initscript() {
 
 systemimage() {
   #Install Software
+  export DEBIAN_FRONTEND=noninteractive
   echo 'Dpkg::Progress-Fancy "0";' > $curch/etc/apt/apt.conf.d/99progressbar
-  chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools plymouth plymouth-label grub2 linux-base linux-generic
-  chinstall openbox xorg lightdm
-  chinstall curl apt-transport-https
+  chstd ""
+  chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools \
+  plymouth plymouth-label grub2 linux-base linux-generic \
+  openbox xorg lightdm \
+  bash sudo \
+  curl apt-transport-https
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
   DISTRO='$dist'
   echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | tee /etc/apt/sources.list.d/nodesource.list
   echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | tee -a /etc/apt/sources.list.d/nodesource.list
   apt-get update'
-  chinstall nodejs bash sudo
+  chinstall nodejs
 
   #Set up user
-  chstd "useradd osloader --password='osloader'
+  chstd "useradd osloader --password='"$(echo "osloader" | openssl passwd -1 -stdin)"'
   addgroup osloader root
   addgroup osloader sudo"
   mkdir -p $curch/etc/lightdm/lightdm.conf.d/
@@ -268,7 +272,8 @@ systemimage() {
 
   #Install internal .debs
   cp -r -v $BDIR/deb $curch/deb
-  chstd "apt install /deb/*.deb -y"
+  chstd "export DEBIAN_FRONTEND=noninteractive
+apt install /deb/*.deb -y"
   rm -rf $curch/deb
 
   #Copy everything
