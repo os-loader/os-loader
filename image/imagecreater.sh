@@ -265,12 +265,12 @@ systemimage() {
   addgroup osloader root
   addgroup osloader sudo"
   for f in `find $data/copy/ -type f`; do
-    r=${f/"$data/copy",""}
-    log "Copy config $r"
+    r=${f/"$data/copy/",""}
+    log "Copy config /$r"
     mkdir -p `dirname $f`
     cp $f $curch/$r
   done
-  chmod +x $curch/osloader/.config/openbox/autostart
+  chmod +x $curch/home/osloader/.config/openbox/autostart
 
   #Install internal .debs
   cp -r -v $BDIR/deb $curch/deb
