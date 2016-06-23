@@ -270,6 +270,8 @@ systemimage() {
   done
   cp -r -v $data/copy/* $curch
   chmod +x $curch/home/osloader/.config/openbox/autostart
+  chown root:root $curch/etc/sudoers.d/os-loader
+  chmod 440 $curch/etc/sudoers.d/os-loader
 
   #Install internal .debs
   cp -r -v $BDIR/deb $curch/deb
