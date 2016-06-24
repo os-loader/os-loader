@@ -20,14 +20,20 @@
       next();
     }
 
+    function setFalse(ctx, next) {
+      app.tempB={};
+      app.showNext=false;
+      next();
+    }
+
     function setFocus(selected){
       Polymer.dom(document)
         .querySelector('section[data-route="' + selected + '"] .focus-target')
         .focus();
     }
-
+    app.tempB={};
     // Routes
-    page('*', scrollToTop, closeDrawer, function(ctx, next) {
+    page('*', scrollToTop, closeDrawer,setFalse, function(ctx, next) {
       next();
     });
 
@@ -54,30 +60,38 @@
 
     page(app.baseUrl, homepage);
 
+
   if (app.install) {
-    page("/install-select",function() {
-      app.usbdev=[];
-      app.route="install-select";
-      setFocus(app.route);
+    app.usbpath="";
+    function getUSB() {
+      if (!app.tempB.usb) return;
       udev(function(e,l) {
         if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
         app.usbdev=l.filter(function(e) {
           if (e.ID_BUS=="usb"&&e.ID_PART_TABLE_TYPE) {
-            e.iuuid=uuid();
             e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
             if (e.ID_FS_TYPE.startsWith("iso")) {
               e.desc="Contains a live disc - Must be formated";
             } else if (e.ID_FS_TYPE.startsWith("fat")) {
               e.desc="Data will be kept";
             } else if (e.ID_FS_TYPE.startsWith("ext")) {
-              e.desc="Not Supported";
+              e.desc="Data will be kept";
             } else {
               e.desc="Unkown filesystem - Is it formatted?"
             }
             return e;
           }
+          if (!app.usbdev.length) app.tempB.u404=true;
         });
+        setTimeout(getUSB,1000);
       });
+    }
+    page("/install-select",function() {
+      app.usbdev=[];
+      app.route="install-select";
+      setFocus(app.route);
+      app.tempB.usb=true;
+      getUSB();
     });
   } else {
     page("/os",function() {

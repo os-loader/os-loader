@@ -106,22 +106,41 @@
             <section data-route="install-select">
               <paper-material class="focus-target small" elevation="1">
                 <template is="dom-if" if="{{usbdev.length}}">
-                  <paper-menu class="app-menu transparent" attr-for-selected="data-uuid" selected="[[usbuuid]]">
+                  <paper-menu class="app-menu transparent" attr-for-selected="data-uuid" selected="[[usbpath]]">
                     <template is="dom-repeat" items="{{usbdev}}">
-                      <paper-toolbar data-uuid="{{item.iuuid}}" class="item-bar">
+                      <paper-toolbar data-uuid="{{item.ID_PATH}}" on-click="selectUSB" class="item-bar">
                         <img style="width:48px;height:48px;transform: rotate(90deg);margin:16px;" src="./images/usb.svg" alt="USB Icon"></img>
                         <div class="aline"><h2>{{item.ID_FS_LABEL}} ({{item.ID_VENDOR}} {{item.ID_MODEL}})</h2><br><p>{{item.desc}} ({{item.ID_FS_TYPE}})</p></div>
                       </paper-toolbar>
                     </template>
                   </paper-menu>
+                  <paper-toolbar class="item-bar">
+                    <template is="dom-if" if="{{showNext}}">
+                      <p>Click on Next if you are sure to install here</p>
+                      <div class="space"></div>
+                      <paper-button on-click="installNext">Next »</paper-button>
+                    </template>
+                    <template is="dom-if" if="{{!showNext}}">
+                      <p>Select an USB</p>
+                      <div class="space"></div>
+                      <paper-button disabled>Next »</paper-button>
+                    </template>
+                  </paper-toolbar>
                 </template>
                 <template is="dom-if" if="{{!usbdev.length}}">
                   <center>
                     <modern-spinner></modern-spinner>
                   </center>
+                  <paper-toolbar class="item-bar">
+                    <p>Plugin some USB Sticks...</p>
+                    <div class="space"></div>
+                    <paper-button disabled>Next »</paper-button>
+                  </paper-toolbar>
                 </template>
                 <h2 class="page-title">Select Media to install on</h2>
                 <p>Requires FAT32 USB with at least 2GB Free Space</p>
+                <p>It can also be an USB with a Live ISO</p>
+                <p>In this case the USB will be formatted</p>
               </paper-material>
             </section>
             <section data-route="os">
