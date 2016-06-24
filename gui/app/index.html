@@ -47,14 +47,16 @@
         </paper-toolbar>
 
         <!-- Drawer Content -->
-        <paper-menu class="app-menu transparent" attr-for-selected="data-route" selected="[[route]]">
-          <template is="dom-repeat" items="{{navbar}}">
-            <a data-route="{{item.page}}" page="{{item.page}}" on-click="navPage">
-              <iron-icon icon="{{item.ico}}"></iron-icon>
-              <span>{{item.name}}</span>
-            </a>
-          </template>
-        </paper-menu>
+        <template is="dom-if" if="{{!install}}">
+          <paper-menu class="app-menu transparent" attr-for-selected="data-route" selected="[[route]]">
+            <template is="dom-repeat" items="{{navbar}}">
+              <a data-route="{{item.page}}" page="{{item.page}}" on-click="navPage">
+                <iron-icon icon="{{item.ico}}"></iron-icon>
+                <span>{{item.name}}</span>
+              </a>
+            </template>
+          </paper-menu>
+        </template>
       </paper-scroll-header-panel>
 
       <!-- Main Area -->
@@ -70,9 +72,11 @@
             <div class="app-name">OS Loader</div>
           </div>
 
-          <template is="dom-repeat" items="{{navbar}}">
-            <paper-icon-button icon="{{item.ico}}" page="{{item.page}}" on-click="navPage"></paper-icon-button>
-            <span style="margin:5px;"></span>
+          <template is="dom-if" if="{{!install}}">
+            <template is="dom-repeat" items="{{navbar}}">
+              <paper-icon-button icon="{{item.ico}}" page="{{item.page}}" on-click="navPage"></paper-icon-button>
+              <span style="margin:5px;"></span>
+            </template>
           </template>
           <paper-icon-button icon="fa:power-off" on-click="askExit"></paper-icon-button>
         </paper-toolbar>
@@ -80,12 +84,35 @@
         <!-- Main Content -->
         <div class="content">
           <iron-pages id="mainContent" attr-for-selected="data-route" selected="{{route}}">
+            <section data-route="loading">
+              <paper-material class="focus-target" style="width:64px;height:64px;" elevation="1">
+                <modern-spinner></modern-spinner>
+              </paper-material>
+            </section>
             <section data-route="home">
               <center class="focus-target" style="color:white;">
                 <h1 style="font-size:3em;">OS Loader</h1>
                 <p style="opacity:0.5;font-size:1.5em;">Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB</p>
-                <paper-button page$="os" on-click="navPage">Get Started »</paper-button>
+                <paper-button data-page="os" on-click="navPage">Get Started »</paper-button>
               </center>
+            </section>
+            <section data-route="install-home">
+              <center class="focus-target" style="color:white;">
+                <h1 style="font-size:3em;">OS Loader</h1>
+                <p style="opacity:0.5;font-size:1.5em;">Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB</p>
+                <paper-button data-page="install-select" on-click="navPage">Install »</paper-button>
+              </center>
+            </section>
+            <section data-route="install-select">
+              <paper-material class="focus-target small" elevation="1">
+                <paper-toolbar class="item-bar">
+                  <img style="width:48px;height:48px;transform: rotate(90deg);margin:16px;" src="./images/usb.svg" alt="USB Icon"></img>
+                  <h2>USBNAME</h2>
+                  <p>USBCONTENT</p>
+                </paper-toolbar>
+                <h2 class="page-title">Select Media to install on</h2>
+                <p>Requires FAT32 USB with at least 2GB Free Space</p>
+              </paper-material>
             </section>
             <section data-route="os">
               <paper-material class="focus-target" elevation="1">

@@ -1,19 +1,24 @@
 global.mainapp=require("electron").remote.app;
 global.isos=process.env.ISINOSMODE=="true";
+global.isdev=window.location.href.split("/").reverse()[1]=="app";
+global.electron=true;
 
 require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
 require("core/tools");
+
+console.warn("%cWARNING!%cDo not paste anything you don´t know what it is for here!","color:orange; font-size:25px;","color:red; font-size:15px;");
 
 var ee=require("events").EventEmitter;
 var events=new ee();
 var safeClose=false;
 
-var isdev=process.env.ISDEVINTERNAL=="true";
+var isdev=global.isdev;
 window.rReload=false;
 app.isDev=isdev;
+var install=true;
 
 function async() {
-  events.emit("updateFound");
+  if (isdev) events.emit("updateFound");
 }
 setTimeout(async,5);
 
@@ -54,4 +59,4 @@ function askExit() {
 window.onbeforeunload = (e) => {
   if (!window.rReload) if (!safeClose) { e.returnValue = false;return isos?askExit():doExit(true);}
 };
-module.exports={ee:ee,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};
+module.exports={ee:ee,install:install,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};

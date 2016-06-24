@@ -8,7 +8,6 @@ const dd='app'; //data dir (build script changes this)
 
 global.isos=process.env.ISINOSMODE=="true";
 global.isdev=dd=="app";
-if (isdev) process.env.ISDEVINTERNAL="true";
 
 require("app-module-path").addPath(__dirname);
 require("core/tools");
@@ -19,14 +18,14 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow(isos?{fullscreen:true}:{width: 800, height: 600});
+  mainWindow = new BrowserWindow(isos?{fullscreen:true,show:false,backgroundColor:"#5BB4C9"}:{width: 800, height: 600,show:false,backgroundColor:"#5BB4C9"});
   mainWindow.maximize();
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/${dd}/index.html`)
 
   // Open the DevTools.
-  if (!isos) mainWindow.webContents.openDevTools();
+  if (isdev) mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -49,7 +48,7 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit()
   }
-})
+});
 
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
@@ -57,7 +56,7 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
-})
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

@@ -33,21 +33,34 @@
 
     app.route="";
 
-    page('/', function() {
-      app.route = 'home';
-      setFocus(app.route);
-    });
+    function loading() {
+      app.route="loading";
+      setFocus("loading");
+    }
 
-    page("/home", function() {
-      app.route = 'home';
-      setFocus(app.route);
-    });
+    function homepage() {
+      if (app.install) {
+        //setup
+        app.route = 'install-home';
+        setFocus(app.route);
+      } else {
+        app.route = 'home';
+        setFocus(app.route);
+      }
+    }
+    page('/', homepage);
 
-    page(app.baseUrl, function() {
-      app.route = 'home';
-      setFocus(app.route);
-    });
+    page("/home", homepage);
 
+    page(app.baseUrl, homepage);
+
+  if (app.install) {
+    page("/install-select",function() {
+      loading();
+      //app.route="install-select";
+      //setFocus(app.route);
+    });
+  } else {
     page("/os",function() {
       app.route="os";
       setFocus(app.route);
@@ -66,7 +79,8 @@
     page("/update",function() {
       app.route="update";
       //setFocus(app.route);
-    })
+    });
+  }
 
 if (app.isDev) {
   page("/reload",function() {
