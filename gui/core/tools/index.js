@@ -7,3 +7,4 @@ streams=require("stream");
 udev=require("core/udev");
 duplex=streams.Duplex;
 w=require("w");
+uuid=require("node-uuid").v4;

@@ -56,9 +56,28 @@
 
   if (app.install) {
     page("/install-select",function() {
-      loading();
-      //app.route="install-select";
-      //setFocus(app.route);
+      app.usbdev=[];
+      app.route="install-select";
+      setFocus(app.route);
+      udev(function(e,l) {
+        if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
+        app.usbdev=l.filter(function(e) {
+          if (e.ID_BUS=="usb"&&e.ID_PART_TABLE_TYPE) {
+            e.iuuid=uuid();
+            e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
+            if (e.ID_FS_TYPE.startsWith("iso")) {
+              e.desc="Contains a live disc - Must be formated";
+            } else if (e.ID_FS_TYPE.startsWith("fat")) {
+              e.desc="Data will be kept";
+            } else if (e.ID_FS_TYPE.startsWith("ext")) {
+              e.desc="Not Supported";
+            } else {
+              e.desc="Unkown filesystem - Is it formatted?"
+            }
+            return e;
+          }
+        });
+      });
     });
   } else {
     page("/os",function() {

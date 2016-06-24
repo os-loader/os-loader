@@ -10,6 +10,12 @@ function query(cb) {
             ro[r.split("=")[0]]=r.split("=")[1];
           }
         });
+        for (var p in ro) {
+          if (p.endsWith("_ENC")) {
+            ro[p.replace("_ENC","")]=ro[p].replace(/\\x20/g," ");
+            delete ro[p];
+          }
+        }
         cb(null,ro);
       });
     })(cb);
