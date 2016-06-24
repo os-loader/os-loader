@@ -1,2 +1,2 @@
-feh --bg-fill ~/bg.png&
+feh --magick-timeout 10 ~/bg.svg --bg-fill &
 sudo /bin/bash /start.sh
