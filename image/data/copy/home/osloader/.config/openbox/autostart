@@ -1,1 +1,1 @@
-sudo bash /start.sh
+sudo /bin/bash /start.sh
