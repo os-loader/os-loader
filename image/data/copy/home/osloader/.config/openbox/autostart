@@ -1,1 +1,2 @@
+feh --bg-fill ~/bg.png&
 sudo /bin/bash /start.sh
