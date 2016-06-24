@@ -215,7 +215,6 @@ preiso() {
   log "Copy system.img to filesystem.squashfs"
   cp $cache/system.img $stage/live/filesystem.squashfs
 
-  log "Create link"
   ln -s ./ $stage/live/live
 
   mkdir -p $stage/boot
@@ -254,7 +253,7 @@ systemimage() {
   plymouth plymouth-label grub2 linux-base linux-generic \
   openbox xorg lightdm \
   bash sudo menu \
-  curl apt-transport-https feh inkscape
+  curl apt-transport-https feh
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
   DISTRO='$dist'
