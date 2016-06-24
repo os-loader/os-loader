@@ -7,6 +7,8 @@ const BrowserWindow = electron.BrowserWindow
 const dd='app'; //data dir (build script changes this)
 
 global.isos=process.env.ISINOSMODE=="true";
+global.isdev=dd=="app";
+if (isdev) process.env.ISDEVINTERNAL="true";
 
 require("app-module-path").addPath(__dirname);
 require("core/tools");

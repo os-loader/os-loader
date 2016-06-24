@@ -5,7 +5,7 @@ var ee=require("events").EventEmitter;
 var events=new ee();
 var safeClose=false;
 
-var isdev=true; //anyway indev
+var isdev=process.env.ISDEVINTERNAL=="true";
 window.rReload=false;
 app.isDev=isdev;
 
@@ -30,7 +30,7 @@ function doExit(isConfirm){
     app.$.mainContent.hidden=true;
     safeClose=true;
     if (isos) {
-      spawn("reboot");
+      spawn("reboot","-f");
     } else {
       setTimeout(mainapp.quit,10);
     }

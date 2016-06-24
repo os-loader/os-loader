@@ -65,13 +65,8 @@
 
     page("/update",function() {
       app.route="update";
-      setFocus(app.route);
+      //setFocus(app.route);
     })
-
-    page('/', function() {
-      app.route = 'contact';
-      setFocus(app.route);
-    });
 
 if (app.isDev) {
   page("/reload",function() {

@@ -3,6 +3,9 @@ for (var p in inapp) {
   this[p]=inapp[p];
   app[p]=inapp[p];
 }
+window.onerror = function(message, source, lineno, colno, error) {
+  swal(message,error,"error");
+};
 (function(document) {
   'use strict';
 
@@ -28,11 +31,6 @@ for (var p in inapp) {
     window.location.href=app.base;
   };
   app.navPage=function(el) {
-    /*var f=false;
-    el.path.map(function(e) {
-      if (e.page&&!f) {alert(e.page);f=true;page.redirect(app.baseUrl+e.page);}
-    });*/
-    console.log(el.toElement.page?el.toElement.page:el.path[1].page);
     page.redirect(app.baseUrl+(el.toElement.page?el.toElement.page:el.path[1].page));
   };
   app.toast=function(text) {
@@ -43,7 +41,7 @@ for (var p in inapp) {
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');
+    console.info('App is ready');
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
