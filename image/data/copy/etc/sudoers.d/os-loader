@@ -1,1 +1,2 @@
 %sudo ALL=NOPASSWD: /usr/bin/os-loader-gui
+%sudo ALL=NOPASSWD: /start.sh
