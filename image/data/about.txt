@@ -4,7 +4,9 @@
 78Multiple Portable and Live Operating Systems
 isolated from each other on a single HDD/USB.
 
-This media contains also a memtest86+ image, which can be used
+78This Media can be used to install OS-Loader on an USB.
+
+78This media contains also a memtest86+ image, which can be used
 to test the ram of this computer.
 
 74Built on {HOST}

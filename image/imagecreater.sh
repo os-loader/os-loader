@@ -215,6 +215,9 @@ preiso() {
   log "Copy system.img to filesystem.squashfs"
   cp $cache/system.img $stage/live/filesystem.squashfs
 
+  log "Create link"
+  ln -s ./ $stage/live/live
+
   mkdir -p $stage/boot
   cp $cache/memtest86+.bin $stage/boot
   cp $cache/initrd.* $stage/boot

@@ -1,6 +1,9 @@
 global.mainapp=require("electron").remote.app;
 global.isos=process.env.ISINOSMODE=="true";
 
+require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
+require("core/tools");
+
 var ee=require("events").EventEmitter;
 var events=new ee();
 var safeClose=false;
@@ -30,7 +33,7 @@ function doExit(isConfirm){
     app.$.mainContent.hidden=true;
     safeClose=true;
     if (isos) {
-      spawn("reboot","-f");
+      spawn("reboot",["-f"]);
     } else {
       setTimeout(mainapp.quit,10);
     }
