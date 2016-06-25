@@ -24,12 +24,20 @@ try {
   return module;
 }
 
+global.install=false;
+
 if (isos) {
-  install=!fs.lstatsSync("/home/osloader").isSymbolicLink();
+  try {
+    install=!fs.lstatSync("/home/osloader").isSymbolicLink();
+  } catch(e) {
+    if (isdev) install=true;
+  }
 } else {
   // TODO: add real check
   install=true;
 }
+
+global.install=install;
 
 
 console.warn("%cWARNING!%cDo not paste anything you don´t know what it is for here!","color:orange; font-size:25px;","color:red; font-size:15px;");
