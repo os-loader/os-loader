@@ -18,7 +18,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow(isos?{fullscreen:true,show:false,backgroundColor:"#5BB4C9"}:{width: 800, height: 600,show:false,backgroundColor:"#5BB4C9"});
+  mainWindow = new BrowserWindow({fullscreen:isos,frame:!isos,show:false,backgroundColor:"#5BB4C9",width: 800, height: 600});
   mainWindow.maximize();
 
   // and load the index.html of the app.

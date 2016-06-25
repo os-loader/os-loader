@@ -62,6 +62,13 @@ window.onerror = function(message, source, lineno, colno, error) {
   app.addNav=function(i,d,p) {
     app.navbar=app.navbar.concat([{ico:i,page:p,name:d}]);
   }
+  app.findData=function(el,p) {
+    var f;
+    el.path.map(function(e) {
+      if (e.dataset) if (e.dataset[p]&&!f) {f=e.dataset[p];}
+    });
+    return f;
+  }
   if (app.isDev) app.addNav("fa:refresh","Dev Reload","reload");
   events.on("updateFound",function() {
     app.addNav("arrow-downward","Update Available","update");

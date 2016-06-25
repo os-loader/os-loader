@@ -22,7 +22,8 @@
 
     function setFalse(ctx, next) {
       app.tempB={};
-      app.showNext=false;
+      app.next=false;
+      app.step="...";
       next();
     }
 
@@ -60,9 +61,20 @@
 
     page(app.baseUrl, homepage);
 
-
   if (app.install) {
     app.usbpath="";
+    app.selectUSB=function(el) {
+      app.usbpath=app.findData(el,"uuid");
+      var r=app.usbsel=app.usbdev.filter(function(e) {
+        if (e.ID_PATH==app.usbpath) return e;
+      })[0];
+      if (r.ok) {
+        app.step="Will be installed here - "+r.desc;
+        app.next=true;
+      } else {
+        app.step=r.desc;
+      }
+    }
     function getUSB() {
       if (!app.tempB.usb) return;
       udev(function(e,l) {
@@ -72,23 +84,32 @@
             e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
             if (e.ID_FS_TYPE.startsWith("iso")) {
               e.desc="Contains a live disc - Must be formated";
+              e.ok=true;
+              e.format=true;
             } else if (e.ID_FS_TYPE.startsWith("fat")) {
               e.desc="Data will be kept";
+              e.ok=true;
+              e.keep=true;
             } else if (e.ID_FS_TYPE.startsWith("ext")) {
               e.desc="Data will be kept";
+              e.ok=true;
+              e.keep=true;
             } else {
               e.desc="Unkown filesystem - Is it formatted?"
+              e.ok=false;
             }
             return e;
           }
-          if (!app.usbdev.length) app.tempB.u404=true;
         });
+        if (app.usbdev.length) if (app.step=="Plug-in some USB Sticks..."||app.step=="Looking for USB-Sticks...") app.step="Select an USB";
+        if (!app.usbdev.length) {app.step="Plug-in some USB Sticks...";app.next=false;}
         setTimeout(getUSB,1000);
       });
     }
     page("/install-select",function() {
       app.usbdev=[];
       app.route="install-select";
+      app.step="Looking for USB-Sticks..."
       setFocus(app.route);
       app.tempB.usb=true;
       getUSB();

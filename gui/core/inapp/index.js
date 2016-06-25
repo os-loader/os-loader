@@ -6,6 +6,13 @@ global.electron=true;
 require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
 require("core/tools");
 
+try {
+  global.isvm=iISVM();
+} catch(e) {
+  global.isvm=false;
+  console.error("%cRUN AS SUDO!","color:red; font-size:30px;");
+}
+
 console.warn("%cWARNING!%cDo not paste anything you don´t know what it is for here!","color:orange; font-size:25px;","color:red; font-size:15px;");
 
 var ee=require("events").EventEmitter;

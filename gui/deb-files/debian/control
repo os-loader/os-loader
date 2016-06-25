@@ -10,6 +10,6 @@ Vcs-Browser: https://github.com/mkg20001/os-loader
 
 Package: os-loader-gui
 Architecture: any
-Depends: nodejs, gconf2
+Depends: nodejs, gconf2, virt-what
 Description: OS Loader Gui
  Controls the OS Loader
