@@ -1,10 +1,33 @@
 var inapp=require("../core/inapp");
+if (needsroot) throw new Error("Needs root permissions"); 
 for (var p in inapp) {
   this[p]=inapp[p];
   app[p]=inapp[p];
 }
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+function getandcheck(file,line,col,cb) {
+  httpGetAsync(file,function(c) {
+    cb(c.split("\n")[line-1]+"\n"+Array(col).join(" ")+"^");
+  });
+}
 window.onerror = function(message, source, lineno, colno, error) {
-  swal(message,error,"error");
+  if (isdev) {
+    swal(message,error,"error");
+    getandcheck(source,lineno,colno,function(msg) {
+      console.log(msg+"\n"+source+":"+lineno+":"+colno+"\n"+error.stack);
+    });
+  } else {
+    swal(message,error,"error")
+  }
 };
 (function(document) {
   'use strict';

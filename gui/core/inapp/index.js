@@ -8,10 +8,29 @@ require("core/tools");
 
 try {
   global.isvm=iISVM();
+  global.needsroot=false;
 } catch(e) {
   global.isvm=false;
-  console.error("%cRUN AS SUDO!","color:red; font-size:30px;");
+  console.error("%cRUN AS ROOT!","color:red; font-size:30px;");
+  module.exports={};
+  global.needsroot=true;
+  swal({
+      title:"Needs Admin Permissions",
+      text:"Run this application again with admin permissions",
+      showConfirmButton: false,
+      type:"error"
+    });
+  setTimeout(mainapp.quit,5000);
+  return module;
 }
+
+if (isos) {
+  install=!fs.lstatsSync("/home/osloader").isSymbolicLink();
+} else {
+  // TODO: add real check
+  install=true;
+}
+
 
 console.warn("%cWARNING!%cDo not paste anything you don´t know what it is for here!","color:orange; font-size:25px;","color:red; font-size:15px;");
 
@@ -22,7 +41,10 @@ var safeClose=false;
 var isdev=global.isdev;
 window.rReload=false;
 app.isDev=isdev;
-var install=true;
+
+if (isos) {
+
+}
 
 function async() {
   if (isdev) events.emit("updateFound");

@@ -13,6 +13,8 @@ distbuild: # This is seperate because it deletes/changes some files
 	sed -i "s/dd='app'/dd='dist'/g" main.js
 	npm run build
 	mv $(OUTDIR) ../
+watch:
+	sudo nodemon /usr/bin/npm start --ext js,html
 deb: build
 	cp -r deb-files $(BDIR)/gui/
 	cp -r $(OUTDIR) $(BDIR)/gui/src

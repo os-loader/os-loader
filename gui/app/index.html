@@ -59,6 +59,12 @@
         </template>
       </paper-scroll-header-panel>
 
+      <template is="dom-if" if="{{install}}">
+        <center style="position:fixed;left:50%;top:1em;z-index:2000;">
+          <p>OS Loader Setup</p>
+        </center>
+      </template>
+
       <!-- Main Area -->
       <paper-scroll-header-panel main id="headerPanelMain">
         <!-- Main Toolbar -->
@@ -110,12 +116,11 @@
                     <paper-menu class="app-menu transparent" attr-for-selected="data-uuid" selected="[[usbpath]]">
                       <template is="dom-repeat" items="{{usbdev}}">
                         <paper-toolbar data-uuid$="{{item.ID_PATH}}" on-click="selectUSB" class="item-bar">
-                          <img style="width:48px;height:48px;transform: rotate(90deg);margin:16px;" src="./images/usb.svg" alt="USB Icon"></img>
+                          <img style$="width:48px;height:48px;transform: rotate({{item.deg}}deg);margin:16px;" src="./images/usb.svg" alt="USB Icon"></img>
                           <div class="aline"><h2>{{item.ID_FS_LABEL}} ({{item.ID_VENDOR}} {{item.ID_MODEL}})</h2><br><p>{{item.desc}} ({{item.ID_FS_TYPE}})</p></div>
                         </paper-toolbar>
                       </template>
                     </paper-menu>
-                        <!--<p>Click on Next if you are sure to install here</p>!-->
                   </template>
                   <template is="dom-if" if="{{!usbdev.length}}">
                     <center>
@@ -127,6 +132,11 @@
                 <p>Requires FAT32 USB with at least 2GB Free Space</p>
                 <p>It can also be an USB with a Live ISO</p>
                 <p>In this case the USB will be formatted</p>
+              </paper-material>
+            </section>
+            <section data-route="install-execute">
+              <paper-material class="focus-target small" elevation="1">
+                <h2 class="pagetitle">Installing on {{dev}}...</h2>
               </paper-material>
             </section>
             <section data-route="os">
@@ -179,8 +189,8 @@
   </template>
 
   <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
   <script src="./bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="scripts/app.js"></script>
   <!-- endbuild-->
 </body>
 

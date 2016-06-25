@@ -73,6 +73,7 @@
         app.next=true;
       } else {
         app.step=r.desc;
+        app.next=false;
       }
     }
     function getUSB() {
@@ -80,7 +81,20 @@
       udev(function(e,l) {
         if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
         app.usbdev=l.filter(function(e) {
-          if (e.ID_BUS=="usb"&&e.ID_PART_TABLE_TYPE) {
+          if ((e.ID_BUS=="usb"||global.isvm)&&e.ID_PART_TABLE_TYPE) {
+            switch(e.ID_BUS) {
+              case "ata": //bug - this should be sata
+                e.img="hdd";
+                e.deg=0;
+                break;
+              case "usb":
+                e.img="usb";
+                e.deg=90;
+                break;
+              default:
+                e.img="unkown";
+                e.deg=0;
+            }
             e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
             if (e.ID_FS_TYPE.startsWith("iso")) {
               e.desc="Contains a live disc - Must be formated";
