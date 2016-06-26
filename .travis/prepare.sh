@@ -1,10 +1,10 @@
 npm i bower -g
 cd gui
-  npm i
-  bower i
+  npm i --silent --quiet
+  bower i --silent --quiet
 cd ..
 cd server
-  npm i
+  npm i --silent --quiet
 cd ..
 
 sudo dpkg -x isolinux.deb /
