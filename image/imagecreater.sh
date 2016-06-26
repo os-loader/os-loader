@@ -247,13 +247,14 @@ initscript() {
 systemimage() {
   #Install Software
   export DEBIAN_FRONTEND=noninteractive
-  echo 'Dpkg::Progress-Fancy "0";' > $curch/etc/apt/apt.conf.d/99progressbar
+  echo 'Dpkg::Progress-Fancy "1";
+APT::Color "1";' > $curch/etc/apt/apt.conf.d/99progressbar
   chstd "apt-get update"
-  chinstall memtest86+ casper live-boot live-boot-initramfs-tools squashfs-tools \
+  chinstall memtest86+ live-boot live-boot-initramfs-tools squashfs-tools \
   plymouth plymouth-label grub2 linux-base linux-generic \
   openbox xorg lightdm \
   bash sudo menu \
-  curl apt-transport-https feh grub2
+  curl wget apt-transport-https feh grub2
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
   DISTRO='$dist'
