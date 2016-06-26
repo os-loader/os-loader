@@ -1,6 +1,6 @@
 [Plymouth Theme]
-Name=Ubuntu GNOME Logo
-Description=A theme that features an animated Ubuntu GNOME logo.
+Name=OS Loader
+Description=OS Loader Logo
 ModuleName=script
 
 [script]
