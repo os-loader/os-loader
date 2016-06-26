@@ -16,14 +16,8 @@ if [ -z "$VERBOSE" ]; then
   slient=true
 fi
 
-#Travis Fix
-if [ -z "$TRAVIS" ]; then
-  execp=$(realpath $0)
-  execd=$(dirname $execp)
-else
-  execd="/home/travis/build/mkg20001/os-loader/image"
-  execp="/home/travis/build/mkg20001/os-loader/image/imagecreater.sh"
-fi
+execp=$(realpath $0)
+execd=$(dirname $execp)
 data=$execd/data
 
 if [ -z $1 ]; then
