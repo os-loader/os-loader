@@ -1,8 +1,5 @@
 'use strict';
 
-// Include promise polyfill for node 0.10 compatibility
-require('es6-promise').polyfill();
-
 // Include Gulp & tools we'll use
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
@@ -40,7 +37,7 @@ var styleTask = function(stylesPath, srcs) {
     .pipe($.changed(stylesPath, {extension: '.css'}))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/' + stylesPath))
-    .pipe($.minifyCss())
+    .pipe($.cleanCss())
     .pipe(gulp.dest(dist(stylesPath)))
     .pipe($.size({title: stylesPath}));
 };
@@ -106,7 +103,7 @@ gulp.task('build', ['images', 'fonts'], function() {
     .pipe($.if('*.js', $.uglify({
       preserveComments: 'some'
     })))
-    .pipe($.if('*.css', $.minifyCss()))
+    .pipe($.if('*.css', $.cleanCss()))
     .pipe($.if('*.html', $.minifyHtml({
       quotes: true,
       empty: true,
