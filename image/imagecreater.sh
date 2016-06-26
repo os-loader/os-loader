@@ -241,8 +241,8 @@ initscript() {
 systemimage() {
   #Install Software
   export DEBIAN_FRONTEND=noninteractive
-  echo 'Dpkg::Progress-Fancy "1";
-APT::Color "1";' > $curch/etc/apt/apt.conf.d/99progressbar
+  echo 'Dpkg::Progress-Fancy "0";
+APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
   chstd "apt-get update"
   chinstall memtest86+ live-boot live-boot-initramfs-tools squashfs-tools \
   plymouth plymouth-label grub2 linux-base linux-generic \
