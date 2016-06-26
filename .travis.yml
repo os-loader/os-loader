@@ -26,4 +26,5 @@ addons:
       - debhelper
       - dpkg-dev
       - openssl
+      - git
 #      - isolinux N/A
