@@ -5,7 +5,7 @@ Multiple Portable and Live Operating Systems isolated from each other on a singl
 
 ![Screenshot](/OS-Loader.png?raw=true)
 
-More in idea.md
+More in Idea.md and FAQ.md
 
 # Images
 Images built by Travis are available [here](https://os-loader.mkg20001.sytes.net/?C=M;O=D) (last recent=newest)
