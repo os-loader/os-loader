@@ -16,7 +16,7 @@ if [ -z "$VERBOSE" ]; then
   slient=true
 fi
 
-execp=$(realpath $0)
+execp=$(readlink -f $0)
 execd=$(dirname $execp)
 data=$execd/data
 
