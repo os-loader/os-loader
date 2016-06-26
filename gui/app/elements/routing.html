@@ -78,10 +78,10 @@
     }
     function getUSB() {
       if (!app.tempB.usb) return;
-      udev(function(e,l) {
+      udev.query(function(e,l) {
         if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
         app.usbdev=l.filter(function(e) {
-          if ((e.ID_BUS=="usb"||global.isvm)&&e.ID_PART_TABLE_TYPE) {
+          if ((global.isvm||e.ID_BUS=="usb")&&e.ID_FS_USAGE) {
             switch(e.ID_BUS) {
               case "ata": //bug - this should be sata
                 e.img="hdd";
@@ -93,14 +93,22 @@
                 break;
               default:
                 e.img="unkown";
-                e.deg=0;
+                e.deg=-90;
             }
             e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
+            e.ID_VENDOR=e.ID_VENDOR||"";
+            e.ID_MODEL=e.ID_MODEL||"";
+            if (e.ID_FS_LABEL) {
+              e.name=e.ID_FS_LABEL+" ("+e.ID_VENDOR.trim()+" "+e.ID_MODEL.trim()+")";
+            } else {
+              e.name=e.ID_VENDOR.trim()+" "+e.ID_MODEL.trim();
+            }
+            e.ID_FS_LABEL=e.ID_FS_LABEL||"Unnamed";
             if (e.ID_FS_TYPE.startsWith("iso")) {
               e.desc="Contains a live disc - Must be formated";
               e.ok=true;
               e.format=true;
-            } else if (e.ID_FS_TYPE.startsWith("fat")) {
+            } else if (e.ID_FS_TYPE.startsWith("fat")||e.ID_FS_TYPE.startsWith("vfat")) {
               e.desc="Data will be kept";
               e.ok=true;
               e.keep=true;

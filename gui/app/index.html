@@ -95,6 +95,16 @@
                 <modern-spinner></modern-spinner>
               </paper-material>
             </section>
+            <section data-route="console">
+              <paper-material class="focus-target small" elevation="1">
+                <div class="console">
+                  <div style="margin:6px;">
+                    <p>TEST</p>
+                    <p>TEST</p>
+                  </div>
+                </div>
+              </paper-material>
+            </section>
             <section data-route="home">
               <center class="focus-target" style="color:white;">
                 <h1 style="font-size:3em;">OS Loader</h1>
@@ -117,7 +127,7 @@
                       <template is="dom-repeat" items="{{usbdev}}">
                         <paper-toolbar data-uuid$="{{item.ID_PATH}}" on-click="selectUSB" class="item-bar">
                           <img style$="width:48px;height:48px;transform: rotate({{item.deg}}deg);margin:16px;" src="./images/usb.svg" alt="USB Icon"></img>
-                          <div class="aline"><h2>{{item.ID_FS_LABEL}} ({{item.ID_VENDOR}} {{item.ID_MODEL}})</h2><br><p>{{item.desc}} ({{item.ID_FS_TYPE}})</p></div>
+                          <div class="aline"><h2>{{item.name}}</h2><br><p>{{item.desc}} ({{item.ID_FS_TYPE}})</p></div>
                         </paper-toolbar>
                       </template>
                     </paper-menu>

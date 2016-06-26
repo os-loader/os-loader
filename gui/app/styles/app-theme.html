@@ -62,6 +62,9 @@
   .small {
     max-width:750px;
   }
+  .min {
+    min-height:412px;
+  }
 
   .item-bar {
     background-color:white;
@@ -73,6 +76,28 @@
   }
   .aline {
     line-height:12px;
+  }
+
+  .console {
+    background-color:black;
+    color:white;
+    height:100%;
+    width:100%;
+    margin:auto;
+    overflow-y: scroll;
+    z-index: 2000;
+    min-height:250px;
+
+    font-family: 'Lucida Console', 'Lucida Sans Typewriter', monaco, 'Bitstream Vera Sans Mono', monospace;
+  	font-size: 15px;
+  	font-style: normal;
+  	font-variant: normal;
+  	font-weight: 500;
+  	line-height: 15px;
+  }
+  .console p {
+    line-height:15px !important;
+    margin:0 !important;
   }
 
   #drawerToolbar {

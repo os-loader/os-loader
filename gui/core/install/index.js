@@ -31,3 +31,4 @@ function installOn(dev,cb) {
   }
   partion(cb);
 }
+module.exports=installOn;
