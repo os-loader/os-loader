@@ -81,7 +81,7 @@
       udev.query(function(e,l) {
         if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
         app.usbdev=l.filter(function(e) {
-          if ((global.isvm||e.ID_BUS=="usb")&&e.ID_FS_USAGE) {
+          if (global.isvm||(e.ID_BUS=="usb"&&e.ID_FS_USAGE)) {
             switch(e.ID_BUS) {
               case "ata": //bug - this should be sata
                 e.img="hdd";
