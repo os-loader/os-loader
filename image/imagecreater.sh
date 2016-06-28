@@ -244,7 +244,7 @@ systemimage() {
   echo 'Dpkg::Progress-Fancy "0";
 APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
   chstd "apt-get update"
-  chinstall memtest86+ live-boot live-boot-initramfs-tools squashfs-tools \
+  chinstall memtest86+ live-boot live-boot-initramfs-tools casper squashfs-tools \
   plymouth plymouth-label grub2 linux-base linux-generic \
   openbox xorg lightdm \
   bash sudo menu \
