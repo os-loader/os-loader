@@ -1,5 +1,5 @@
 # OS-Loader
-[![Build Status](https://travis-ci.org/mkg20001/os-loader.svg?branch=master)](https://travis-ci.org/mkg20001/os-loader)
+[![Build Status](https://travis-ci.org/os-loader/os-loader.svg?branch=master)](https://travis-ci.org/mkg20001/os-loader)
 
 Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB
 
