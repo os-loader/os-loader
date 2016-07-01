@@ -1,6 +1,6 @@
 _OLD
 .~
-.tmp
+.tmp*
 .bak
 .log
 .deb
