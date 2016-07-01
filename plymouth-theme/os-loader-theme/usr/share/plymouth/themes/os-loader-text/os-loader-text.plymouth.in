@@ -5,7 +5,7 @@ ModuleName=ubuntu-text
 
 [ubuntu-text]
 title=OS Loader
-black=0x0087ed
+black=0x5BB4C9
 white=0xffffff
-brown=0xffffff
+brown=0x50CDB1
 blue=0x133773
