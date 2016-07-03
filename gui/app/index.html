@@ -97,12 +97,15 @@
             </section>
             <section data-route="console">
               <paper-material class="focus-target small" elevation="1">
-                <div class="console">
+                <div class="console min">
                   <div style="margin:6px;">
-                    <p>TEST</p>
-                    <p>TEST</p>
+                    <template is="dom-repeat" items="{{scriptlines}}">
+                      <p style$="color:{{item.c}};">{{item.l}}</p>
+                    </template>
                   </div>
                 </div>
+                <center><h2>{{scriptstate}}</h2></center>
+                <paper-progress min="0" max="100" value="{{scriptprogress}}" style="width:100%;"></paper-progress>
               </paper-material>
             </section>
             <section data-route="home">
@@ -117,6 +120,20 @@
                 <h1 style="font-size:3em;">OS Loader</h1>
                 <p style="opacity:0.5;font-size:1.5em;">Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB</p>
                 <paper-button data-page="install-select" on-click="navPage">Install »</paper-button>
+              </center>
+            </section>
+            <section data-route="install-success">
+              <center class="focus-target" style="color:white;">
+                <h1 style="font-size:3em;">OS Loader</h1>
+                <p style="opacity:0.5;font-size:1.5em;">Install was Sucessfull</p>
+                <paper-button data-page="askExit" on-click="navPage">Reboot/Restart »</paper-button>
+              </center>
+            </section>
+            <section data-route="lang-home">
+              <center class="focus-target" style="color:white;">
+                <h1 style="font-size:3em;">Choose your Language</h1>
+                <p style="opacity:0.5;font-size:1.5em;"></p>
+                <paper-button data-page="install-home" on-click="navPage">Continue »</paper-button>
               </center>
             </section>
             <section data-route="install-select">

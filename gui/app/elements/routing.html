@@ -128,6 +128,18 @@
         setTimeout(getUSB,1000);
       });
     }
+    app.installNext=function() {
+      var u=app.usbdev.filter(function(u) {return (u.ID_PATH==app.usbpath)?u:null;})[0];
+      if (!u) return;
+      if (!u.DEVNAME) return swal("ERROR","Has no storage","error");
+      if (u.format) return swal("Not Implented","You can´t format drives, yet!");
+      app.scriptout.clear();
+      app.route="console";
+      require("core/install")(u,function(e) {
+        if (e) if (e.stack) throw e; else throw new Error("Unkown Error: "+e);
+        app.route="install-success";
+      });
+    }
     page("/install-select",function() {
       app.usbdev=[];
       app.route="install-select";

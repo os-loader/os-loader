@@ -2,6 +2,8 @@ global.mainapp=require("electron").remote.app;
 global.isos=process.env.ISINOSMODE=="true";
 global.isdev=window.location.href.split("/").reverse()[1]=="app";
 global.electron=true;
+global.mountdir="/tmp/os-loader.mountpoint"
+var isdev=global.isdev;
 
 require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
 require("core/tools");
@@ -40,18 +42,45 @@ if (isos) {
 global.install=install;
 
 
-console.warn("%cWARNING!%cDo not paste anything you don´t know what it is for here!","color:orange; font-size:25px;","color:red; font-size:15px;");
+console.warn("%cWARNING!%cAny code you paste here has access to your data and network!","color:orange; font-size:25px;","color:red; font-size:15px;");
 
 var ee=require("events").EventEmitter;
 var events=new ee();
 var safeClose=false;
 
-var isdev=global.isdev;
 window.rReload=false;
 app.isDev=isdev;
 
 if (isos) {
+  global.imagedir=""
+} else {
+  global.imagedir="/tmp/os-loader.image"
+}
 
+function scriptout() {
+  var e=new ee();
+  const self=this;
+  this.lines=[];
+  global.cEV=e;
+  e.on("line",function(l) {
+    if (isdev) console.log("%c"+l.l,"color:"+((l.c=="white")?"black":l.c));
+    self.lines=self.lines.concat([l]).slice(-25);
+    app.scriptlines=self.lines;
+  });
+  e.on("print",function(l,c) {
+    app.scriptlines=self.lines.concat([{l:l,c:c}]);
+  });
+  e.on("progress",function(p) {
+    app.scriptprogress=p;
+  });
+  e.on("state",function(s) {
+    app.scriptstate=s;
+  });
+  e.emit("line",{c:"white",l:"> OS Loader"});
+  this.clear=function() {
+    self.lines=[];
+    app.scriptlines=[];
+  }
 }
 
 function async() {
@@ -67,18 +96,27 @@ function actions() {
 }
 function doExit(isConfirm){
   if (isConfirm) {
-    swal({
-      title:"Shutdown...",
-      text:isos?"Rebooting into BootLoader...":"Closing the App...",
-      showConfirmButton: false
+    global.cEV.on("state",function(s) {
+      swal({
+        title:"Shutdown...",
+        text:s+"...",
+        showConfirmButton: false
+      });
     });
-    app.$.mainContent.hidden=true;
-    safeClose=true;
-    if (isos) {
-      spawn("reboot",["-f"]);
-    } else {
-      setTimeout(mainapp.quit,10);
-    }
+    script("shutdown",[],"Shutdown the App",function() {
+      swal({
+        title:"Shutdown...",
+        text:isos?"Rebooting into BootLoader...":"Closing the App...",
+        showConfirmButton: false
+      });
+      app.$.mainContent.hidden=true;
+      safeClose=true;
+      if (isos) {
+        spawn("reboot",["-f"]);
+      } else {
+        setTimeout(mainapp.quit,10);
+      }
+    });
   }
 }
 function askExit() {
@@ -96,4 +134,4 @@ function askExit() {
 window.onbeforeunload = (e) => {
   if (!window.rReload) if (!safeClose) { e.returnValue = false;return isos?askExit():doExit(true);}
 };
-module.exports={ee:ee,install:install,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};
+module.exports={ee:ee,scriptout:new scriptout(),install:install,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};

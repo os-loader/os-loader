@@ -6,6 +6,7 @@ ee=require("events").EventEmitter;
 spawn=cp.spawn;
 exec=cp.exec;
 execSync=cp.execSync;
+grub=require("core/grub");
 streams=require("stream");
 udev=require("core/udev");
 parted=require("core/parted");

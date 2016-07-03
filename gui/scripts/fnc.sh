@@ -1,4 +1,6 @@
 #!/bin/sh
+#set -e
+set -o xtrace
 
 sprefix="°"
 pprefix="¯"
@@ -30,4 +32,7 @@ finish() {
   prog $pmax
   state "Done"
   exit 0
+}
+script() {
+  bash $(dirname $FNC)/$1.sh "$2" "$3" "$4" "$5"
 }

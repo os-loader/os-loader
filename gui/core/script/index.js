@@ -1,11 +1,11 @@
 const colors={
   "err":{
-    "normal":"red",
+    "normal":"crimson",
     "state":"magenta"
   },
   "std":{
     "normal":"white",
-    "state":"blue"
+    "state":"royalblue"
   }
 }
 const sprefix="°";
@@ -31,7 +31,7 @@ function epipe(s,e,ev) {
   d._write=function(d,enc,next) {
     var a=d.toString().split("\n");
     if (a.length>1) {
-      a[0]+=curline;
+      a[0]=curline+a[0];
       curline=a.pop();
       a.map(function(l) {
         parseLine(l);
@@ -46,19 +46,23 @@ function epipe(s,e,ev) {
   return d;
 }
 function spipe(std,ste,ev2) {
-  var ev=ev||new ee();
+  var ev=ev2||new ee();
   return {std:new epipe(std,false,ev),ste:new epipe(ste,true,ev),ee:ev}
 }
 
 const pp=pth.join(__dirname,"..","..","scripts");
 
-function script(sc,args,cb,ev2) {
+function script(sc,args,name,cb,ev2) {
   //Executes scripts
   var ev=ev2||global.cEV;
+  if (!cb&&name) {cb=name;name="";}
+  ev.emit("line",{c:"black",l:"\n"});
+  if (name) ev.emit("line",{c:"white",l:name});
+  ev.emit("line",{c:"white",l:"> "+sc+".sh "+args.join(" ")});
+  ev.emit("line",{c:"black",l:"\n"});
   args.unshift(pth.join(pp,sc+".sh"));
-  var p=spawn("/bin/bash",args,{env:{FNC:pth.join(pp,"fnc.sh")}});
-  var pipe=new spipe(p.stdout,p.stderr,ev);
+  var p=spawn("/bin/bash",args,{env:{FNC:pth.join(pp,"fnc.sh"),isos:(isos?"true":""),imagedir:global.imagedir,usb:global.mountdir}});
+  /*var pipe=*/new spipe(p.stdout,p.stderr,ev);
   p.on("close",cb);
-  return {p:p,pipe:pipe,ee:ev};
 }
 module.exports=script;
