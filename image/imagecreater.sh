@@ -57,6 +57,7 @@ arch=amd64
 dist=xenial
 today=$(date)
 host=$(hostname)
+commit=`git rev-parse HEAD`
 user=$SUDO_USER
 mirror=http://archive.ubuntu.com/ubuntu  #http://10.0.3.1:8084
 curch=""
@@ -197,7 +198,8 @@ preiso() {
   cp -r $data/boot $stage/isolinux
   cp -r $data/com32/* $stage/isolinux/
   about=`cat $data/about.txt`
-  about=${about//"{VER}"/$today};
+  about=${about//"{DATE}"/$today};
+  about=${about//"{VER}"/$commit};
   about=${about//"{HOST}"/$host};
   echo "$about" > $stage/isolinux/f1.txt
 
@@ -249,6 +251,7 @@ APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
   openbox xorg lightdm \
   bash sudo menu \
   curl wget apt-transport-https feh grub2
+  chstd "echo $commit > /version"
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
   DISTRO='$dist'
