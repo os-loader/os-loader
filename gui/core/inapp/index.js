@@ -41,7 +41,6 @@ if (isos) {
 
 global.install=install;
 
-
 console.warn("%cWARNING!%cAny code you paste here has access to your data and network!","color:orange; font-size:25px;","color:red; font-size:15px;");
 
 var ee=require("events").EventEmitter;
@@ -53,8 +52,10 @@ app.isDev=isdev;
 
 if (isos) {
   global.imagedir=""
+  global.imagepath="/var/lib/mount/filesystem.squashfs"
 } else {
   global.imagedir="/tmp/os-loader.image"
+  global.imagepath="/tmp/liveimage/live/filesystem.squashfs"
 }
 
 function scriptout() {
@@ -64,6 +65,7 @@ function scriptout() {
   global.cEV=e;
   e.on("line",function(l) {
     if (isdev) console.log("%c"+l.l,"color:"+((l.c=="white")?"black":l.c));
+    if (l.l.startsWith("+ ")||l.l.startsWith("++ ")) return; //do not spam the stack traces
     self.lines=self.lines.concat([l]).slice(-25);
     app.scriptlines=self.lines;
   });

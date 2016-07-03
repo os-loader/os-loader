@@ -2,14 +2,14 @@
 
 progmax 3
 state "Umount USB"
-umount $usb
+umount $usb -f
 prog 1
 
 if [ -z $isos ]; then
   state "Umount image"
-  umount $imagedir
+  umount $imagedir -f
   state "Umount ISO"
-  umount /tmp/liveimage
+  umount /tmp/liveimage -f
   prog 2
 else
   prog 2

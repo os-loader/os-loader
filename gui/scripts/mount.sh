@@ -5,7 +5,7 @@ fs=$2
 
 progmax 2
 state "Dismount $dev"
-umount $dev
+umount $dev -f
 prog 1
 
 state "Mount $dev"

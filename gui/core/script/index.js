@@ -61,7 +61,7 @@ function script(sc,args,name,cb,ev2) {
   ev.emit("line",{c:"white",l:"> "+sc+".sh "+args.join(" ")});
   ev.emit("line",{c:"black",l:"\n"});
   args.unshift(pth.join(pp,sc+".sh"));
-  var p=spawn("/bin/bash",args,{env:{FNC:pth.join(pp,"fnc.sh"),isos:(isos?"true":""),imagedir:global.imagedir,usb:global.mountdir}});
+  var p=spawn("/bin/bash",args,{env:{FNC:pth.join(pp,"fnc.sh"),isos:(isos?"true":""),isdev:(isdev?"true":""),imagedir:global.imagedir,usb:global.mountdir,imagepath:global.imagepath}});
   /*var pipe=*/new spipe(p.stdout,p.stderr,ev);
   p.on("close",cb);
 }

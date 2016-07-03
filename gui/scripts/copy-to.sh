@@ -1,10 +1,13 @@
 . $FNC
 
-from="$imagedir/boot"
+dev="$1"
+from="$imagedir"
+to="$usb"
 
 progmax 4
-prog 2
 state "Copy Files to $dev"
-cp -r -v $from $usb/boot
-mkdir -p $usb/boot/grub
+cp -r $from/boot $to/boot
+mkdir -p $to/boot/grub $to/os-loader/config
+prog 1
+cp -r $imagepath $to/os-loader/system.img
 finish

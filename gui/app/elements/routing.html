@@ -61,6 +61,10 @@
 
     page(app.baseUrl, homepage);
 
+    page("/doExit",function() {
+      window.onbeforeunload({});
+    });
+
   if (app.install) {
     app.usbpath="";
     app.selectUSB=function(el) {
