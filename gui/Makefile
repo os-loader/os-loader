@@ -1,9 +1,9 @@
 BDIR="/tmp/os-loader-builddir"
-OUTDIR="os-loader-gui-linux-x64"
+OUTDIR="os-loader-settings-linux-x64"
 build:
 	npm i
 	bower i
-	rm -rf os-loader-gui* buildtmp
+	rm -rf os-loader-settings* buildtmp
 	cp -r ./ ../gui.cp
 	mv ../gui.cp ./buildtmp
 	make -C buildtmp distbuild BDIR=$(BDIR)
