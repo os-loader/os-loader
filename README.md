@@ -15,14 +15,22 @@ Currently Ubuntu 16.04 is the recommended Build Environment
 
 # Dependencies
 You need the following installed to Build the Image:
- - nodeJS (v6+)
+ - nodeJS (v6.1)
  - make
  - squashfs-tools
  - genisoimage
  - debootstrap
- - chroot
- - cpio, gzip, tar
+ - schroot
+ - cpio
+ - gzip
+ - tar
  - isolinux
+ - debhelper
+ - coreutils
+
+ nodeJS apt repository: ```curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -```
+
+Install with: ```sudo apt install make squashfs-tools genisoimage debootstrap chroot cpio gzip tar isolinux debhelper coreutils nodejs```
 
 # Build
 Simply use ```make image``` or ```make server```
