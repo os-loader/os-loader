@@ -1,5 +1,6 @@
 # OS-Loader
 [![Build Status](https://travis-ci.org/os-loader/os-loader.svg?branch=master)](https://travis-ci.org/os-loader/os-loader)
+[![TODOs](https://todofy.org/b/os-loader/os-loader)](https://todofy.org/r/os-loader/os-loader)
 
 Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB
 
