@@ -1,6 +1,8 @@
 127.0.0.1	localhost
 127.0.1.1	os-loader
 
+# OS Loader domains
+136.243.32.225  os-loader.images
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback
