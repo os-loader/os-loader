@@ -17,8 +17,8 @@ fi
 
 # Author: Maciej Krüger <mkg20001@gmail.com>
 
-DESC="os-loader-gui"
-DAEMON=/usr/bin/os-loader-gui
+DESC="os-loader-settings"
+DAEMON=/usr/bin/os-loader-settings
 
 # This is an example to start a single forking daemon capable of writing
 # a pid file. To get other behaviors, implement do_start(), do_stop() or

@@ -1,13 +1,13 @@
 {
-  "name": "os-loader-gui",
+  "name": "os-loader-settings",
   "version": "1.0.0",
-  "description": "A GUI for os-loader",
+  "description": "A tool for managing the OS Loader USB",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron main.js",
     "gulp": "gulp",
-    "build": "electron-packager . os-loader-gui --platform=linux --arch=x64"
+    "build": "electron-packager . os-loader-settings --platform=linux --arch=x64"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,9 @@
   "author": "Maciej Krüger <mkg20001@gmail.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/mkg20001/os-loader/issues"
+    "url": "https://github.com/os-loader/os-loader/issues"
   },
-  "homepage": "https://github.com/mkg20001/os-loader#readme",
+  "homepage": "https://github.com/os-loader/os-loader#readme",
   "devDependencies": {
     "del": "^2.2.1",
     "electron-packager": "^7.0.4",

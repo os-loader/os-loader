@@ -1,15 +1,16 @@
-Source: os-loader-gui
+Source: os-loader-settings
 Section: unknown
 Priority: optional
 Maintainer: Maciej Krüger <mkg20001@gmail.com>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
-Homepage: https://github.com/mkg20001/os-loader
-Vcs-Git: git://github.com/mkg20001/os-loader.git
-Vcs-Browser: https://github.com/mkg20001/os-loader
+Homepage: https://github.com/os-loader/os-loader
+Vcs-Git: git://github.com/os-loader/os-loader.git
+Vcs-Browser: https://github.com/os-loader/os-loader
 
-Package: os-loader-gui
-Architecture: any
-Depends: nodejs, gconf2, virt-what
-Description: OS Loader Gui
- Controls the OS Loader
+Package: os-loader-settings
+Architecture: amd64
+Replaces: os-loader-gui
+Depends: nodejs, gconf2, virt-what, grub2, schroot
+Description: OS Loader Settings
+ A tool for managing the OS Loader USB
