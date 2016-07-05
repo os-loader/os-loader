@@ -256,7 +256,7 @@ APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
   plymouth plymouth-label grub2 linux-base linux-generic \
   openbox xorg lightdm \
   bash sudo menu \
-  curl wget apt-transport-https feh grub2
+  curl wget apt-transport-https feh grub2 dmz-cursor-theme
   chstd "echo $commit > /version"
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
