@@ -38,3 +38,15 @@ finish() {
 script() {
   bash $(dirname $FNC)/$1.sh "$2" "$3" "$4" "$5"
 }
+chroot() {
+  if [ -z $isos ]; then
+    /usr/sbin/chroot $imagedir/bin/bash -x <<ffff
+export imagedir=""
+export usb="/usb"
+$*
+ffff
+    return $?
+  else
+    $*
+  fi
+}

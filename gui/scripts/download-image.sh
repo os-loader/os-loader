@@ -4,12 +4,12 @@
 
 progmax 5
 state "Check for new ISO..."
-con=`curl 'https://os-loader.mkg20001.sytes.net/?C=M;O=D' 2> /dev/null`
-name=`echo $con | grep 'href="image.iso.[a-zA-Z0-9.-]*"' -o | head -n 1 | grep "image.iso.[a-zA-Z0-9.-]*" -o`
+con=`curl 'https://os-loader.mkg20001.sytes.net/?C=M;O=D' 2> /dev/null  | grep 'href="image.iso.[a-zA-Z0-9.-]*"' -o | head -n 1 | grep "image.iso.[a-zA-Z0-9.-]*" -o`
+name="$con"
 echo "Latest ISO is: $name"
 prog 1
 
-pt="$HOME/.cache/os-loader/images"
+pt="/.cache/os-loader/images"
 mkdir -p $pt
 out=$1
 if [ -z $out ]; then

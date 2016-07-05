@@ -266,13 +266,14 @@ APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
   addgroup osloader sudo"
   for f in `find $data/copy/ -type f`; do
     r=${f/"$data/copy/"/""}
-    log "Copy config /$r"
+    log "Copy file /$r"
   done
-  cp -r -v $data/copy/* $curch
+  cp -r $data/copy/* $curch
   chmod +x $curch/home/osloader/.config/openbox/autostart
   chown root:root $curch/etc/sudoers.d/os-loader
   chmod 440 $curch/etc/sudoers.d/os-loader
   chown 1000:1000 -R $curch/home/osloader
+  mkdir -p $curch/usb
 
   #Install internal .debs
   cp -r -v $BDIR/deb $curch/deb

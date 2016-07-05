@@ -9,6 +9,5 @@ umount $dev -f
 prog 1
 
 state "Mount $dev"
-mkdir -p $usb
 mount -t $fs $dev $usb
 prog 2

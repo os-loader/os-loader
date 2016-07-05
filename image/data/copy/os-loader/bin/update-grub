@@ -17,15 +17,15 @@ set -e
 # You should have received a copy of the GNU General Public License
 # along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
 
-prefix="$imagedir/usr"
-exec_prefix="$imagedir/usr"
-datarootdir="$imagedir/usr/share"
+prefix="/usr"
+exec_prefix="/usr"
+datarootdir="/usr/share"
 
-prefix="$imagedir/usr"
-exec_prefix="$imagedir/usr"
+prefix="/usr"
+exec_prefix="/usr"
 sbindir="${exec_prefix}/sbin"
 bindir="${exec_prefix}/bin"
-sysconfdir="$imagedir/etc"
+sysconfdir="/etc"
 PACKAGE_NAME=GRUB
 PACKAGE_VERSION=os-loader-alpha-grub-2.02~beta2-36ubuntu3
 host_os=linux-gnu

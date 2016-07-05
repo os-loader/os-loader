@@ -1,16 +1,28 @@
 . $FNC
 
-progmax 4
+progmax 5
+state "Umount - to get sure"
+script umount-image
+
 state "Download Boot-Image..."
-script download-image /tmp/bootimage.iso
+script download-image $imagedir.iso
 prog 2
 
 state "Mount ISO-Image"
-mkdir -p /tmp/liveimage
-mount -o loop -t iso9660 /tmp/bootimage.iso /tmp/liveimage
+mkdir -p $imagedir.live
+mount -o loop -t iso9660 $imagedir.iso $imagedir.live
 prog 3
 
 state "Mount Boot-Image"
-mkdir -p $imagedir
-mount -o loop -t squashfs /tmp/liveimage/live/filesystem.squashfs $imagedir
+mkdir -p $imagedir $imagedir.overlay $imagedir.tmp
+mount -o loop -t squashfs $imagedir.live/live/filesystem.squashfs $imagedir.overlay
+fs="overlay";
+mount -t tmpfs -o size=1G tmpfs $imagedir.tmp
+mkdir -p $imagedir.tmp/work
+mkdir -p $imagedir.tmp/files
+mount -t $fs -o lowerdir=$imagedir.overlay,upperdir=$imagedir.tmp/files,workdir=$imagedir.tmp/work $fs $imagedir
+prog 4
+
+state "Prepare chroot"
+for dir in /dev/pts /proc /sys; do mount --bind $dir $imagedir$dir; done
 finish

@@ -2,7 +2,6 @@ global.mainapp=require("electron").remote.app;
 global.isos=process.env.ISINOSMODE=="true";
 global.isdev=window.location.href.split("/").reverse()[1]=="app";
 global.electron=true;
-global.mountdir="/tmp/os-loader.mountpoint"
 var isdev=global.isdev;
 
 require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
@@ -40,6 +39,7 @@ if (isos) {
 }
 
 global.install=install;
+global.active=!install;
 
 console.warn("%cWARNING!%cAny code you paste here has access to your data and network!","color:orange; font-size:25px;","color:red; font-size:15px;");
 
@@ -52,10 +52,11 @@ app.isDev=isdev;
 
 if (isos) {
   global.imagedir=""
-  global.imagepath="/var/lib/mount/filesystem.squashfs"
+  global.imagepath="/usb"
 } else {
   global.imagedir="/tmp/os-loader.image"
-  global.imagepath="/tmp/liveimage/live/filesystem.squashfs"
+  global.imagepath=global.imagedir+".live/live/filesystem.squashfs"
+  global.mountdir=global.imagedir+"/usb";
 }
 
 function scriptout() {
@@ -85,8 +86,31 @@ function scriptout() {
   }
 }
 
+function asyncOk() {
+  page.redirect(app.baseUrl);
+}
+
 function async() {
   if (isdev) events.emit("updateFound");
+  if (active) {
+    udev.info(dev,function(e,d) {
+      if (e) return swal(e.toString(),e.toString(),"error");
+      if (!isos) {
+        script("mount-image",[],function(e) {
+          if (e) return swal(e.toString(),e.toString(),"error");
+          script("mount",[dev,d.ID_FS_TYPE],function(e) {
+            if (e) return swal(e.toString(),e.toString(),"error");
+            asyncOk();
+          });
+        });
+      } else {
+        script("mount",[dev,d.ID_FS_TYPE],function(e) {
+          if (e) return swal(e.toString(),e.toString(),"error");
+          asyncOk();
+        });
+      }
+    });
+  }
 }
 setTimeout(async,5);
 
@@ -136,4 +160,4 @@ function askExit() {
 window.onbeforeunload = (e) => {
   if (!window.rReload) if (!safeClose) { e.returnValue = false;return isos?askExit():doExit(true);}
 };
-module.exports={ee:ee,scriptout:new scriptout(),install:install,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};
+module.exports={ee:ee,scriptout:new scriptout(),install:install,active:active,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};
