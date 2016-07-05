@@ -9,5 +9,7 @@ isolated from each other on a single HDD/USB.
 78This media contains also a memtest86+ image, which can be used
 to test the ram of this computer.
 
-74Built on {HOST} at {DATE}
+74Built on {HOST}
+ at {DATE}
 71Version/Commit: {VER}
+Channel: {CHANNEL}

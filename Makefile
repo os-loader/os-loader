@@ -1,5 +1,6 @@
 #The final Makefile
 BDIR="/tmp/os-loader-builddir"
+VERSION=$(shell git rev-parse HEAD)
 image: builddir os-gui theme debs
 	sudo make -C image build BDIR=$(BDIR)
 debs:
@@ -9,6 +10,8 @@ debs:
 builddir:
 	rm -rf $(BDIR)
 	mkdir -p $(BDIR)
+	echo $(VERSION) > $(BDIR)/VERSION
+	echo "git" > $(BDIR)/CHANNEL
 theme:
 	make -C plymouth-theme BDIR=$(BDIR) cp
 os-gui:

@@ -22,9 +22,11 @@ data=$execd/data
 
 if [ -z $1 ]; then
   cur=$PWD/IMAGE
+  curroot=$PWD
   BDIR="/tmp/os-loader-builddir"
 else
   cur=$1/IMAGE
+  curroot=$1
   BDIR=$1
 fi
 mkdir -p $cur
@@ -57,7 +59,8 @@ arch=amd64
 dist=xenial
 today=$(date)
 host=$(hostname)
-commit=`git rev-parse HEAD`
+commit=$(cat $curroot/VERSION)
+channel=$(cat $curroot/CHANNEl)
 user=$SUDO_USER
 mirror=http://archive.ubuntu.com/ubuntu  #http://10.0.3.1:8084
 curch=""
@@ -201,6 +204,7 @@ preiso() {
   about=${about//"{DATE}"/$today};
   about=${about//"{VER}"/$commit};
   about=${about//"{HOST}"/$host};
+  about=${about//"{CHANNEL}"/$channel};
   echo "$about" > $stage/isolinux/f1.txt
 
   mkdir -p $stage/live
@@ -243,6 +247,9 @@ initscript() {
 systemimage() {
   #Install Software
   export DEBIAN_FRONTEND=noninteractive
+  mkdir -p $curch/meta
+  cp $curroot/VERSION $curch/meta
+  cp $curroot/CHANNEL $curch/meta
   echo 'Dpkg::Progress-Fancy "0";
 APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
   chstd "apt-get update"
