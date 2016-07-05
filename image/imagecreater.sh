@@ -230,7 +230,7 @@ preiso() {
 
 geniso() {
   log "Generate $out/image.iso"
-  genisoimage -o $out/image.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -input-charset utf8 -no-emul-boot -boot-load-size 4 \
+  genisoimage -quiet -o $out/image.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -input-charset utf8 -no-emul-boot -boot-load-size 4 \
   -boot-info-table -r -V "OS-Loader" -cache-inodes -J -l $stage
 }
 
