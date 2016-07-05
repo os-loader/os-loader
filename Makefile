@@ -16,3 +16,5 @@ theme:
 	make -C plymouth-theme BDIR=$(BDIR) cp
 os-gui:
 	make -C gui BDIR=$(BDIR) deb
+server:
+	@echo "Soon..."
