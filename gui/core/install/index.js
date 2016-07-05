@@ -15,26 +15,12 @@ function installOn(d,cb) {
     });
   }
   function copyFiles(cb) {
-    // TODO: copy files
-    function goNextCopy() {
+    script("mount",[dev,d.ID_FS_TYPE],function(e) {
+      if (e) return cb(e);
       script("copy-to",[dev],"Copy files to "+dev,function(e) {
         if (e) return cb(e); else grubInstall(cb);
       });
-    }
-    if (isos) {
-      script("mount",[dev,d.ID_FS_TYPE],function(e) {
-        if (e) return cb(e);
-        goNextCopy();
-      });
-    } else {
-      script("mount",[dev,d.ID_FS_TYPE],function(e) {
-        if (e) return cb(e);
-        script("mount-image",[],function(e) {
-          if (e) return cb(e);
-          goNextCopy();
-        });
-      });
-    }
+    });
   }
   function partion(cb) {
     if (!d.format) return copyFiles(cb);

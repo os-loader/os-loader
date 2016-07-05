@@ -95,20 +95,10 @@ function async() {
   if (active) {
     udev.info(dev,function(e,d) {
       if (e) return swal(e.toString(),e.toString(),"error");
-      if (!isos) {
-        script("mount-image",[],function(e) {
-          if (e) return swal(e.toString(),e.toString(),"error");
-          script("mount",[dev,d.ID_FS_TYPE],function(e) {
-            if (e) return swal(e.toString(),e.toString(),"error");
-            asyncOk();
-          });
-        });
-      } else {
         script("mount",[dev,d.ID_FS_TYPE],function(e) {
           if (e) return swal(e.toString(),e.toString(),"error");
           asyncOk();
         });
-      }
     });
   }
 }
