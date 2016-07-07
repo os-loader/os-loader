@@ -53,7 +53,7 @@ window.rReload=false;
 app.isDev=isdev;
 
 if (isos) {
-  global.imagedir="";
+  global.imagedir="/lib/live/mount/rootfs/filesystem.squashfs";
   global.imagepath="/lib/live/mount/medium/filesystem.squashfs"
   global.mountdir="/usb"
 } else {

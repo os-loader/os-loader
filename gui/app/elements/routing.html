@@ -38,6 +38,13 @@
       next();
     });
 
+    function pageSwitch(route) {
+      app.scrollPageToTop();
+      app.closeDrawer();
+      app.route=route;
+      setFocus(app.route);
+    }
+
     app.route="";
 
     function loading() {
