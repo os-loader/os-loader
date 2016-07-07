@@ -18,8 +18,8 @@ fi
 
 for f in `dir -w 1 $pt`; do
 	if [ "$f" != "$name" ]; then
-		echo "Clean OLD image: $pt/$f"
-		rm -r "$pt/$f"
+		echo "Clean OLD image: $f"
+		rm "$pt/$f"
 	fi
 done
 
@@ -33,7 +33,6 @@ fi
 prog 4
 
 if [ -h $out ]; then
-	echo "Clean old link $out..."
 	rm $out
 fi
 ln -s $ipt $out
