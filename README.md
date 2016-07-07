@@ -31,7 +31,7 @@ You need the following installed to Build the Image:
 
  nodeJS apt repository: ```curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -```
 
-Install with: ```sudo apt install make squashfs-tools genisoimage debootstrap chroot cpio gzip tar isolinux debhelper coreutils nodejs```
+Install with: ```sudo apt install make squashfs-tools genisoimage debootstrap schroot cpio gzip tar isolinux debhelper coreutils nodejs```
 
 # Build
 Simply use ```make image``` or ```make server```
