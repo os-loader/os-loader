@@ -16,6 +16,12 @@ if [ -z $out ]; then
 	err "Usage: ./getlatest.sh <OUTPUT>" 2
 fi
 
+for f in `dir -w 1 $pt`; do
+	if [ "$f" != "$name" ]; then
+		echo "Clean OLD image: $f"
+	fi
+done
+
 ipt="$pt/$name"
 if [ -f $ipt ]; then
 	wget -qq https://os-loader.mkg20001.sytes.net/$name -O $ipt --continue
