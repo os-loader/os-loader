@@ -18,7 +18,8 @@ fi
 
 for f in `dir -w 1 $pt`; do
 	if [ "$f" != "$name" ]; then
-		echo "Clean OLD image: $f"
+		echo "Clean OLD image: $pt/$f"
+		rm -r "$pt/$f"
 	fi
 done
 

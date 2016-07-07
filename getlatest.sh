@@ -23,15 +23,15 @@ case "$1" in
 		;;
 	cleanold)
 		for f in `dir -w 0 $pt`; do
-			f="n"
+			ff="n"
 			for i in $list; do
 				if [ "$f" == "$i" ]; then
-					f="y"
+					ff="y"
 				fi
 			done
-			if [ "$f" == "n" ]; then
+			if [ "$ff" == "n" ]; then
 				echo "Clean OLD image: $f"
-				rm -rf $f
+				rm -rf "$pt/$f"
 			fi
 		done
 		;;
