@@ -53,8 +53,9 @@ window.rReload=false;
 app.isDev=isdev;
 
 if (isos) {
-  global.imagedir=""
-  global.imagepath="/usb"
+  global.imagedir="";
+  global.imagepath="/lib/live/mount/medium/filesystem.squashfs"
+  global.mountdir="/usb"
 } else {
   global.imagedir="/tmp/os-loader.image"
   global.imagepath=global.imagedir+".live/live/filesystem.squashfs"
