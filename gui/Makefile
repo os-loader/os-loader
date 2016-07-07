@@ -9,7 +9,8 @@ build:
 	make -C buildtmp distbuild BDIR=$(BDIR)
 distbuild: # This is seperate because it deletes/changes some files
 	npm run gulp
-	rm -rf app deb-files
+	rm -rf app deb-files node_modules Makefile
+	npm i --production
 	sed -i "s/dd='app'/dd='dist'/g" main.js
 	npm run build
 	mv $(OUTDIR) ../
