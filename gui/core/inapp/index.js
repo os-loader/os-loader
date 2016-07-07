@@ -1,4 +1,6 @@
-global.mainapp=require("electron").remote.app;
+global.electron=require("electron");
+global.mainapp=electron.remote.app;
+global.appwindow=electron;
 global.isos=process.env.ISINOSMODE=="true";
 global.isdev=window.location.href.split("/").reverse()[1]=="app";
 global.electron=true;

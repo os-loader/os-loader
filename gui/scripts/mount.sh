@@ -9,7 +9,9 @@ fi
 
 progmax 2
 state "Dismount $dev"
+errignore
 umount $dev -f
+errcatch
 prog 1
 
 state "Mount $dev"

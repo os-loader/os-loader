@@ -1,5 +1,4 @@
 #!/bin/sh
-#set -e
 if ! [ -z $isdev ]; then
   set -o xtrace
 fi
@@ -8,6 +7,8 @@ sprefix="°"
 pprefix="¯"
 
 let pmax=0
+
+set -e
 
 log() {
   echo $(date +"%H:%M:%S") $*
@@ -20,7 +21,11 @@ progmax() {
   prog 0
 }
 prog() {
-  let p=($1*100/pmax)
+  if [ "x$1" == "x0" ]; then
+    p=0
+  else
+    let p=($1*100/$pmax)
+  fi
   echo $pprefix$p
 }
 err() {
@@ -37,6 +42,12 @@ finish() {
 }
 script() {
   bash $(dirname $FNC)/$1.sh "$2" "$3" "$4" "$5"
+}
+errignore() {
+  set +e
+}
+errcatch() {
+  set -e
 }
 chroot() {
   if [ -z $isos ]; then

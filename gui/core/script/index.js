@@ -25,6 +25,7 @@ function epipe(s,e,ev) {
       var p=parseInt(line,10);
       ev.emit("progress",p);
     } else {
+      if (e) global.bashLastStderr=line;
       ev.emit("line",{l:line,c:col.normal});
     }
   }
@@ -61,8 +62,14 @@ function script(sc,args,name,cb,ev2) {
   ev.emit("line",{c:"white",l:"> "+sc+".sh "+args.join(" ")});
   ev.emit("line",{c:"black",l:"\n"});
   args.unshift(pth.join(pp,sc+".sh"));
+  global.bashLastStderr="";
   var p=spawn("/bin/bash",args,{env:{FNC:pth.join(pp,"fnc.sh"),isos:(isos?"true":""),isdev:(isdev?"true":""),imagedir:global.imagedir,usb:global.mountdir,imagepath:global.imagepath}});
   /*var pipe=*/new spipe(p.stdout,p.stderr,ev);
-  p.on("close",cb);
+  p.on("close",function(e,sig) {
+    var ee=null;
+    if (e) ee=new Error("["+sc+".sh] "+(global.bashLastStderr?global.bashLastStderr:"Script Error")+": "+e);
+    if (sig) ee=new Error("["+sc+".sh] Killed with "+sig);
+    cb(ee);
+  });
 }
 module.exports=script;
