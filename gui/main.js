@@ -25,7 +25,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/${dd}/index.html`)
 
   // Open the DevTools.
-  if (isdev) mainWindow.webContents.openDevTools();
+  if (isdev||iISVM()) mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
