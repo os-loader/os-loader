@@ -12,6 +12,14 @@ global.isdev=dd=="app";
 require("app-module-path").addPath(__dirname);
 require("core/tools");
 
+global.isvm=false;
+
+  try {
+    global.isvm=iISVM();
+  } catch(e) {
+
+  }
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -25,7 +33,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/${dd}/index.html`)
 
   // Open the DevTools.
-  if (isdev||iISVM()) mainWindow.webContents.openDevTools();
+  if (isdev||global.isvm) mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

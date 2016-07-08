@@ -15,5 +15,6 @@ Duplex=streams.Duplex;
 w=require("w");
 uuid=require("node-uuid").v4;
 iISVM=function() {
+  //return (execSync("whoami")=="root")?!!execSync("virt-what").toString():false;
   return !!execSync("virt-what").toString();
 }

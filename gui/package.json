@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron main.js",
     "gulp": "gulp",
-    "build": "electron-packager . os-loader-settings --platform=linux --arch=x64"
+    "build": "electron-packager . os-loader-settings --platform=linux --arch=x64",
+    "buildpkg": "export NODE_PATH=dev_modules;electron-packager . os-loader-settings --platform=linux --arch=x64 --ignore=dev_modules;export NODE_PATH=\"\""
   },
   "repository": {
     "type": "git",

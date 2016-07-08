@@ -1,18 +1,19 @@
 BDIR="/tmp/os-loader-builddir"
 OUTDIR="os-loader-settings-linux-x64"
 build:
-	npm i
-	bower i
+	if ! [ -d node_modules ]; then npm i; fi
+	if ! [ -d app/bower_components ]; then bower i; fi
 	rm -rf os-loader-settings* buildtmp
 	cp -r ./ ../gui.cp
 	mv ../gui.cp ./buildtmp
 	make -C buildtmp distbuild BDIR=$(BDIR)
 distbuild: # This is seperate because it deletes/changes some files
 	npm run gulp
+	mv node_modules dev_modules
 	rm -rf app deb-files node_modules Makefile
 	npm i --production
 	sed -i "s/dd='app'/dd='dist'/g" main.js
-	npm run build
+	npm run buildpkg
 	mv $(OUTDIR) ../
 watch:
 	(sleep 1s;sudo chown $(USER):$(USER) -R $(HOME)/.config/configstore/)&
