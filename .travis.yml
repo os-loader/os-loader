@@ -4,7 +4,11 @@ before_script: bash .travis/prepare.sh
 sudo: required
 script: make
 dist: trusty
-after_script: bash .travis/upload.sh
+deploy:
+  provider: script
+  script: .travis/upload.sh
+  on:
+    branch: master
 #env:
 #  - CXX=g++-4.8
 addons:
