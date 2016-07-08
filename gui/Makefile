@@ -1,8 +1,8 @@
 BDIR="/tmp/os-loader-builddir"
 OUTDIR="os-loader-settings-linux-x64"
 build:
-	npm i
-	bower i
+	if ! [ -d node_modules ]; then npm i; fi
+	if ! [ -d app/bower_components ]; then bower i; fi
 	rm -rf os-loader-settings* buildtmp
 	cp -r ./ ../gui.cp
 	mv ../gui.cp ./buildtmp
