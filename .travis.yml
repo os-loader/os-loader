@@ -4,9 +4,10 @@ before_script: bash .travis/prepare.sh
 sudo: required
 script: make
 dist: trusty
+#after_success: bash .travis/upload.sh
 deploy:
   provider: script
-  script: .travis/upload.sh
+  script: bash .travis/upload.sh
   on:
     branch: master
 #env:
