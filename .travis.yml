@@ -1,5 +1,5 @@
 language: node_js
-node_js: "6.1"
+node_js: "6.3"
 before_script: bash .travis/prepare.sh
 sudo: required
 script: make

@@ -16,7 +16,7 @@ Currently Ubuntu 16.04 is the recommended Build Environment
 
 # Dependencies
 You need the following installed to Build the Image:
- - nodeJS (v6.1)
+ - nodeJS (v6+)
  - make
  - squashfs-tools
  - genisoimage
