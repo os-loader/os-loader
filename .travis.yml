@@ -5,7 +5,6 @@ sudo: required
 script: make
 dist: trusty
 deploy:
-  matrix:
   - provider: script
     script: bash .travis/upload.sh
     skip_cleanup: true
