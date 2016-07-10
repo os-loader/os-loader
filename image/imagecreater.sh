@@ -251,6 +251,7 @@ systemimage() {
   cp $curroot/CHANNEL $curch/meta
   echo 'Dpkg::Progress-Fancy "0";
 APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
+  mkdir -p $imagedir/etc/dpkg/dpkg.conf.d/
   echo '
 # /etc/dpkg/dpkg.conf.d/01_minimize
 
