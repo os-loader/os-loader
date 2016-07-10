@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "E: Disabled on this Live CD"
+exit 2
