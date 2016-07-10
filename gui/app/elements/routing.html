@@ -74,6 +74,7 @@
 
   if (app.install) {
     app.usbpath="";
+    app.usbpartition="";
     app.selectUSB=function(el) {
       app.usbpath=app.findData(el,"uuid");
       var r=app.usbsel=app.usbdev.filter(function(e) {
@@ -87,33 +88,78 @@
         app.next=false;
       }
     }
+    app.selectUSBPart=function(el) {
+      app.usbpartpath=app.findData(el,"uuid");
+      var r=app.usbpartsel=app.usbparts.filter(function(e) {
+        if (e.ID_PATH==app.usbpartpath) return e;
+      })[0];
+    }
     function getUSB() {
       if (!app.tempB.usb) return;
       udev.query(function(e,l) {
         if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
-        app.usbdev=l.filter(function(e) {
-          if (global.isvm||(e.ID_BUS=="usb"&&e.ID_FS_USAGE)) {
-            switch(e.ID_BUS) {
-              case "ata": //bug - this should be sata
-                e.img="hdd";
-                e.deg=0;
-                break;
-              case "usb":
-                e.img="usb";
-                e.deg=90;
-                break;
-              default:
-                e.img="unkown";
-                e.deg=-90;
+        //lsblk -o SIZE /dev/sdf | head -n 2 | tail -n 1
+        w(l,function(e,cb) {
+          exec("lsblk -o SIZE "+e.devname+" | head -n 2 | tail -n 1",function(er,std) {
+            if (er) return cb(er);
+            if (global.isvm||(e.ID_BUS=="usb"&&e.DEVNAME&&(e.part_table_type||e.fs_type))) {
+              switch(e.ID_BUS) {
+                case "ata": //=sata
+                  e.img="hdd";
+                  e.deg=0;
+                  break;
+                case "usb":
+                  e.img="usb";
+                  e.deg=90;
+                  break;
+                default:
+                  e.img="unkown";
+                  e.deg=-90;
+              }
+              e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
+              e.ID_VENDOR=e.ID_VENDOR||"";
+              e.ID_MODEL=e.ID_MODEL||"";
+              e.name=e.ID_VENDOR.trim()+" "+e.ID_MODEL.trim();
+              if (!e.part_table_type) {
+                e.desc="Has no Partition-Table, can not install here!";
+              } else if (bytes(bytesTrim(std.toString()))<bytes("2gb")) {
+                e.desc="Not enough space! Required: 2gb, Available: "+std.toString();
+              } else {
+                e.ok=true;
+                e.desc="Size "+std.toString();
+              }
+              cb(null,e);
+            } else {
+              cb();
             }
+          });
+        })(function(e,r) {
+          if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
+          if (!app.tempB.usb) return;
+          app.usbdev=r;
+          if (app.usbdev.length) if (app.step=="Plug-in some USB Sticks..."||app.step=="Looking for USB-Sticks...") app.step="Select an USB";
+          if (!app.usbdev.length) {app.step="Plug-in some USB Sticks...";app.next=false;}
+          setTimeout(getUSB,1000);
+        });
+      });
+    }
+    function getUSBPartitions() {
+      udev.part(app.usbmain.devname.replace("/dev/",""),function(e,l) {
+        if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
+        w(l,function(e,cb) {
+          console.log(e);
+          exec("lsblk -o SIZE "+e.devname+" | tail -n 1",function(er,std) {
+            if (er) return cb(er);
+            console.log(bytes(bytesTrim(std.toString())));
             e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
             e.ID_VENDOR=e.ID_VENDOR||"";
             e.ID_MODEL=e.ID_MODEL||"";
             if (e.ID_FS_LABEL) {
-              e.name=e.ID_FS_LABEL+" ("+e.ID_VENDOR.trim()+" "+e.ID_MODEL.trim()+")";
+              e.name=e.ID_FS_LABEL+" ("+std.toString()+")";
             } else {
-              e.name=e.ID_VENDOR.trim()+" "+e.ID_MODEL.trim();
+              e.name=std.toString()+" Partition";
             }
+
             e.ID_FS_LABEL=e.ID_FS_LABEL||"Unnamed";
             if (e.ID_FS_TYPE.startsWith("iso")) {
               e.desc="Contains a live disc - Must be formated";
@@ -131,26 +177,43 @@
               e.desc="Unkown filesystem - Is it formatted?"
               e.ok=false;
             }
-            return e;
-          }
+            e.ok=true;
+            cb(null,e);
+          });
+        })(function(e,l) {
+          if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
+          app.step="Select Partition";
+          app.usbparts=l;
         });
-        if (app.usbdev.length) if (app.step=="Plug-in some USB Sticks..."||app.step=="Looking for USB-Sticks...") app.step="Select an USB";
-        if (!app.usbdev.length) {app.step="Plug-in some USB Sticks...";app.next=false;}
-        setTimeout(getUSB,1000);
       });
     }
     app.installNext=function() {
       var u=app.usbdev.filter(function(u) {return (u.ID_PATH==app.usbpath)?u:null;})[0];
       if (!u) return;
       if (!u.DEVNAME) return swal("ERROR","Has no storage","error");
+      if (!u.ID_PART_TABLE_TYPE) return swal("Has no partition-table","You can´t install here - please format this drive and create a partition table!");
+      app.usbmain=u;
+      page.redirect("/install-partition/"+u.ID_PATH);
+    }
+    app.installNextFinal=function() {
+      var u=app.usbdev.filter(function(u) {return (u.ID_PATH==app.usbpath)?u:null;})[0];
+      if (!u) return;
       if (u.format) return swal("Not Implented","You can´t format drives, yet!");
       app.scriptout.clear();
       app.route="console";
-      require("core/install")(u,function(e) {
+      require("core/install")(app.usbmain,u,function(e) {
         if (e) if (e.stack) throw e; else throw new Error("Unkown Error: "+e);
         app.route="install-success";
       });
     }
+    page("/install-partition/:path",function(d) {
+      app.usbdev=[];
+      app.usbparts=[];
+      app.route="install-partition";
+      app.step="Loading Partitions...";
+      setFocus(app.route);
+      getUSBPartitions();
+    });
     page("/install-select",function() {
       app.usbdev=[];
       app.route="install-select";

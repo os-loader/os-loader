@@ -14,6 +14,7 @@ function udev() {
           delete ro[p];
         }
       }
+      for (p in ro) ro[p.replace("ID_","").toLowerCase()]=ro[p];
       cb(null,ro);
     });
   }
@@ -25,7 +26,17 @@ function udev() {
       })(cb);
     });
   }
+  function partitions(d,cb) {
+    fs.readdir("/sys/class/block",function(e,l) {
+      if (e) return cb(e);
+      w(l,function(id,cb) {
+        if (!id.startsWith(d)||id==d) return cb();
+        udevexec("/sys/class/block/"+id,cb);
+      })(cb);
+    });
+  }
   this.query=query;
+  this.part=partitions;
   this.getInfo=udevexec;
 }
 module.exports=new udev();

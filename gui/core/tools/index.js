@@ -12,6 +12,10 @@ udev=require("core/udev");
 parted=require("core/parted");
 script=require("core/script");
 Duplex=streams.Duplex;
+bytes=require("bytes");
+bytesTrim=function(str) {
+  return str.trim().replace("G","gb").replace("M","mb").replace(",",".");
+}
 w=require("w");
 uuid=require("node-uuid").v4;
 iISVM=function() {

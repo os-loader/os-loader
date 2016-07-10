@@ -141,7 +141,7 @@
                       <template is="dom-repeat" items="{{usbdev}}">
                         <paper-toolbar data-uuid$="{{item.ID_PATH}}" on-click="selectUSB" class="item-bar">
                           <img style$="width:48px;height:48px;transform: rotate({{item.deg}}deg);margin:16px;" src="./images/usb.svg" alt="USB Icon"></img>
-                          <div class="aline"><h2>{{item.name}}</h2><br><p>{{item.desc}} ({{item.ID_FS_TYPE}})</p></div>
+                          <div class="aline"><h2>{{item.name}}</h2><br><p>{{item.desc}}</p></div>
                         </paper-toolbar>
                       </template>
                     </paper-menu>
@@ -152,10 +152,35 @@
                     </center>
                   </template>
                 </setup-dialog>
-                <h2 class="page-title">Select Media to install on</h2>
-                <p>Requires FAT32 USB with at least 2GB Free Space</p>
-                <p>It can also be an USB with a Live ISO</p>
-                <p>In this case the USB will be formatted</p>
+                <h2 class="page-title">Select Device to install on</h2>
+                <p>You can later choose on which partion it should install</p>
+                <p>Requires FAT32/ext partition on an USB with at least 2GB Free Space</p>
+                <!--<p>It can also be an USB with a Live ISO</p>
+                <p>In this case the USB will be formatted</p>!-->
+              </paper-material>
+            </section>
+            <section data-route="install-partition">
+              <paper-material class="focus-target small" elevation="1">
+                <paper-icon-button data-page="install-select" on-click="navPage" icon="arrow-back" class="iron-flex"></paper-icon-button><h2>{{usbmain.name}}</h2>
+                <setup-dialog desc="{{step}}" next="{{next}}" do="{{installNextFinal}}">
+                  <template is="dom-if" if="{{usbparts.length}}">
+                    <paper-menu class="app-menu transparent" attr-for-selected="data-uuid" selected="[[usbpartition]]">
+                      <template is="dom-repeat" items="{{usbparts}}">
+                        <paper-toolbar data-uuid$="{{item.ID_PATH}}" on-click="selectUSBPart" class="item-bar">
+                          <img style$="width:48px;height:48px;transform: rotate({{item.deg}}deg);margin:16px;" src="./images/usb.svg" alt="USB Icon"></img>
+                          <div class="aline"><h2>{{item.name}}</h2><br><p>{{item.desc}} ({{item.ID_FS_TYPE}})</p></div>
+                        </paper-toolbar>
+                      </template>
+                    </paper-menu>
+                  </template>
+                  <template is="dom-if" if="{{!usbparts.length}}">
+                    <center>
+                      <modern-spinner></modern-spinner>
+                    </center>
+                  </template>
+                </setup-dialog>
+                <h2 class="page-title">Select Partition to install on</h2>
+                <p>Requires FAT32/ext partition on an USB with at least 2GB Free Space</p>
               </paper-material>
             </section>
             <section data-route="install-execute">

@@ -1,5 +1,5 @@
 var inapp=require("../core/inapp");
-if (needsroot) throw new Error("Needs root permissions"); 
+if (needsroot) throw new Error("Needs root permissions");
 for (var p in inapp) {
   this[p]=inapp[p];
   app[p]=inapp[p];
@@ -54,7 +54,7 @@ window.onerror = function(message, source, lineno, colno, error) {
     window.location.href=app.base;
   };
   app.navPage=function(el) {
-    page.redirect(app.baseUrl+(el.toElement.dataset.page?el.toElement.dataset.page:el.toElement.page?el.toElement.page:el.path[1].page));
+    page.redirect(app.baseUrl+app.findData(el,"page"));
   };
   app.toast=function(text) {
     app.$.toast.text = text;
