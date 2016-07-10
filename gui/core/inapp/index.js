@@ -113,7 +113,45 @@ function actions() {
   }
   this.tutorial=tutorial;
 }
-function doExit(isConfirm){
+function doExit(isConfirm) {
+  function finalShutdown() {
+    swal({
+      title:"Shutdown...",
+      text:isos?"Rebooting into BootLoader...":"Closing the App...",
+      showConfirmButton: false
+    });
+    app.$.mainContent.hidden=true;
+    safeClose=true;
+    if (isos) {
+      spawn("reboot",["-f"]);
+    } else {
+      setTimeout(mainapp.quit,10);
+    }
+  }
+  function execShutdown() {
+    script("shutdown",[],"Shutdown the App",function(e) {
+      if (e) {
+        swal({
+          title:"Shutdown Failed!",
+          text:e.toString(),
+          showCancelButton: true,
+          confirmButtonText:"Force Shutdown!",
+          cancelButtonText:"Try again...",
+          closeOnConfirm:false,
+          closeOnCancel:false,
+          confirmButtonColor: "#DD6B55"
+        },function(force) {
+          if (force) {
+            finalShutdown();
+          } else {
+            execShutdown();
+          }
+        });
+      } else {
+        finalShutdown();
+      }
+    });
+  }
   if (isConfirm) {
     global.cEV.on("state",function(s) {
       swal({
@@ -122,20 +160,7 @@ function doExit(isConfirm){
         showConfirmButton: false
       });
     });
-    script("shutdown",[],"Shutdown the App",function() {
-      swal({
-        title:"Shutdown...",
-        text:isos?"Rebooting into BootLoader...":"Closing the App...",
-        showConfirmButton: false
-      });
-      app.$.mainContent.hidden=true;
-      safeClose=true;
-      if (isos) {
-        spawn("reboot",["-f"]);
-      } else {
-        setTimeout(mainapp.quit,10);
-      }
-    });
+    execShutdown();
   }
 }
 function askExit() {

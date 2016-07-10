@@ -2,7 +2,13 @@
 
 progmax 3
 state "Umount USB"
-umount $usb -f
+errignore
+mountpoint $usb
+e=$?
+errcatch
+if [ $e == "0" ]; then
+  umount $usb -f
+fi
 prog 1
 
 if [ -z $isos ]; then
