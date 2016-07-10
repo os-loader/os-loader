@@ -67,7 +67,7 @@ function script(sc,args,name,cb,ev2) {
   /*var pipe=*/new spipe(p.stdout,p.stderr,ev);
   p.on("close",function(e,sig) {
     var ee=null;
-    if (e) ee=new Error("["+sc+".sh] "+(global.bashLastStderr?global.bashLastStderr:"Script Error")+": "+e);
+    if (e) ee=new Error("["+sc+".sh] "+(global.bashLastStderr?global.bashLastStderr:"Script Error"));
     if (sig) ee=new Error("["+sc+".sh] Killed with "+sig);
     cb(ee);
   });

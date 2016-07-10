@@ -23,6 +23,8 @@ progmax() {
 prog() {
   if [ "x$1" == "x0" ]; then
     p=0
+  elif [ "x$1" == "x+" ]; then
+    let p=($p+1)*100/$pmax
   else
     let p=($1*100/$pmax)
   fi
@@ -30,7 +32,11 @@ prog() {
 }
 err() {
   echo $(date +"%H:%M:%S") $1 1>&2
-  let e=0$2
+  if [ -z $2 ]; then
+    e=0
+  else
+    e=$2
+  fi
   if [ $e -ne 0 ]; then
     exit $e
   fi
