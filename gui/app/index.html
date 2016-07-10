@@ -161,7 +161,8 @@
             </section>
             <section data-route="install-partition">
               <paper-material class="focus-target small" elevation="1">
-                <paper-icon-button data-page="install-select" on-click="navPage" icon="arrow-back" class="iron-flex"></paper-icon-button><h2>{{usbmain.name}}</h2>
+                <paper-icon-button data-page="install-select" on-click="navPage" icon="arrow-back" class="fixed"></paper-icon-button>
+                <h2 class="fixed">{{usbmain.name}}</h2>
                 <setup-dialog desc="{{step}}" next="{{next}}" do="{{installNextFinal}}">
                   <template is="dom-if" if="{{usbparts.length}}">
                     <paper-menu class="app-menu transparent" attr-for-selected="data-uuid" selected="[[usbpartition]]">

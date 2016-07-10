@@ -93,6 +93,8 @@
       var r=app.usbpartsel=app.usbparts.filter(function(e) {
         if (e.ID_PATH==app.usbpartpath) return e;
       })[0];
+      app.step=(r.ok?"Will be installed here - ":"")+r.desc;
+      app.next=r.ok;
     }
     function getUSB() {
       if (!app.tempB.usb) return;
@@ -161,7 +163,9 @@
             }
 
             e.ID_FS_LABEL=e.ID_FS_LABEL||"Unnamed";
-            if (e.ID_FS_TYPE.startsWith("iso")) {
+            if (bytes(bytesTrim(std.toString()))<bytes("2gb")) {
+              e.desc="Not enough space! Required: 2gb, Available: "+std.toString();
+            } else if (e.ID_FS_TYPE.startsWith("iso")) {
               e.desc="Contains a live disc - Must be formated";
               e.ok=true;
               e.format=true;
@@ -196,7 +200,7 @@
       page.redirect("/install-partition/"+u.ID_PATH);
     }
     app.installNextFinal=function() {
-      var u=app.usbdev.filter(function(u) {return (u.ID_PATH==app.usbpath)?u:null;})[0];
+      var u=app.usbparts.filter(function(u) {return (u.ID_PATH==app.usbpartpath)?u:null;})[0];
       if (!u) return;
       if (u.format) return swal("Not Implented","You can´t format drives, yet!");
       app.scriptout.clear();
