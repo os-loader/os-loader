@@ -24,5 +24,8 @@ mount -t $fs -o lowerdir=$imagedir.overlay,upperdir=$imagedir.tmp/files,workdir=
 prog 4
 
 state "Prepare chroot"
-for dir in /dev/pts /proc /sys; do mount --bind $dir $imagedir$dir; done
+#for dir in /dev/pts /proc /sys; do mount --bind $dir $imagedir$dir; done
+mount -t proc -o rw,nosuid,noexec null $imagedir/proc
+mount -t sysfs -o rw,nosuid null $imagedir/sys
+mount -t devpts -o rw,nosuid,noexec null $imagedir/dev/pts
 finish

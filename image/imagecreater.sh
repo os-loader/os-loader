@@ -251,6 +251,17 @@ systemimage() {
   cp $curroot/CHANNEL $curch/meta
   echo 'Dpkg::Progress-Fancy "0";
 APT::Color "0";' > $curch/etc/apt/apt.conf.d/99progressbar
+  echo '
+# /etc/dpkg/dpkg.conf.d/01_minimize
+
+# Delete man pages
+path-exclude=/usr/share/man/*
+
+# Delete docs
+path-exclude=/usr/share/doc/*
+path-include=/usr/share/doc/*/copyright
+' > $curch/etc/dpkg/dpkg.conf.d/01_minimize
+
   chstd "apt-get update"
   chinstall memtest86+ live-boot live-boot-initramfs-tools casper squashfs-tools \
   plymouth plymouth-label grub2 linux-base linux-generic \
@@ -289,6 +300,11 @@ apt install /deb/*.deb -y"
 
   #Clean
   chstd "apt-get clean"
+
+  for d in /usr/share/man/ /var/cache/apt /var/cache/man/ /var/lib/apt/ /var/lib/dpkg/; do
+    log "Delete dir: $(du -hs $curch$d)"
+    rm -rf $curch$d
+  fi
 
   #Copy everything
   cp $1/boot/vmlinuz* $2/vmlinuz

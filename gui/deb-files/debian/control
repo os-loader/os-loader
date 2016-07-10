@@ -1,5 +1,5 @@
 Source: os-loader-settings
-Section: unknown
+Section: admin
 Priority: optional
 Maintainer: Maciej Krüger <mkg20001@gmail.com>
 Build-Depends: debhelper (>=9)
