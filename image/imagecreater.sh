@@ -304,7 +304,7 @@ apt install /deb/*.deb -y"
   for d in /usr/share/man/ /var/cache/apt /var/cache/man/ /var/lib/apt/ /var/lib/dpkg/; do
     log "Delete dir: $(du -hs $curch$d)"
     rm -rf $curch$d
-  fi
+  done
 
   #Copy everything
   cp $1/boot/vmlinuz* $2/vmlinuz
