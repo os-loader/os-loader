@@ -51,7 +51,7 @@ errcatch() {
 }
 chroot() {
   if [ -z $isos ]; then
-    /usr/sbin/chroot $imagedir/bin/bash -x <<ffff
+    /usr/sbin/chroot $imagedir /bin/bash -x <<ffff
 export imagedir=""
 export usb="/usb"
 $*
