@@ -37,7 +37,7 @@ done
 
 if [ "x${GRUB_DEFAULT}" = "x" ] ; then GRUB_DEFAULT=0 ; fi
 if [ "x${GRUB_DEFAULT}" = "xsaved" ] ; then GRUB_DEFAULT='${saved_entry}' ; fi
-if [ "x${GRUB_TIMEOUT}" = "x" ] ; then GRUB_TIMEOUT=5 ; fi
+if [ "x${GRUB_TIMEOUT}" = "x" ] ; then GRUB_TIMEOUT=50 ; fi
 if [ "x${GRUB_GFXMODE}" = "x" ] ; then GRUB_GFXMODE=auto ; fi
 
 if [ "x${GRUB_DEFAULT_BUTTON}" = "x" ] ; then GRUB_DEFAULT_BUTTON="$GRUB_DEFAULT" ; fi
@@ -304,7 +304,7 @@ EOF
 insmod tga
 EOF
 	fi
-	    
+
 	cat << EOF
 set theme=(\$root)`make_system_path_relative_to_its_root $GRUB_THEME`
 export theme
@@ -312,7 +312,7 @@ EOF
     elif [ "x$GRUB_BACKGROUND" != x ] && [ -f "$GRUB_BACKGROUND" ] \
 	    && is_path_readable_by_grub "$GRUB_BACKGROUND"; then
 	gettext_printf "Found background: %s\n" "$GRUB_BACKGROUND" >&2
-	case "$GRUB_BACKGROUND" in 
+	case "$GRUB_BACKGROUND" in
 	    *.png)         reader=png ;;
 	    *.tga)         reader=tga ;;
 	    *.jpg|*.jpeg)  reader=jpeg ;;

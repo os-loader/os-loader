@@ -206,7 +206,13 @@
       app.scriptout.clear();
       app.route="console";
       require("core/install")(app.usbmain,u,function(e) {
-        if (e) if (e.stack) throw e; else throw new Error("Unkown Error: "+e);
+        if (e) {
+          if (isdev) {
+            throw e;
+          } else {
+            return swal("Installation Error!",e.toString(),"error");
+          }
+        }
         app.route="install-success";
       });
     }

@@ -29,10 +29,10 @@ BACKGROUND_CACHE=".background_cache"
 
 set_default_theme(){
 	case $GRUB_DISTRIBUTOR in
-		Tanglu|Ubuntu|Kubuntu)
+		os-loader)
 			# Set a monochromatic theme for Tanglu/Ubuntu.
-			echo "${1}set menu_color_normal=white/black"
-			echo "${1}set menu_color_highlight=black/light-gray"
+			echo "${1}set menu_color_normal=cyan/blue"
+			echo "${1}set menu_color_highlight=white/blue"
 
 			if [ -e /usr/share/plymouth/themes/default.grub ]; then
 				sed "s/^/${1}/" /usr/share/plymouth/themes/default.grub
@@ -179,10 +179,8 @@ fi
 
 # If we haven't found a background image yet, use the default from desktop-base.
 case $GRUB_DISTRIBUTOR in
-	Ubuntu|Kubuntu)
-		;;
-	Tanglu)
-		if set_background_image "/usr/share/images/grub/grub.png"; then
+	os-loader)
+		if set_background_image "/usr/share/os-loader/os-loader.png"; then
 			exit 0
 		fi
 		;;

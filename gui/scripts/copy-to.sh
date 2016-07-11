@@ -10,4 +10,8 @@ cp -r $from/boot $to/boot
 mkdir -p $to/boot/grub $to/os-loader/config
 prog 1
 cp -r $imagepath $to/os-loader/system.img
+
+rm -rf $imagedir/boot
+ln -s ../usb/boot $imagedir/boot
+
 finish

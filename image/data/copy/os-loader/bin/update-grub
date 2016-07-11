@@ -27,7 +27,7 @@ sbindir="${exec_prefix}/sbin"
 bindir="${exec_prefix}/bin"
 sysconfdir="/etc"
 PACKAGE_NAME=GRUB
-PACKAGE_VERSION=os-loader-alpha-grub-2.02~beta2-36ubuntu3
+PACKAGE_VERSION=os-loader-grub-2.02
 host_os=linux-gnu
 datadir="${datarootdir}"
 if [ "x$pkgdatadir" = x ]; then
@@ -51,14 +51,13 @@ export TEXTDOMAINDIR="${datarootdir}/locale"
 # Usage: usage
 # Print the usage.
 usage () {
+    echo "MODIFIED VERSION FOR OS LOADER"
     gettext_printf "Usage: %s [OPTION]\n" "$self"
     gettext "Generate a grub config file"; echo
     echo
     print_option_help "-o, --output=$(gettext FILE)" "$(gettext "output generated config to FILE [default=stdout]")"
     print_option_help "-h, --help" "$(gettext "print this message and exit")"
     print_option_help "-v, --version" "$(gettext "print the version information and exit")"
-    echo
-    gettext "Report bugs to <bug-grub@gnu.org>."; echo
 }
 
 argument () {

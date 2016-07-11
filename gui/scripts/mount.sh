@@ -8,12 +8,20 @@ if [ -z $isos ]; then
 fi
 
 progmax 2
-state "Dismount $dev"
+state "Umount $dev"
 errignore
-umount $dev -f
+cat /proc/mounts | grep -o "^$dev" > /dev/null 2> /dev/null
+e=$?
 errcatch
+if [ $e -eq 0 ]; then
+  umount $dev -f
+fi
 prog 1
 
 state "Mount $dev"
 mount -t $fs $dev $usb
+if [ -z $isinstall ]; then
+  rm -rf $imagedir/boot
+  ln -s ../usb/boot $imagedir/boot
+fi
 prog 2
