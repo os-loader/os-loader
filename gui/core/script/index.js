@@ -19,6 +19,7 @@ function epipe(s,e,ev) {
     if (line.startsWith(sprefix)) {
       line=line.substr(1);
       ev.emit("state",line);
+      if (!line) return; //don´t print empty lines
       ev.emit("line",{l:line,c:col.state});
     } else if (line.startsWith(pprefix)) {
       line=line.substr(1);
@@ -26,6 +27,7 @@ function epipe(s,e,ev) {
       ev.emit("progress",p);
     } else {
       if (e) global.bashLastStderr=line;
+      if (!line) return; //don´t print empty lines
       ev.emit("line",{l:line,c:col.normal});
     }
   }
@@ -57,10 +59,8 @@ function script(sc,args,name,cb,ev2) {
   //Executes scripts
   var ev=ev2||global.cEV;
   if (!cb&&name) {cb=name;name="";}
-  ev.emit("line",{c:"black",l:"\n"});
   if (name) ev.emit("line",{c:"white",l:name});
   ev.emit("line",{c:"white",l:"> "+sc+".sh "+args.join(" ")});
-  ev.emit("line",{c:"black",l:"\n"});
   args.unshift(pth.join(pp,sc+".sh"));
   global.bashLastStderr="";
   var p=spawn("/bin/bash",args,{env:{FNC:pth.join(pp,"fnc.sh"),isos:(isos?"true":""),isdev:(isdev?"true":""),imagedir:global.imagedir,usb:global.mountdir,imagepath:global.imagepath}});

@@ -104,6 +104,7 @@
         w(l,function(e,cb) {
           exec("lsblk -o SIZE "+e.devname+" | head -n 2 | tail -n 1",function(er,std) {
             if (er) return cb(er);
+            var size=std.toString().trim();
             if (global.isvm||(e.ID_BUS=="usb"&&e.DEVNAME&&(e.part_table_type||e.fs_type))) {
               switch(e.ID_BUS) {
                 case "ata": //=sata
@@ -124,11 +125,11 @@
               e.name=e.ID_VENDOR.trim()+" "+e.ID_MODEL.trim();
               if (!e.part_table_type) {
                 e.desc="Has no Partition-Table, can not install here!";
-              } else if (bytes(bytesTrim(std.toString()))<bytes("2gb")) {
+              } else if (bytes(bytesTrim(size))<bytes("2gb")) {
                 e.desc="Not enough space! Required: 2gb, Available: "+std.toString();
               } else {
                 e.ok=true;
-                e.desc="Size "+std.toString();
+                e.desc="Size "+size;
               }
               cb(null,e);
             } else {
@@ -149,22 +150,21 @@
       udev.part(app.usbmain.devname.replace("/dev/",""),function(e,l) {
         if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
         w(l,function(e,cb) {
-          console.log(e);
           exec("lsblk -o SIZE "+e.devname+" | tail -n 1",function(er,std) {
             if (er) return cb(er);
-            console.log(bytes(bytesTrim(std.toString())));
+            var size=std.toString().trim();
             e.ID_FS_TYPE=e.ID_FS_TYPE||"unkown";
             e.ID_VENDOR=e.ID_VENDOR||"";
             e.ID_MODEL=e.ID_MODEL||"";
             if (e.ID_FS_LABEL) {
-              e.name=e.ID_FS_LABEL+" ("+std.toString()+")";
+              e.name=e.ID_FS_LABEL+" ("+size+")";
             } else {
-              e.name=std.toString()+" Partition";
+              e.name=size+" Partition";
             }
 
             e.ID_FS_LABEL=e.ID_FS_LABEL||"Unnamed";
-            if (bytes(bytesTrim(std.toString()))<bytes("2gb")) {
-              e.desc="Not enough space! Required: 2gb, Available: "+std.toString();
+            if (bytes(bytesTrim(size))<bytes("2gb")) {
+              e.desc="Not enough space! Required: 2gb, Available: "+size;
             } else if (e.ID_FS_TYPE.startsWith("iso")) {
               e.desc="Contains a live disc - Must be formated";
               e.ok=true;
