@@ -9,6 +9,7 @@ dist
 os-loader-gui-*-*
 os-loader-settings-*-*
 buildtmp
+copy.dev
 
 IMAGE
 

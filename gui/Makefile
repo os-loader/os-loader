@@ -17,7 +17,7 @@ distbuild: # This is seperate because it deletes/changes some files
 	mv $(OUTDIR) ../
 watch:
 	(sleep 1s;sudo chown $(USER):$(USER) -R $(HOME)/.config/configstore/)&
-	sudo nodemon /usr/bin/npm start --ext js,html,sh
+	sudo nodemon /usr/bin/npm run startdev --ext js,html,sh
 deb: build
 	cp -r deb-files $(BDIR)/gui/
 	cp -r $(OUTDIR) $(BDIR)/gui/src

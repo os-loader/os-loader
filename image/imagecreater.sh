@@ -286,7 +286,7 @@ path-include=/usr/share/doc/*/copyright
     r=${f/"$data/copy/"/""}
     log "Copy file /$r"
   done
-  cp -r $data/copy/* $curch
+  cp -r --preserve=timestamps,mode $data/copy/* $curch
   chmod +x $curch/home/osloader/.config/openbox/autostart
   chown root:root $curch/etc/sudoers.d/os-loader
   chmod 440 $curch/etc/sudoers.d/os-loader

@@ -5,7 +5,7 @@ for dir in /dev/pts /proc /sys; do
   sysmounts="$sysmounts $imagedir$dir"
   #umount $imagedir$dir -f
 done
-for f in $sysmounts $imagedir/usb $imagedir.tmp/files/usb $imagedir $imagedir.overlay $imagedir.tmp $imagedir.live; do
+for f in $sysmounts $imagedir/usb $imagedir.tmp/files/usb $imagedir $imagedir.overlay.real $imagedir.overlay $imagedir.tmp $imagedir.live; do
   errignore
   mountpoint $f > /dev/null 2> /dev/null
   e=$?

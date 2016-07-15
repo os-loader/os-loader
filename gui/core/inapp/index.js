@@ -9,6 +9,9 @@ var isdev=global.isdev;
 require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
 require("core/tools");
 
+global.devmount=(process.env.devmount=="enabled"&&isdev);
+global.devmountpoint=pth.join(__dirname,"..","..","..","image","data","copy");
+
 try {
   global.isvm=iISVM();
   global.needsroot=false;
@@ -53,7 +56,8 @@ window.rReload=false;
 app.isDev=isdev;
 
 if (isos) {
-  global.imagedir="/lib/live/mount/rootfs/filesystem.squashfs";
+  //global.imagedir="/lib/live/mount/rootfs/filesystem.squashfs";
+  global.imagedir="";
   global.imagepath="/lib/live/mount/medium/filesystem.squashfs"
   global.mountdir="/usb"
 } else {

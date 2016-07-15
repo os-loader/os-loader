@@ -15,12 +15,16 @@ prog 3
 
 state "Mount Boot-Image"
 mkdir -p $imagedir $imagedir.overlay $imagedir.tmp
-mount -o loop -t squashfs $imagedir.live/live/filesystem.squashfs $imagedir.overlay
-fs="overlay";
 mount -t tmpfs -o size=1G tmpfs $imagedir.tmp
-mkdir -p $imagedir.tmp/work
-mkdir -p $imagedir.tmp/files
-mount -t $fs -o lowerdir=$imagedir.overlay,upperdir=$imagedir.tmp/files,workdir=$imagedir.tmp/work $fs $imagedir
+if [ -z $devmount ]; then
+  mount -o loop -t squashfs $imagedir.live/live/filesystem.squashfs $imagedir.overlay
+else
+  mkdir -p $imagedir.overlay.real $devmountpoint.dev
+  mount -o loop -t squashfs $imagedir.live/live/filesystem.squashfs $imagedir.overlay.real
+  mount -t overlay -o lowerdir=$imagedir.overlay.real,upperdir=$devmountpoint,workdir=$devmountpoint.dev overlay $imagedir.overlay
+fi
+mkdir -p $imagedir.tmp/{work,files}
+mount -t overlay -o lowerdir=$imagedir.overlay,upperdir=$imagedir.tmp/files,workdir=$imagedir.tmp/work overlay $imagedir
 prog 4
 
 state "Prepare chroot"
