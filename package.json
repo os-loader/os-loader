@@ -13,15 +13,17 @@
   "keywords": [
     "os-loader",
     "portable",
-    "os"
+    "os",
+    "usb"
   ],
   "author": "Maciej Krüger <mkg20001@gmail.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/mkg20001/os-loader/issues"
+    "url": "https://github.com/os-loader/os-loader/issues"
   },
-  "homepage": "https://github.com/mkg20001/os-loader#readme",
-  "dependencies": {
-    "mocha": "^2.5.3"
+  "homepage": "https://github.com/os-loader/os-loader#readme",
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "chai": "^3.5.0"
   }
 }
