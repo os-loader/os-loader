@@ -4,7 +4,7 @@ pth=require("path");
 function getPath() {
   var a=[].slice.call(arguments,0);
   a.unshift(__dirname,"..");
-  pth.join.apply(pth.join,a);
+  return pth.join.apply(pth.join,a);
 }
 
 describe("gui",function() {

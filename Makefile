@@ -18,3 +18,5 @@ os-gui:
 	make -C gui BDIR=$(BDIR) deb
 server:
 	@echo "Soon..."
+tests:
+	npm test
