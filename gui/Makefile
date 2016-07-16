@@ -10,6 +10,7 @@ build:
 distbuild: # This is seperate because it deletes/changes some files
 	npm run gulp
 	rm -rf app deb-files node_modules Makefile
+	cd scripts;find -type f -iname "*.sh" | xargs "bash" "../minify-sh.sh"
 	npm i --production
 	npm i electron-packager
 	sed -i "s/dd='app'/dd='dist'/g" main.js
