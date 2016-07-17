@@ -7,7 +7,7 @@ before_script:
 sudo: required
 script:
   - make
-  - make tests
+  - sudo -E make tests
 dist: trusty
 deploy:
   - provider: script
