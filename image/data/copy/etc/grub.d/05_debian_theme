@@ -31,7 +31,7 @@ set_default_theme(){
 	case $GRUB_DISTRIBUTOR in
 		os-loader)
 			# Set a monochromatic theme for Tanglu/Ubuntu.
-			echo "${1}set menu_color_normal=grey/cyan"
+			echo "${1}set menu_color_normal=gray/cyan"
 			echo "${1}set menu_color_highlight=white/cyan"
 
 			if [ -e /usr/share/plymouth/themes/default.grub ]; then
