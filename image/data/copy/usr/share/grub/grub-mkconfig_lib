@@ -15,9 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
 
-set -o xtrace
-
-
 prefix="/usr"
 exec_prefix="/usr"
 datarootdir="/usr/share"
