@@ -7,19 +7,7 @@ const colortable={
   orange:"yellow"
 };
 before(function(done) {
-  this.timeout(50000);
-  //init modules
-/*  require("app-module-path").addPath(pth.join(__dirname,".."));
-  require("app-module-path").addPath(pth.join(__dirname,"..","node_modules"));
-  require("core/tools");
-  require("app-module-path").addPath(pth.join(__dirname,"fake_modules"));
-
-  //main
-  require("core/inapp")
-
-  //variables
-
-  global.testing=true;*/
+  this.timeout(10000);
 
   server=http.createServer();
   io=socketio.listen(server);
@@ -76,7 +64,7 @@ before(function(done) {
   });
 
   server.on('listening',function(){
-      /*var p=*/cp.spawn("/usr/bin/npm",["run","starttest"],{stdio:"inherit",cwd:pth.join(__dirname,"..")});
+      /*var p=*/cp.spawn("npm",["run","starttest"],{stdio:"inherit",cwd:pth.join(__dirname,"..")});
       /*p.on("exit",function() {
 
       });*/

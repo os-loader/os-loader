@@ -54,8 +54,4 @@ if (global.devport) {
       socket.emit("ready");
     });
   },1000);
-  /*setInterval(function() {
-    console.log("CONNECTED!");
-    socket.emit("READY");
-  },1000);*/
 }
