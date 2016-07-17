@@ -10,6 +10,10 @@ require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
 require("core/tools");
 
 global.devmount=(process.env.devmount=="enabled"&&isdev);
+global.isofile="";
+if (isdev) {
+  require("core/isdev");
+}
 global.devmountpoint=pth.join(__dirname,"..","..","..","image","data","copy");
 
 try {

@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron main.js",
     "startdev": "export devmount=enabled;electron main.js;export devmount=false",
+    "starttest": "export devmount=/tmp/os-loader-builddir/IMAGE/output/image.iso;export devport=5566;electron main.js;export devport;export devmount=false",
     "gulp": "gulp",
     "build": "electron-packager . os-loader-settings --platform=linux --arch=x64"
   },
@@ -50,6 +51,7 @@
     "merge-stream": "^1.0.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.1",
+    "socket.io-client": "^1.4.8",
     "vulcanize": "^1.14.8"
   },
   "dependencies": {

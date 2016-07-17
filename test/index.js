@@ -1,6 +1,11 @@
 assert = require('chai').assert;
 pth=require("path");
 
+http=require("http");
+https=require("https");
+socketio=require("socket.io");
+cp=require("child_process");
+
 function getPath() {
   var a=[].slice.call(arguments,0);
   a.unshift(__dirname,"..");
