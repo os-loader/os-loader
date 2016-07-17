@@ -1,6 +1,12 @@
 language: node_js
-node_js: '6.3'
 before_script:
+  - curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+  - VERSION=node_6.x
+  - DISTRO=$(lsb_release -s -c)
+  - echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | tee /etc/apt/sources.list.d/nodesource.list
+  - echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | tee -a /etc/apt/sources.list.d/nodesource.list
+  - apt-get update
+  - apt-get install nodejs
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - bash .travis/prepare.sh
