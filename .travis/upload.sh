@@ -1,3 +1,13 @@
+#!/bin/sh
+
+isalive() {
+  sleep 300s
+  echo "Uploading..."
+  isalive
+}
+
+isalive &
+
 if [ -f /tmp/os-loader-builddir/IMAGE/output/image.iso ]; then
   if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
     md5=`md5sum /tmp/os-loader-builddir/IMAGE/output/image.iso | fold -w 32 | head -n 1`
