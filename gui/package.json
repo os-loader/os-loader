@@ -29,8 +29,8 @@
   "homepage": "https://github.com/os-loader/os-loader#readme",
   "devDependencies": {
     "del": "^2.2.1",
-    "electron-packager": "^7.0.4",
-    "electron-prebuilt": "^1.2.4",
+    "electron-packager": "^7.3.0",
+    "electron-prebuilt": "^1.2.7",
     "glob-all": "^3.0.3",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
@@ -59,8 +59,6 @@
     "bunyan": "^1.8.1",
     "bytes": "^2.4.0",
     "colors": "^1.1.2",
-    "electron-packager": "^7.3.0",
-    "electron-prebuilt": "^1.2.7",
     "jsonfile": "^2.3.1",
     "node-uuid": "^1.4.7",
     "request": "^2.72.0"
