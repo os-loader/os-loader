@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mkg20001/os-loader.git"
+    "url": "git+https://github.com/os-loader/os-loader.git"
   },
   "keywords": [
     "os-loader",
@@ -18,9 +18,9 @@
   "author": "Maciej Krüger <mkg20001@gmail.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/mkg20001/os-loader/issues"
+    "url": "https://github.com/os-loader/os-loader/issues"
   },
-  "homepage": "https://github.com/mkg20001/os-loader#readme",
+  "homepage": "https://github.com/os-loader/os-loader#readme",
   "dependencies": {
     "app-module-path": "^1.1.0",
     "body-parser": "^1.15.1",
