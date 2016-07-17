@@ -1,6 +1,9 @@
 language: node_js
 node_js: '6.3'
-before_script: bash .travis/prepare.sh
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - bash .travis/prepare.sh
 sudo: required
 script:
   - make
