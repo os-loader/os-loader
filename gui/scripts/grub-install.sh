@@ -7,5 +7,6 @@ if [ -z $isos ]; then
 else
   rd=""
 fi
+chroot grub-mkdevicemap
 grub-install $1 $rd --boot-directory=$usb/boot/grub
 finish

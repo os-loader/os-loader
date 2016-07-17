@@ -43,6 +43,7 @@ else
       ;;
     os-loader)
       OS="OS Loader"
+      ;;
     *)
       OS="${GRUB_DISTRIBUTOR} GNU/Linux"
       ;;
