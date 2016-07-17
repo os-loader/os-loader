@@ -53,6 +53,8 @@ make_system_path_relative_to_its_root ()
   "${grub_mkrelpath}" "$1"
 }
 
+log() { echo "$@" 1>&2; }
+
 is_path_readable_by_grub ()
 {
   path="$1"

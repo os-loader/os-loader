@@ -177,11 +177,13 @@ EOF
   fi
   if test -d /sys/firmware/efi && test -e "${linux}.efi.signed"; then
     sed "s/^/$submenu_indentation/" << EOF
-	linux	${rel_dirname}/${basename}.efi.signed root=${linux_root_device_thisversion} ro ${args}
+	linux	${rel_dirname}/${basename}.efi.signed ro ${args}
+  # root=${linux_root_device_thisversion}
 EOF
   else
     sed "s/^/$submenu_indentation/" << EOF
-	linux	${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
+	linux	${rel_dirname}/${basename} ro ${args}
+  # root=${linux_root_device_thisversion}
 EOF
   fi
   if test -n "${initrd}" ; then
@@ -272,20 +274,10 @@ cat << EOF
 export linux_gfx_mode
 EOF
 
-# Extra indentation to add to menu entries in a submenu. We're not in a submenu
-# yet, so it's empty. In a submenu it will be equal to '\t' (one tab).
-submenu_indentation=""
+mainlist=$list
 
-is_top_level=true
-while [ "x$list" != "x" ] ; do
-  linux=`version_find_latest $list`
-  case $linux in
-    *.efi.signed)
-      # We handle these in linux_entry.
-      list=`echo $list | tr ' ' '\n' | grep -vx $linux | tr '\n' ' '`
-      continue
-      ;;
-  esac
+linux_base_var() {
+  linux=$1
   gettext_printf "Found linux image: %s\n" "$linux" >&2
   basename=`basename $linux`
   dirname=`dirname $linux`
@@ -296,13 +288,13 @@ while [ "x$list" != "x" ] ; do
 
   initrd=
   for i in "initrd.img-${version}" "initrd-${version}.img" "initrd-${version}.gz" \
-	   "initrd-${version}" "initramfs-${version}.img" \
-	   "initrd.img-${alt_version}" "initrd-${alt_version}.img" \
-	   "initrd-${alt_version}" "initramfs-${alt_version}.img" \
-	   "initramfs-genkernel-${version}" \
-	   "initramfs-genkernel-${alt_version}" \
-	   "initramfs-genkernel-${GENKERNEL_ARCH}-${version}" \
-	   "initramfs-genkernel-${GENKERNEL_ARCH}-${alt_version}"; do
+     "initrd-${version}" "initramfs-${version}.img" \
+     "initrd.img-${alt_version}" "initrd-${alt_version}.img" \
+     "initrd-${alt_version}" "initramfs-${alt_version}.img" \
+     "initramfs-genkernel-${version}" \
+     "initramfs-genkernel-${alt_version}" \
+     "initramfs-genkernel-${GENKERNEL_ARCH}-${version}" \
+     "initramfs-genkernel-${GENKERNEL_ARCH}-${alt_version}"; do
     if test -e "${dirname}/${i}" ; then
       initrd="$i"
       break
@@ -329,42 +321,80 @@ while [ "x$list" != "x" ] ; do
     # no initrd or builtin initramfs, it can't work here.
     linux_root_device_thisversion=${GRUB_DEVICE}
   fi
+}
 
-  if [ "x$is_top_level" = xtrue ] && [ "x${GRUB_DISABLE_SUBMENU}" != xy ]; then
-    linux_entry "${OS}" "${version}" simple \
-    "${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
+do_list_process() {
+  local list=$2
+  local OS=$1
+  # Extra indentation to add to menu entries in a submenu. We're not in a submenu
+  # yet, so it's empty. In a submenu it will be equal to '\t' (one tab).
+  submenu_indentation=""
 
-    submenu_indentation="$grub_tab"
+  is_top_level=true
+  while [ "x$list" != "x" ] ; do
+    linux=`version_find_latest $list`
+    case $linux in
+      *.efi.signed)
+        # We handle these in linux_entry.
+        list=`echo $list | tr ' ' '\n' | grep -vx $linux | tr '\n' ' '`
+        continue
+        ;;
+    esac
+    log "(vmlinuz/kernel) $linux"
+    linux_base_var $linux
 
-    if [ -z "$boot_device_id" ]; then
-	boot_device_id="$(grub_get_device_id "${GRUB_DEVICE}")"
+    if [ "x$is_top_level" = xtrue ] && [ "x${GRUB_DISABLE_SUBMENU}" != xy ]; then
+      linux_entry "${OS}" "${version}" simple \
+      "${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
+
+      submenu_indentation="$grub_tab"
+
+      if [ -z "$boot_device_id" ]; then
+  	boot_device_id="$(grub_get_device_id "${GRUB_DEVICE}")"
+      fi
+      # TRANSLATORS: %s is replaced with an OS name
+      echo "submenu '$(gettext_printf "Advanced options for %s" "${OS}" | grub_quote)' \$menuentry_id_option 'gnulinux-advanced-$boot_device_id' {"
+      is_top_level=false
     fi
-    # TRANSLATORS: %s is replaced with an OS name
-    echo "submenu '$(gettext_printf "Advanced options for %s" "${OS}" | grub_quote)' \$menuentry_id_option 'gnulinux-advanced-$boot_device_id' {"
-    is_top_level=false
-  fi
 
-  linux_entry "${OS}" "${version}" advanced \
-              "${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
-  for supported_init in ${SUPPORTED_INITS}; do
-    init_path="${supported_init#*:}"
-    if [ -x "${init_path}" ] && [ "$(readlink -f /sbin/init)" != "${init_path}" ]; then
-      linux_entry "${OS}" "${version}" "init-${supported_init%%:*}" \
-		  "${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT} init=${init_path}"
+    linux_entry "${OS}" "${version}" advanced \
+                "${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
+    for supported_init in ${SUPPORTED_INITS}; do
+      init_path="${supported_init#*:}"
+      if [ -x "${init_path}" ] && [ "$(readlink -f /sbin/init)" != "${init_path}" ]; then
+        linux_entry "${OS}" "${version}" "init-${supported_init%%:*}" \
+  		  "${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT} init=${init_path}"
+      fi
+    done
+    if [ "x${GRUB_DISABLE_RECOVERY}" != "xtrue" ]; then
+      linux_entry "${OS}" "${version}" recovery \
+                  "${GRUB_CMDLINE_LINUX_RECOVERY} ${GRUB_CMDLINE_LINUX}"
     fi
+
+    list=`echo $list | tr ' ' '\n' | fgrep -vx "$linux" | tr '\n' ' '`
   done
-  if [ "x${GRUB_DISABLE_RECOVERY}" != "xtrue" ]; then
-    linux_entry "${OS}" "${version}" recovery \
-                "${GRUB_CMDLINE_LINUX_RECOVERY} ${GRUB_CMDLINE_LINUX}"
+
+  # If at least one kernel was found, then we need to
+  # add a closing '}' for the submenu command.
+  if [ x"$is_top_level" != xtrue ]; then
+    echo '}'
   fi
 
-  list=`echo $list | tr ' ' '\n' | fgrep -vx "$linux" | tr '\n' ' '`
-done
+  echo "$title_correction_code"
+}
 
-# If at least one kernel was found, then we need to
-# add a closing '}' for the submenu command.
-if [ x"$is_top_level" != xtrue ]; then
-  echo '}'
-fi
 
-echo "$title_correction_code"
+main_entry() {
+  main=`version_find_latest $mainlist`
+  log "OS Loader at $main"
+  linux_base_var $main
+  linux_entry "OS Loader" "${version}" simple \
+  "boot=live toram=filesystem.squahfs ${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
+}
+
+#do_list_process $mainlist
+#do_list_process "OS Loader" "$mainlist"
+
+main_entry
+
+linux_entry

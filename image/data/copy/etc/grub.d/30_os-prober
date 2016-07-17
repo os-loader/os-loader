@@ -1,6 +1,8 @@
 #! /bin/sh
 set -e
 
+exit 0 #currently disabled
+
 # grub-mkconfig helper script.
 # Copyright (C) 2006,2007,2008,2009  Free Software Foundation, Inc.
 #
