@@ -19,4 +19,4 @@ os-gui:
 server:
 	@echo "Soon..."
 tests:
-	npm test
+	$(which npm) test
