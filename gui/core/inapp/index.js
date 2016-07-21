@@ -1,13 +1,23 @@
 global.electron=require("electron");
 global.mainapp=electron.remote.app;
 global.appwindow=electron;
-global.isos=process.env.ISINOSMODE=="true";
 global.isdev=window.location.href.split("/").reverse()[1]=="app";
 global.electron=true;
-var isdev=global.isdev;
 
 require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
 require("core/tools");
+
+global.kernelcmd={};
+global.kernelcmdlist=[];
+
+fs.readFileSync("/proc/cmdline").toString().split(" ").map(function(i) {
+  var a=i.split("=");
+  var b=a.shift();
+  kernelcmd[b]=a.join("=")?a.join("="):true;
+  kernelcmdlist.push(b);
+});
+
+global.isos=(process.env.ISINOSMODE=="true"&&isdev)||kernelcmd.osloader;
 
 global.isofile="";
 if (isdev) {
@@ -35,13 +45,12 @@ try {
 global.install=false;
 
 if (isos) {
-  try {
-    install=!fs.lstatSync("/home/osloader").isSymbolicLink();
-  } catch(e) {
-    if (isdev) install=true;
+  if (kernelcmd.osloaderinstall) {
+    install=true;
+  } else if (kernelcmd.osloadersettings) {
+
   }
 } else {
-  // TODO: add real check
   install=true;
   if (isdev) {
     try {
@@ -49,6 +58,7 @@ if (isos) {
       global.targetdevice=process.env.targetdevice;
       global.device=process.env.targetdevice;
       global.maintarget=device.substr(0,device.length-1);
+      fs.lstatSync(maintarget);
       global.install=false;
     } catch(e) {
       global.targetdevice="";
