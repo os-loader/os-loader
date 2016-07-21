@@ -10,7 +10,7 @@ require("core/tools");
 global.kernelcmd={};
 global.kernelcmdlist=[];
 
-fs.readFileSync("/proc/cmdline").toString().split(" ").map(function(i) {
+fs.readFileSync("/proc/cmdline").toString().replace(/\n/g,"").split(" ").map(function(i) {
   var a=i.split("=");
   var b=a.shift();
   kernelcmd[b]=a.join("=")?a.join("="):true;
@@ -48,7 +48,22 @@ if (isos) {
   if (kernelcmd.osloaderinstall) {
     install=true;
   } else if (kernelcmd.osloadersettings) {
-
+    try {
+      global.devuuid=kernelcmd.osloaderuuid;
+      global.device=require("fs").realpathSync("/dev/disk/by-uuid/"+devuuid);
+      fs.lstatSync(device);
+      global.targetdevice=device;
+      global.maintarget=device.substr(0,device.length-1);
+      fs.lstatSync(maintarget);
+      global.install=false;
+    } catch(e) {
+      global.targetdevice="";
+      global.device="";
+      global.maintarget="";
+      global.install=true;
+    }
+  } else {
+    swal("WRONG KERNEL PARAMETERS!","","error");
   }
 } else {
   install=true;
