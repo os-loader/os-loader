@@ -55,11 +55,10 @@
     function homepage() {
       if (app.install) {
         //setup
-        app.route = 'install-home';
-        setFocus(app.route);
+        pageSwitch("install-home");
       } else {
-        app.route = 'home';
-        setFocus(app.route);
+        if (!app.asyncReady) return loading();
+        pageSwitch("home");
       }
     }
     page('/', homepage);
@@ -205,7 +204,9 @@
       if (u.format) return swal("Not Implented","You can´t format drives, yet!");
       app.scriptout.clear();
       app.route="console";
+      app.hideMenu=true;
       require("core/install")(app.usbmain,u,function(e) {
+        app.hideMenu=false;
         if (e) {
           if (isdev) {
             throw e;

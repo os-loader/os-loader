@@ -1,9 +1,11 @@
+global.devmount=(process.env.devmount=="enabled"&&isdev);
 try {
   fs.lstatSync(process.env.devmount);
   global.isofile=process.env.devmount;
 } catch(e) {
 
 }
+global.devmountpoint=pth.join(__dirname,"..","..","..","image","data","copy");
 global.devport=parseInt(process.env.devport,10);
 function fakeConsole(t) {
   console[t+"_"]=console[t];

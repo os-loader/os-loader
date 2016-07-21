@@ -45,14 +45,21 @@
 
         <!-- Drawer Content -->
         <template is="dom-if" if="{{!install}}">
-          <paper-menu class="app-menu transparent" attr-for-selected="data-route" selected="[[route]]">
-            <template is="dom-repeat" items="{{navbar}}">
-              <a data-route="{{item.page}}" page="{{item.page}}" on-click="navPage">
-                <iron-icon icon="{{item.ico}}"></iron-icon>
-                <span>{{item.name}}</span>
-              </a>
-            </template>
-          </paper-menu>
+          <template is="dom-if" if="{{!hideMenu}}">
+            <paper-menu class="app-menu transparent" attr-for-selected="data-route" selected="[[route]]">
+              <template is="dom-repeat" items="{{navbar}}">
+                <a data-route="{{item.page}}" data-page$="{{item.page}}" page="{{item.page}}" on-click="navPage">
+                  <iron-icon icon="{{item.ico}}"></iron-icon>
+                  <span>{{item.name}}</span>
+                </a>
+              </template>
+            </paper-menu>
+          </template>
+          <template is="dom-if" if="{{hideMenu}}">
+            <center>
+              <modern-spinner></modern-spinner>
+            </center>
+          </template>
         </template>
       </paper-scroll-header-panel>
 
@@ -75,13 +82,15 @@
             <div class="app-name">OS Loader</div>
           </div>
 
-          <template is="dom-if" if="{{!install}}">
-            <template is="dom-repeat" items="{{navbar}}">
-              <paper-icon-button icon="{{item.ico}}" page="{{item.page}}" on-click="navPage"></paper-icon-button>
-              <span style="margin:5px;"></span>
+          <template is="dom-if" if="{{!hideMenu}}">
+            <template is="dom-if" if="{{!install}}">
+              <template is="dom-repeat" items="{{navbar}}">
+                <paper-icon-button icon="{{item.ico}}" data-page$="{{item.page}}" page="{{item.page}}" on-click="navPage"></paper-icon-button>
+                <span style="margin:5px;"></span>
+              </template>
             </template>
+            <paper-icon-button icon="fa:power-off" on-click="askExit"></paper-icon-button>
           </template>
-          <paper-icon-button icon="fa:power-off" on-click="askExit"></paper-icon-button>
         </paper-toolbar>
 
         <!-- Main Content -->

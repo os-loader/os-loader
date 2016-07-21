@@ -9,12 +9,10 @@ var isdev=global.isdev;
 require("app-module-path").addPath(require("path").join(__dirname,"..",".."));
 require("core/tools");
 
-global.devmount=(process.env.devmount=="enabled"&&isdev);
 global.isofile="";
 if (isdev) {
   require("core/isdev");
 }
-global.devmountpoint=pth.join(__dirname,"..","..","..","image","data","copy");
 
 try {
   global.isvm=iISVM();
@@ -45,6 +43,20 @@ if (isos) {
 } else {
   // TODO: add real check
   install=true;
+  if (isdev) {
+    try {
+      fs.lstatSync(process.env.targetdevice);
+      global.targetdevice=process.env.targetdevice;
+      global.device=process.env.targetdevice;
+      global.maintarget=device.substr(0,device.length-1);
+      global.install=false;
+    } catch(e) {
+      global.targetdevice="";
+      global.device="";
+      global.maintarget="";
+      global.install=true;
+    }
+  }
 }
 
 global.install=install;
@@ -98,19 +110,25 @@ function scriptout() {
 }
 
 function asyncOk() {
+  app.hideMenu=false;
   page.redirect(app.baseUrl);
+  app.asyncReady=true;
 }
 
+app.asyncReady=false;
+app.hideMenu=true;
 function async() {
   if (isdev) events.emit("updateFound");
   if (active) {
-    udev.info(dev,function(e,d) {
+    udev.getInfo(device.replace("/dev","/sys/class/block"),function(e,d) {
       if (e) return swal(e.toString(),e.toString(),"error");
-        script("mount",[dev,d.ID_FS_TYPE],function(e) {
+        script("mount",[device,d.ID_FS_TYPE],function(e) {
           if (e) return swal(e.toString(),e.toString(),"error");
           asyncOk();
         });
     });
+  } else {
+    asyncOk();
   }
 }
 setTimeout(async,5);
