@@ -6,7 +6,6 @@ const BrowserWindow = electron.BrowserWindow
 
 const dd='app'; //data dir (build script changes this)
 
-global.isos=process.env.ISINOSMODE=="true";
 global.isdev=dd=="app";
 
 require("app-module-path").addPath(__dirname);
@@ -33,7 +32,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/${dd}/index.html`)
 
   // Open the DevTools.
-  if (isdev||global.isvm) mainWindow.webContents.openDevTools();
+  if (isdev||(isdebug&&isvm)) mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

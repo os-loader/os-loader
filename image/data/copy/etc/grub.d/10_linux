@@ -388,8 +388,11 @@ main_entry() {
   main=`version_find_latest $mainlist`
   log "OS Loader at $main"
   linux_base_var $main
+  oslbasic="boot=live toram=filesystem.squashfs live-media-path=os-loader osloader osloadersettings osloaderuuid=${GRUB_DEVICE_UUID}"
   linux_entry "OS Loader" "${version}" simple \
-  "boot=live toram=filesystem.squashfs live-media-path=os-loader osloader osloadersettings osloaderuuid=${GRUB_DEVICE_UUID} ${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
+  "$oslbasic quiet splash ${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
+  linux_entry "OS Loader (Debug Mode)" "${version}" simple \
+  "$oslbasic osloaderdebug ${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
 }
 
 #do_list_process $mainlist

@@ -11,6 +11,7 @@ streams=require("stream");
 udev=require("core/udev");
 parted=require("core/parted");
 script=require("core/script");
+require("core/kernel");
 Duplex=streams.Duplex;
 bytes=require("bytes");
 bytesTrim=function(str) {
