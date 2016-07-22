@@ -1,15 +1,16 @@
 
-                                  70OS Loader Help
+                              70OS Loader
 
 78Multiple Portable and Live Operating Systems
-isolated from each other on a single HDD/USB.
+  isolated from each other on a single HDD/USB.
 
-78This Media can be used to install OS-Loader on an USB.
+78This Live Image can be used to install OS-Loader on an USB.
 
-78This media contains also a memtest86+ image, which can be used
-to test the ram of this computer.
+78This Live Image contains also a memtest86+ image
+  to test the ram if the image fails to boot.
 
 74Built on {HOST}
- at {DATE}
+  at {DATE}
+
 71Version/Commit: {VER}
-Channel: {CHANNEL}
+  Channel: {CHANNEL}
