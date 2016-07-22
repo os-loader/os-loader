@@ -399,5 +399,3 @@ main_entry() {
 #do_list_process "OS Loader" "$mainlist"
 
 main_entry
-
-linux_entry

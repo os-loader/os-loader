@@ -8,5 +8,5 @@ prog 1
 state "Generate Config Files..."
 #script update-grub -o "$usb/boot/grub/grub.cfg"
 chroot grub-mkdevicemap
-chroot update-grub -o "/usb/boot/grub/grub.cfg"
+chroot update-grub -o "/usb/boot/grub.cfg"
 finish
