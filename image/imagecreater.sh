@@ -279,7 +279,7 @@ path-include=/usr/share/doc/*/copyright
   chinstall nodejs
 
   #Set up user
-  chstd "useradd osloader -m --password='"$(echo "osloader" | openssl passwd -1 -stdin)"'
+  chstd "useradd osloader --uid=987 -m --password='"$(echo "osloader" | openssl passwd -1 -stdin)"'
   addgroup osloader root
   addgroup osloader sudo"
   for f in `find $data/copy/ -type f`; do
@@ -290,7 +290,7 @@ path-include=/usr/share/doc/*/copyright
   chmod +x $curch/home/osloader/.config/openbox/autostart
   chown root:root $curch/etc/sudoers.d/os-loader
   chmod 440 $curch/etc/sudoers.d/os-loader
-  chown 1000:1000 -R $curch/home/osloader
+  chstd "chown osloader:osloader -R /home/osloader"
   mkdir -p $curch/usb
 
   #Install internal .debs

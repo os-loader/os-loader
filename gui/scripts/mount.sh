@@ -23,5 +23,8 @@ mount -t $fs $dev $usb
 if [ -z $isinstall ]; then
   rm -rf $imagedir/boot
   ln -s ../usb/boot $imagedir/boot
+  rm -rf $imagedir/home/osloader
+  ln -s ../usb/os-loader $imagedir/home/osloader
+  chroot chown osloader:osloader -R /usb/os-loader
 fi
 prog 2
