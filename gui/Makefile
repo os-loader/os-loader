@@ -9,7 +9,7 @@ build:
 	make -C buildtmp distbuild BDIR=$(BDIR)
 distbuild: # This is seperate because it deletes/changes some files
 	npm run gulp
-	rm -rf app deb-files node_modules Makefile
+	rm -rf app deb-files node_modules Makefile test
 	cd scripts;find -type f -iname "*.sh" | xargs "bash" "../minify-sh.sh"
 	npm i --production
 	npm i electron-packager

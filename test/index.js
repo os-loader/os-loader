@@ -19,3 +19,7 @@ describe("gui",function() {
 describe("image",function() {
   require(getPath("image","test"));
 });
+
+describe("server",function() {
+  require(getPath("server","test"));
+});

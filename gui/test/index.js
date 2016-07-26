@@ -12,6 +12,7 @@ before(function(done) {
   server=http.createServer();
   io=socketio.listen(server);
   var isfirst=true;
+
   function colorparse(t,i) {
     if (!t[i]) return t;
     var tmp=t[i].split("%c");
@@ -32,6 +33,7 @@ before(function(done) {
     i++;
     return colorparse(t.filter(function() {return t;}),i);
   }
+
   io.on("connection",function(ssocket) {
     if (isfirst) {
       socket=ssocket;
@@ -64,10 +66,7 @@ before(function(done) {
   });
 
   server.on('listening',function(){
-      /*var p=*/cp.spawn("npm",["run","starttest"],{stdio:"inherit",cwd:pth.join(__dirname,"..")});
-      /*p.on("exit",function() {
-
-      });*/
+      cp.spawn("npm",["run","starttest"],{stdio:"inherit",cwd:pth.join(__dirname,"..")});
   });
   server.listen(5566);
 });

@@ -11,6 +11,7 @@ function config(file,defaults) {
         },
         set: function(n) {
           data[p]=n;
+          write();
         }
       /* jshint ignore:end */
     });
@@ -29,21 +30,22 @@ function config(file,defaults) {
       return cb(e);
     }
   }
-  function write() {
+  function write(c) {
     try {
       jsonfile.writeFileSync(file,data,{spaces:2});
       self.log("Config file saved!");
     } catch(e) {
       self.error(e,"Config file save failed!");
+      if (c) throw e; //critical
     }
   }
   read(function(err) {
     if (err) {
       data=defaults;
       self.error(err,"Config file load failed!");
-      write();
+      write(true);
     }
-
   });
+  this.save=write;
 }
 module.exports=config;
