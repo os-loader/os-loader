@@ -4,12 +4,28 @@ bunyan=require("bunyan");
 init=bunyan.createLogger({name:"init"});
 init.info("Starting Up...");
 
+const configDefaults={
+  repo:{
+    ipfs:{
+      bin:"./node_modules/.bin/ipfs",
+      config:"./data/ipfs-repo"
+    },
+    out:"./data/repo"
+  }
+};
+
 mongoose=require("mongoose");
 mongoose.connect("mongodb://localhost:27017/osl-image-server");
 express=require("express");
 http=require("http");
 https=require("https");
 request=require("request");
+jsonfile=require("jsonfile");
+mkdirp=require("mkdirp");
+
+newLogger=require("core/logger");
+configFile=require("core/config");
+config=new configFile("config.json",configDefaults);
 
 require("core/express");
 require("core/static");
