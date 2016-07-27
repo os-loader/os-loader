@@ -23,11 +23,7 @@ Note: the different sources (ipfs,http,https) will be priorized by the values in
         size:"", //file size
       }
     },
-    archive:{ //the checksum for the archive itself
-      sha256:"", //sha256 checksum
-      size:"" //file size
-    }
-    signed:"KEYID", //keyid of signature - once set can´t change
+    signed:"KEYID" //keyid of signature - must match keyid in repourl
   }
   - checksum.json.signed
   # signed checksum.json with [checksum.json].signed key

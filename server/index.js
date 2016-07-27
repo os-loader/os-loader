@@ -22,6 +22,8 @@ https=require("https");
 request=require("request");
 jsonfile=require("jsonfile");
 mkdirp=require("mkdirp");
+gpg=require("gpg");
+crypto=require("crypto");
 
 newLogger=require("core/logger");
 configFile=require("core/config");
