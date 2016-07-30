@@ -55,4 +55,18 @@ app.set('view engine', 'ejs'); // register the template engine
 app.get("/",function(req,res) {
   res.render("home",{title:"Home"});
 });
+
+app.get("/Login",function(req,res) {
+  res.render("login",{title:"Login",nav:[{name:"Login",icon:"sign-in",url:"/Login"},{name:"Register",icon:"user-plus",url:"/Register"}]});
+});
+
+app.get("/Register",function(req,res) {
+  res.render("register",{title:"Register",nav:[{name:"Login",icon:"sign-in",url:"/Login"},{name:"Register",icon:"user-plus",url:"/Register"}]});
+});
+
 app.use("/admin",require("core/acp"));
+
+
+app.use(function(req,res) {
+  res.status(404).render("404",{title:"404 - Page Not Found"});
+});
