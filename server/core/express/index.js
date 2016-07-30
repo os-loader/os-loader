@@ -82,7 +82,7 @@ app.set('views', pth.join(__dirname,"..","..","pages")); // specify the views di
 app.set('view engine', 'ejs'); // register the template engine
 
 app.get("/",function(req,res) {
-  res.render("home",{title:"Home",status:backend.status,flash:res.getFlash()});
+  res.render("home",{title:"Home",addurl:req.protocol + '://' + req.get('host')+"/repo/repo.tar.gz?keyid="+null,status:backend.status,flash:res.getFlash()});
 });
 
 app.get("/About",function(req,res) {
