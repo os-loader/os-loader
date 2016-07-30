@@ -3,13 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title><%=title%> - OSL Image Server</title>
+    <link rel="stylesheet" href="/hackcss/dist/hack.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- Hack CSS - easy and simple -->
   </head>
-  <body>
-    <ul>
-      <%nav.map(function(n) {
-        %><li><a href="<%=n.url%>"><i class="fa fa-<%=n.icon%>"></i><%=n.name%></a></li><%
-      })%>
-  </ul>
-    <%-html%>
+  <body class="hack">
+    <div class="main container">
+      <h2>OS Loader Image Server</h2>
+      <ul>
+        <%nav.map(function(n) {
+          %><li><a href="<%=n.url%>"><i style="width:16px;" class="fa fa-<%=n.icon%>"></i><%=n.name%></a></li><%
+        })%>
+      </ul>
+      <h1><%=title%></h1>
+      <%-html%>
+    </div>
   </body>
 </html>

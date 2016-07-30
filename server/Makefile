@@ -1,4 +1,6 @@
 build:
-	@echo "Soon"
-watch:
+	if ! [ -d node_modules ]; then npm i; fi
+	if ! [ -d bower_components ]; then bower i; fi
+	if ! [ -d bower_components/hackcss/dist ]; then cd bower_components/hackcss;npm i;gulp; fi
+watch: build
 	nodemon index.js | bunyan

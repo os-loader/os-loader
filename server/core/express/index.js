@@ -21,6 +21,8 @@ var store = new MongoStore(
     collection: 'sessions'
   });
 
+app.use(require("core/static"));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
