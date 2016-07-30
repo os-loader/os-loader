@@ -3,4 +3,4 @@ build:
 	if ! [ -d bower_components ]; then bower i; fi
 	if ! [ -d bower_components/hackcss/dist ]; then cd bower_components/hackcss;npm i;gulp; fi
 watch: build
-	nodemon index.js | bunyan
+	nodemon index.js -i config.json | bunyan

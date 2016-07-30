@@ -7,10 +7,13 @@ init.info("Starting Up...");
 const configDefaults={
   repo:{
     ipfs:{
-      bin:"./node_modules/.bin/ipfs",
-      config:"./data/ipfs-repo"
+      bin:"node_modules/.bin/ipfs",
+      config:"data/ipfs-repo"
     },
-    out:"./data/repo"
+    out:"data/repo"
+  },
+  about:{
+    maintainer:"Example Maintainer <maintainer@example.com>"
   }
 };
 

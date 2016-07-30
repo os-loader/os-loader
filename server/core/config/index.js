@@ -1,21 +1,24 @@
 //Load the config
 function config(file,defaults) {
   const self=this;
+  /* jshint ignore:start */
   const el=[];
   for (var p in defaults) {
     el.push(p);
-    Object.defineProperty(self, p, {
-      /* jshint ignore:start */
-        get: function() {
-          return data[p];
-        },
-        set: function(n) {
-          data[p]=n;
-          write();
-        }
-      /* jshint ignore:end */
-    });
+    (function(p) {
+      'use strict';
+      Object.defineProperty(self, p, {
+          get: function() {
+            return data[p];
+          },
+          set: function(n) {
+            data[p]=n;
+            write();
+          }
+      });
+    }(p));
   }
+  /* jshint ignore:end */
   newLogger({name:"config",file:file},self);
   var data={};
   function read(cb) {
