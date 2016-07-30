@@ -78,7 +78,7 @@ app.set('views', pth.join(__dirname,"..","..","pages")); // specify the views di
 app.set('view engine', 'ejs'); // register the template engine
 
 app.get("/",function(req,res) {
-  res.render("home",{title:"Home",flash:res.getFlash()});
+  res.render("home",{title:"Home",status:backend.status,flash:res.getFlash()});
 });
 
 app.post('/Register', function(req, res) {

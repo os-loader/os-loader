@@ -54,6 +54,14 @@ function ipfs(bin,conf) {
     return true;
   }
 
+  function status() {
+    return {
+      running:run,
+      external:(run&&!p)?true:false,
+      pid:(run&&p)?p.pid:null
+    }
+  }
+
   this.add=add;
   this.ls=ls;
   this.get=get;
@@ -61,5 +69,6 @@ function ipfs(bin,conf) {
   this.stop=stop;
   this.on=this.ee.on.bind(ee);
   this.once=this.ee.once.bind(ee);
+  this.status=status;
 }
 module.exports=ipfs;
