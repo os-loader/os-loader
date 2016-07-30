@@ -1,0 +1,9 @@
+<p>OS Loader Image Server version <%=p.version%></p>
+<p>Maintained by <%=about.maintainer%></p>
+<p>The following OS Loader Operating System Images are hosted here:</p>
+<ul>
+  <%["(unkown)"].map(function(o) {
+    %><li><%=o%></li><%
+  });
+  %>
+</ul>

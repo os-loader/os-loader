@@ -31,6 +31,7 @@ function ipfs(bin,conf) {
       } catch(e) {
         this.info("IPFS Instance already running - skipping");
         run=true;
+        p=null;
         return run;
       }
     }

@@ -60,9 +60,12 @@ app.use(function(req,res,next) {
   return next();
 });
 
+var pjson=require("../../package.json");
+
 var nav=[
   {name:"Home",icon:"home",url:"/"},
-  {name:"Admin",icon:"shield",url:"/admin"}
+  {name:"Admin",icon:"shield",url:"/admin"},
+  {name:"About",icon:"info",url:"/About"}
 ];
 
 app.engine('ejs', function (filePath, options, cb) { // define the template engine
@@ -74,11 +77,16 @@ app.engine('ejs', function (filePath, options, cb) { // define the template engi
     });
   });
 });
+
 app.set('views', pth.join(__dirname,"..","..","pages")); // specify the views directory
 app.set('view engine', 'ejs'); // register the template engine
 
 app.get("/",function(req,res) {
   res.render("home",{title:"Home",status:backend.status,flash:res.getFlash()});
+});
+
+app.get("/About",function(req,res) {
+  res.render("about",{title:"About",p:pjson,about:config.about});
 });
 
 app.post('/Register', function(req, res) {
