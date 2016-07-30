@@ -13,6 +13,12 @@ app.use(function(req,res,next) {
   res.render=function(a,b,c) {
     b.flash=res.getFlash();
     b.user=req.user;
+    b.nav=[
+      {name:"Back",icon:"arrow-left",url:"/"},
+      {name:"Systems",icon:"desktop",url:"/admin/Systems"},
+      {name:"Repo",icon:"file-o",url:"/admin/Repo"},
+      {name:"Settings",icon:"gear",url:"/admin/Settings"},
+    ]
     b.status=backend.status;
     return o(a,b,c);
   }
