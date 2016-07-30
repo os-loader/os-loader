@@ -4,6 +4,8 @@ bunyan=require("bunyan");
 init=bunyan.createLogger({name:"init"});
 init.info("Starting Up...");
 
+maindir=__dirname;
+
 const configDefaults={
   repo:{
     ipfs:{
@@ -21,6 +23,11 @@ mongoose=require("mongoose");
 mongoose.connect("mongodb://localhost:27017/osl-image-server");
 pth=require("path");
 ejs=require("ejs");
+ee=require("events").EventEmitter;
+cp=require("child_process");
+exec=cp.exec;
+execSync=cp.execSync;
+spawn=cp.spawn;
 express=require("express");
 passport=require("passport");
 http=require("http");

@@ -1,9 +1,9 @@
 //Upload to the IPFS
 function ipfs(bin,conf) {
+  const self=this;
   this.ee=new ee();
   var p,run=false,exit;
   newLogger("ipfs",this);
-  log({do:"load",config:config});
 
   function add(dir,cb) {
     if (!run) return cb(null,new Error("IPSF Not Running"));
@@ -22,17 +22,32 @@ function ipfs(bin,conf) {
 
   function start() {
     if (run) return p;
+    try {
+      fs.lstatSync(pth.join(conf,"config"));
+    } catch(e) {
+      this.info("IPFS Repo doesn´t exist - creating...");
+      try {
+        execSync(bin+" init");
+      } catch(e) {
+        this.info("IPFS Instance already running - skipping");
+        run=true;
+        return run;
+      }
+    }
     this.info("IPFS Starting...");
-    p=exec(bin,["daemon"],{env:{IPFS_PATH:conf.dir},stdio:["ignore","ignore","pipe"]});
+    mkdirp.sync(conf);
+    p=spawn(bin,["daemon"],{env:{IPFS_PATH:conf},stdio:"inherit"/*["ignore","ignore","pipe"]*/});
+    run=true;
     p.on("exit",function(e,s) {
       exit=e||s;
-      if (run) this.warn("IPFS Killed or Crashed",ipfs); else this.info("IPFS Stopped",exit);
+      if (run) self.warn({bin:bin,path:conf},"IPFS Killed or Crashed: ",exit); else self.info("IPFS Stopped",exit);
     });
     return p;
   }
 
   function stop() {
     if (!run) return false;
+    if (!p) return this.error("IPFS Running External - can not stop");
     this.info("Stopping IPFS");
     run=false;
     p.kill(15);
@@ -44,7 +59,7 @@ function ipfs(bin,conf) {
   this.get=get;
   this.start=start;
   this.stop=stop;
-  this.on=ee.on.bind(ee);
-  this.once=ee.once.bind(ee);
+  this.on=this.ee.on.bind(ee);
+  this.once=this.ee.once.bind(ee);
 }
 module.exports=ipfs;
