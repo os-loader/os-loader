@@ -26,6 +26,15 @@
           </div>
         </div>
       </div>
+      <%if (typeof flash != "undefined") {
+        flash.map(function(f) {
+          %>
+          <br>
+          <div class="alert alert-<%=f.type%>"><%=f.message%></div>
+          <%
+        });
+        flash=[];
+      }%>
       <h1><%=title%></h1>
       <%-html%>
     </div>
