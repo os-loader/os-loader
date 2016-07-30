@@ -107,4 +107,7 @@ A repo should be a tar.gz
 
 # Repo URL
 The repo urls should look like this:
+```
 [fs,http,https]://path/to/repo.tar.gz?keyid=KEYID
+```
+Additionally you can create a repo.sha256 with the checksum so the client downloads only updated versions.
