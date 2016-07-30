@@ -19,6 +19,7 @@ mongoose.connect("mongodb://localhost:27017/osl-image-server");
 pth=require("path");
 ejs=require("ejs");
 express=require("express");
+passport=require("passport");
 http=require("http");
 https=require("https");
 request=require("request");
@@ -32,9 +33,6 @@ configFile=require("core/config");
 config=new configFile("config.json",configDefaults);
 
 require("core/express");
-require("core/static");
-require("core/auth");
-require("core/acp");
 
 app.listen(8190)
 

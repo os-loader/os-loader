@@ -2,9 +2,40 @@ const app=global.app=express();
 
 //const server=global.server=http.createServer();
 
+User=require("core/user");
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+
+var MongoStore = require('connect-mongodb-session')(session);
+var store = new MongoStore(
+  {
+    uri: "mongodb://localhost:27017/osl-image-server",
+    collection: 'sessions'
+  });
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(session({
+  secret:"rgkhresnfk",
+  name:"osl-image-server",
+  store:store,
+  resave: true,
+  saveUninitialized: true
+}));
+
 var nav=[
-  {name:"home",icon:"home",url:"/"},
-  {name:"admin",icon:"shield",url:"/admin"}
+  {name:"Home",icon:"home",url:"/"},
+  {name:"Admin",icon:"shield",url:"/admin"}
 ];
 
 app.engine('ejs', function (filePath, options, cb) { // define the template engine

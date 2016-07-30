@@ -5,6 +5,11 @@
     <title><%=title%> - OSL Image Server</title>
   </head>
   <body>
+    <ul>
+      <%nav.map(function(n) {
+        %><li><a href="<%=n.url%>"><i class="fa fa-<%=n.icon%>"></i><%=n.name%></a></li><%
+      })%>
+  </ul>
     <%-html%>
   </body>
 </html>
