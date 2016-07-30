@@ -7,7 +7,7 @@ build:
 	cp -r ./ ../gui.cp
 	mv ../gui.cp ./buildtmp
 	rm ./buildtmp/core/repo
-	cp -r ../server/core/repo ./buildmp/core/repo
+	cp -r ../server/core/repo ./buildtmp/core/repo
 	make -C buildtmp distbuild BDIR=$(BDIR)
 distbuild: # This is seperate because it deletes/changes some files
 	npm run gulp
