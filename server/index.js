@@ -16,6 +16,8 @@ const configDefaults={
 
 mongoose=require("mongoose");
 mongoose.connect("mongodb://localhost:27017/osl-image-server");
+pth=require("path");
+ejs=require("ejs");
 express=require("express");
 http=require("http");
 https=require("https");

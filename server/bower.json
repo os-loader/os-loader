@@ -1,0 +1,23 @@
+{
+  "name": "os-loader-server",
+  "description": "A Server to serve os-loader repo info and images",
+  "main": "index.js",
+  "authors": [
+    "Maciej Krüger <mkg20001@gmail.com>"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "os-loader",
+    "image",
+    "server"
+  ],
+  "homepage": "https://github.com/os-loader/os-loader",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
