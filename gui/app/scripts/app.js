@@ -81,6 +81,7 @@ window.onerror = function(message, source, lineno, colno, error) {
     {ico:"settings",name:"OSes",page:"os"},
     {ico:"fa:dot-circle-o",name:"Live CDs",page:"live"},
     {ico:"image:palette",name:"Apperance",page:"design"},
+    {ico:"dns",name:"Repo",page:"repo"}
   ];
   app.addNav=function(i,d,p) {
     app.navbar=app.navbar.concat([{ico:i,page:p,name:d}]);

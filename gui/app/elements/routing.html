@@ -217,7 +217,7 @@
         app.route="install-success";
       });
     }
-    page("/install-partition/:path",function(d) {
+    ("/install-partition/:path",function(d) {
       app.usbdev=[];
       app.usbparts=[];
       app.route="install-partition";
@@ -252,6 +252,11 @@
     page("/update",function() {
       app.route="update";
       //setFocus(app.route);
+    });
+
+    page("/repo",function() {
+      app.route="repo";
+      setFocus(app.route)
     });
   }
 
