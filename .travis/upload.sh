@@ -8,7 +8,7 @@ isalive() {
 
 isalive &
 
-echo $PWD
+main=$PWD
 
 mv dput $HOME/.dput.cf
 
@@ -16,6 +16,8 @@ echo $keypass | gpg2 --passphrase-fd 0 --allow-secret-key-import --import upload
 cd /tmp/os-loader-builddir/gui
 dpkg-buildpackage -sa -S -k851C42EF
 dput daily *.changes
+
+cd $main
 
 if [ -f /tmp/os-loader-builddir/IMAGE/output/image.iso ]; then
   if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
