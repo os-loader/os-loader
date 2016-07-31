@@ -8,8 +8,11 @@ isalive() {
 
 isalive &
 
+echo $PWD
+
 mv dput $HOME/.dput.cf
 
+echo $keypass | gpg2 --passphrase-fd 0 --allow-secret-key-import --import upload.key
 cd /tmp/os-loader-builddir/gui
 dpkg-buildpackage -sa -S -k851C42EF
 dput daily *.changes
