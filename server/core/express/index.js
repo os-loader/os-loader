@@ -70,7 +70,13 @@ var nav=[
 
 app.engine('ejs', function (filePath, options, cb) { // define the template engine
   ejs.renderFile(filePath, options, {}, function(err, str){
-    if (err) return cb(new Error(err));
+    if (err) {
+      try {
+        ejs.render(fs.readFileSync(filePath).toString(),options,{});
+      } catch(err) {
+        return cb(err);
+      }
+    }
     ejs.renderFile(pth.join(__dirname,"..","..","views","main.ejs"), {html:str,title:options.title,nav:options.nav||nav,flash:options.flash}, {}, function(err, str){
       if (err) return cb(new Error(err));
       cb(err,str);
@@ -126,4 +132,26 @@ app.use("/admin",require("core/acp"));
 
 app.use(function(req,res) {
   res.status(404).render("404",{title:"404 - Page Not Found"});
+});
+
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err,
+      title:"Error"
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {},
+    title:"Error"
+  });
 });
