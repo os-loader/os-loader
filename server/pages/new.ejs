@@ -1,0 +1,50 @@
+<form class="form" method="POST" action="<%=url%>">
+  <%=el.map(function(e) {
+    switch(e.type) {
+      case "string":
+        %>
+        <fieldset class="form-group">
+          <label for="<%=e.id%>"><%=e.name?e.name.toUpperCase():e.id.toUpperCase()%>:</label>
+          <input id="<%=e.id%>" value="<%=e.value%>" type="text" placeholder="Value for <%=e.name?e.name:e.id%>" class="form-control">
+        </fieldset>
+        <%
+        break;
+      case "long":
+        %>
+        <fieldset class="form-group form-textarea">
+          <label for="<%=e.id%>"><%=e.name?e.name.toUpperCase():e.id.toUpperCase()%>:</label>
+          <textarea id="<%=e.id%>" name="<%=e.id%>" rows="5" class="form-control"><%-e.value%></textarea>
+        </fieldset>
+        <%
+        break;
+      case "number":
+        %>
+
+        <%
+        break;
+      case "select":
+        %>
+        <fieldset class="form-group">
+          <label for="<%=e.id%>">COUNTRY:</label>
+          <select name="<%=e.id%>" id="<%=e.id%>" class="form-control">
+            <%e.v.map(function(v) {
+              if (v.v) {
+                %>
+                <option value="<%=v%>"><%=v%></option>
+                <%
+              } else {
+                %>
+                <option value="<%=v.v%>"><%=v.n%></option>
+                <%
+              }
+            })%>
+          </select>
+        </fieldset>
+        <%
+        break;
+    }
+  })%>
+  <div class="form-actions">
+    <button class="btn btn-primary btn-block"><%if (new) {%>Create new <%=name%><%} else {%>Save <%=name%><%}%></button>
+  </div>
+</form>

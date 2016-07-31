@@ -15,6 +15,7 @@ app.use(function(req,res,next) {
     b.user=req.user;
     b.nav=[
       {name:"Back",icon:"arrow-left",url:"/"},
+      {name:"Dashboard",icon:"home",url:"/admin/"},
       {name:"Systems",icon:"desktop",url:"/admin/Systems"},
       {name:"Repo",icon:"file-o",url:"/admin/Repo"},
       {name:"Settings",icon:"gear",url:"/admin/Settings"},
@@ -25,6 +26,9 @@ app.use(function(req,res,next) {
   return next();
 });
 app.get("/",function(req,res) {
-  res.render("admin",{title:"Admin Home"});
+  res.render("admin",{title:"Admin Dashboard"});
+});
+app.get("/Systems",function(req,res) {
+  res.render("systems",{title:"Systems",systems:[]});
 });
 module.exports=app;

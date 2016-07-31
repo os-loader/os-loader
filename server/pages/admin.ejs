@@ -1,1 +1,49 @@
-<p>WIP...</p>
+<div class="grid">
+  <div class="cell -4of12 margin">
+    <div class="card">
+      <header class="card-header">Repo Status</header>
+      <div class="card-content">
+        <div class="inner">Unkown</div>
+      </div>
+    </div>
+  </div>
+  <div class="cell -4of12 margin">
+    <div class="card">
+      <header class="card-header">IPFS Status</header>
+      <div class="card-content">
+        <div class="inner">
+          Running: <%=status.ipfs.running?"Yes":"No"%><br>
+          Type: <%=status.ipfs.external?"External":"Internal"%><br>
+          Peer ID: N/A
+          PID: <%=status.ipfs.pid?status.ipfs.pid:"N/A"%></div>
+      </div>
+    </div>
+  </div>
+  <div class="cell -4of12 margin">
+    <div class="card">
+      <header class="card-header">Server Status</header>
+      <div class="card-content">
+        <div class="inner">Unkown</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="cell -12of12">
+    <div class="card" style="margin:8px 48px 32px 48px;">
+      <header class="card-header">Help & Resources</header>
+      <div class="card-content">
+        <div class="inner">
+          <ul>
+            <li><a href="#">Docs</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Issues</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="https://github.com/os-loader/os-loader/tree/master/server">Source Code</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

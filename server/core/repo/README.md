@@ -70,6 +70,15 @@ Note: the different sources (ipfs,http,https) will be priorized by the values in
         name:"Beta 1", //release name
         codename:"example-16", //release codename
         upgrade:"", //(string) release to upgrade to, (boolean) upgrade to next release
+        files:{
+          "image.iso": {
+            sha256:"", //sha256 checksum
+            type:"live.iso", //iso,squashfs,image,vdi | live.iso = use this as livecd image
+            ipfs:"ipfs/hash/image.iso", //ipfs/ipns url or hash
+            http:"example.com/image.iso", //http:// link
+            https:"example.com/image.iso", //https:// link
+          }
+        },
         hooks:{
           install:{ //hooks on install (after default hooks)
             "os:example":false, //disable a hook with false
@@ -89,16 +98,7 @@ Note: the different sources (ipfs,http,https) will be priorized by the values in
           }
         }
       }
-    ],
-    files:{
-      "image.iso": {
-        sha256:"", //sha256 checksum
-        type:"live.iso", //iso,squashfs,image,vdi | live.iso = use this as livecd image
-        ipfs:"ipfs/hash/image.iso", //ipfs/ipns url or hash
-        http:"example.com/image.iso", //http:// link
-        https:"example.com/image.iso", //https:// link
-      }
-    }
+    ]
   }
 ```
 

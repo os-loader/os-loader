@@ -1,0 +1,17 @@
+<% systems.map(function(s) {
+  %>
+  <div class="grid">
+    <div class="cell -12of12">
+      <div class="card" style="margin:8px 48px 32px 48px;">
+        <header class="card-header"><%=s.name%></header>
+        <div class="card-content">
+          <div class="inner">
+            Channels: <%=s.channels.join(",")%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+})%>
+<a href="/admin/Systems/new"><button class="btn btn-primary">Create New</button></a>
