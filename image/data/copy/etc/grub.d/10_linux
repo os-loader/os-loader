@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 set -e
 
 # grub-mkconfig helper script.
@@ -383,6 +383,7 @@ do_list_process() {
   echo "$title_correction_code"
 }
 
+GRUB_CMDLINE_LINUX_DEBUG=${GRUB_CMDLINE_LINUX_DEFAULT//"quiet splash"/""}
 
 main_entry() {
   main=`version_find_latest $mainlist`
@@ -392,7 +393,7 @@ main_entry() {
   linux_entry "OS Loader" "${version}" simple \
   "$oslbasic quiet splash ${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
   linux_entry "OS Loader (Debug Mode)" "${version}" simple \
-  "$oslbasic osloaderdebug ${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT//"quiet splash"/""}"
+  "$oslbasic osloaderdebug ${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEBUG}"
 }
 
 #do_list_process $mainlist

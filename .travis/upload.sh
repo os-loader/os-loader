@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 isalive() {
   sleep 300s

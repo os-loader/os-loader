@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Openbox will start this as sudo
 
 export ISINOSMODE=true

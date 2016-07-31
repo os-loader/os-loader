@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Downloads the latest OS-Loader image
 # Usage: ./getlatest.sh <OUTPUT>
 # Author: Maciej Krüger <mkg20001@gmail.com>

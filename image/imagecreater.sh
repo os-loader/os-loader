@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Will Build the os-loader image
 set -e
 
