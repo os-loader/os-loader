@@ -11,7 +11,7 @@ sysel=[
   },
   {
     id:"desc",
-    type:"string"
+    type:"long"
   },
   {
     id:"icon",
@@ -113,7 +113,10 @@ app.get("/",function(req,res) {
   res.render("admin",{title:"Admin Dashboard"});
 });
 app.get("/Systems",function(req,res) {
-  res.render("systems",{title:"Systems",systems:[]});
+  System.find({},function(e,r) {
+    if (e) return next(e);
+    res.render("systems",{title:"Systems",systems:r});
+  });
 });
 app.get("/Systems/new",function(req,res) {
   res.render("new",{url:req.originalUrl,n:true,el:sysel,name:"System",titel:"New System"});
@@ -134,7 +137,11 @@ app.get("/Systems/:id",function(req,res,next) {
   System.findOne({_id:req.params.id},function(e,r) {
     if (e) return next(e);
     try {
-      res.render("new",{url:req.originalUrl,n:false,el:cparse(r,sysel),name:r.name,titel:r.name+" - Systems"});
+      res.render("new",{url:req.originalUrl,n:false,el:cparse(r,sysel),name:r.name,titel:r.name+" - Systems",nav:[
+        {name:"Back",icon:"arrow-left",url:"/admin/Systems"},
+        {name:r.name,icon:"desktop",url:"/admin/Systems/"+r._id},
+        {name:"Channels",icon:"tag",url:"/admin/"+r._id+"/Channels/"}
+      ]});
     } catch(e) {
       req.flash("error",e.toString());
       res.redirect("/admin/Systems");

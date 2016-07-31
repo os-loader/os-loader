@@ -27,6 +27,9 @@
         <fieldset class="form-group">
           <label for="<%=e.id%>"><%=e.name?e.name.toUpperCase():e.id.toUpperCase()%>:</label>
           <select name="<%=e.id%>" id="<%=e.id%>" class="form-control">
+            <%if (e.value) {
+              %><option value="<%=e.value%>"><%=e.value%> (current)</option><%
+            }%>
             <%e.v.map(function(v) {
               if (v.v) {
                 %>
