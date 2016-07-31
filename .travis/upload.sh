@@ -12,8 +12,13 @@ main=$PWD
 
 mv dput $HOME/.dput.cf
 
+ver=0.0.1-$(git rev-list --all --count)
+
 echo $keypass | gpg2 --passphrase-fd 0 --allow-secret-key-import --import upload.key
 cd /tmp/os-loader-builddir/gui
+export EDITOR=$main/.travis/dch.sh
+chmod +x $EDITOR
+dch -v $ver -b --force-distribution -D xenial
 dpkg-buildpackage -sa -S -k851C42EF
 dput daily *.changes
 
