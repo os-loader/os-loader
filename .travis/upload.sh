@@ -8,6 +8,12 @@ isalive() {
 
 isalive &
 
+mv dput $HOME/.dput.cf
+
+cd /tmp/os-loader-builddir/gui
+dpkg-buildpackage -sa -S -k851C42EF
+dput daily *.changes
+
 if [ -f /tmp/os-loader-builddir/IMAGE/output/image.iso ]; then
   if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
     md5=`md5sum /tmp/os-loader-builddir/IMAGE/output/image.iso | fold -w 32 | head -n 1`
