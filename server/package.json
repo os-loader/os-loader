@@ -23,7 +23,7 @@
   "homepage": "https://github.com/os-loader/os-loader/tree/master/server#readme",
   "dependencies": {
     "app-module-path": "^1.1.0",
-    "body-parser": "^1.15.1",
+    "body-parser": "^1.15.2",
     "bunyan": "^1.8.1",
     "colors": "^1.1.2",
     "connect-mongodb-session": "^1.1.1",
@@ -41,6 +41,6 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.0.0",
-    "request": "^2.73.0"
+    "request": "^2.74.0"
   }
 }

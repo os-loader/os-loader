@@ -17,6 +17,6 @@ theme:
 os-gui:
 	make -C gui BDIR=$(BDIR) deb
 server:
-	@echo "Soon..."
+	make -C server
 tests:
 	npm test
