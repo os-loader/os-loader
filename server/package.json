@@ -4,7 +4,11 @@
   "description": "A Server to serve os-loader repo info and images",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"osl-image-server > server.log"
+  },
+  "bin":{
+    "osl-image-server":"./index.js"
   },
   "repository": {
     "type": "git",
