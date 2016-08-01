@@ -149,9 +149,6 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {},
-    title:"Error"
-  });
+  res.flash("error",err.toString())
+  res.render('error2', {title:"500 - That's an error"});
 });

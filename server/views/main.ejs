@@ -12,6 +12,10 @@
     .margin {
       margin:6px;
     }
+    .facenter {
+      width:16px;
+      text-align:center;
+    }
     </style>
   </head>
   <body class="hack">
@@ -21,7 +25,7 @@
         <div class="cell -3of12">
           <div class="menu">
             <%nav.map(function(n) {
-              %><a class="menu-item" href="<%=n.url%>"><i style="width:16px;" class="fa fa-<%=n.icon%>"></i><%=n.name%><div class="pull-right">»</div></a><%
+              %><a class="menu-item" href="<%=n.url%>"><i class="fa facenter fa-<%=n.icon%>"></i><%=n.name%><div class="pull-right">»</div></a><%
             })%>
           </div>
         </div>
