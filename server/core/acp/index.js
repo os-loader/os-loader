@@ -32,6 +32,41 @@ sysel=[
     v:["arch", "debian", "android", "other"]
   }
 ];
+chel=[
+  {
+    id:"for",
+    type:"hidden",
+    name:"System ID - DO NOT CHANGE!"
+  },
+  {
+    id:"name",
+    type:"string"
+  },
+  {
+    id:"desc",
+    type:"long"
+  },
+  {
+    id:"beta",
+    type:"bool"
+  },
+  {
+    id:"stable",
+    type:"bool"
+  },
+  /*{
+    id:"hooks.install",
+    type:"object",
+  },
+  {
+    id:"hooks.update",
+    type:"object",
+  },
+  {
+    id:"hooks.remove",
+    type:"object",
+  },*/
+]
 
 const b=require("core/backend");
 backend=new b(config);
@@ -39,7 +74,26 @@ backend=new b(config);
 
 function bparse(b,c) {
   var o={};
+  c.map(function(e) {
+    if (e.type=="bool"&&!b[e.id]) b[e.id]=false;
+  });
   for (var p in b) {
+    var t=c.filter(function(e) {
+      return e.id==p?e:null;
+    }).shift().type;
+    var i;
+    switch(t) {
+      case "string":
+      case "long":
+      case "hidden":
+        i=b[p];
+        break;
+      case "bool":
+        i=(b[p]||"off")=="on";
+        break;
+      default:
+        console.warn("skipping "+p+" with unkown type "+t);
+    }
     if (p.indexOf(".")!=-1) {
       var s=p.split(".");
       var f=s.pop();
@@ -47,10 +101,10 @@ function bparse(b,c) {
       s.map(function(n) {
         d=d[n]||{};
       });
-      d[f]=b[p];
+      d[f]=i;
       o[s.shift()]=d;
     } else {
-      o[p]=b[p];
+      o[p]=i;
     }
   }
   c.map(function(e) {
@@ -58,11 +112,11 @@ function bparse(b,c) {
       var s=e.id.split(".");
       var d=o;
       s.map(function(n) {
-        if (!d[n]) throw new Error("Parameter "+e.id+" missing!");
+        if (typeof d[n] == "undefined") throw new Error("Parameter "+e.id+" missing!");
         d=d[n];
       });
     } else {
-      if (!o[e.id]) throw new Error("Parameter "+e.id+" missing!");
+      if (typeof o[e.id] == "undefined") throw new Error("Parameter "+e.id+" missing!");
     }
   });
   return o;
@@ -133,15 +187,18 @@ app.post("/Systems/new",function(req,res,next) {
     res.redirect(req.originalUrl);
   }
 });
+function sysnav(r,a) {
+  return a?[].concat(sysnav(r),a):[
+    {name:"Back",icon:"arrow-left",url:"/admin/Systems"},
+    {name:r.name,icon:"desktop",url:"/admin/Systems/"+r._id},
+    {name:"Channels",icon:"tag",url:"/admin/sys/"+r._id+"/Channels/"}
+  ]
+}
 app.get("/Systems/:id",function(req,res,next) {
   System.findOne({_id:req.params.id},function(e,r) {
     if (e) return next(e);
     try {
-      res.render("new",{url:req.originalUrl,n:false,el:cparse(r,sysel),name:r.name,titel:r.name+" - Systems",nav:[
-        {name:"Back",icon:"arrow-left",url:"/admin/Systems"},
-        {name:r.name,icon:"desktop",url:"/admin/Systems/"+r._id},
-        {name:"Channels",icon:"tag",url:"/admin/"+r._id+"/Channels/"}
-      ]});
+      res.render("new",{url:req.originalUrl,n:false,el:cparse(r,sysel),name:r.name,titel:r.name+" - Systems",nav:sysnav(r)});
     } catch(e) {
       req.flash("error",e.toString());
       res.redirect("/admin/Systems");
@@ -167,4 +224,44 @@ app.post("/Systems/:id",function(req,res,next) {
     }
   });
 });
+
+app.use("/sys/:id",function(req,res,next) {
+  System.findOne({_id:req.params.id},function(e,r) {
+    if (e) return next(e);
+    req.sys=r;
+    var o=res.render.bind(res);
+    res.render=function(a,b,c) {
+      b.nav=b.nav||sysnav(r);
+      return o(a,b,c);
+    }
+    return next();
+  });
+});
+
+app.get("/sys/:id/Channels",function(req,res,next) {
+  r=req.sys;
+  Channel.find({for:r._id},function(e,c) {
+    if (e) return next(e);
+    res.render("channels",{title:r.name+" - Channels",channels:c,sys:r});
+  });
+});
+
+app.get("/sys/:id/Channels/new",function(req,res) {
+  r=req.sys;
+  res.render("new",{url:req.originalUrl,n:true,f:r._id,el:chel,name:"Channel",titel:"New Channel"});
+});
+
+app.post("/sys/:id/Channels/new",function(req,res,next) {
+  try {
+    new Channel(bparse(req.body,chel)).save(function(e,s) {
+      if (e) return next(e);
+      req.flash("success","Saved!");
+      res.redirect(req.originalUrl.replace("new",s._id));
+    });
+  } catch(e) {
+    req.flash("error",e.toString());
+    res.redirect(req.originalUrl);
+  }
+});
+
 module.exports=app;

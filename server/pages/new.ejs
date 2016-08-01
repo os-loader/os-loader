@@ -1,3 +1,11 @@
+<%
+if (typeof f !="undefined") {
+  el=el.map(function(e) {
+    if (e.id=="for") e.value=f;
+    return e;
+  });
+}
+%>
 <form class="form" method="POST" action="<%=url%>">
   <%el.map(function(e) {
     switch(e.type) {
@@ -20,6 +28,19 @@
       case "number":
         %>
         <h2>WIP</p>
+        <%
+        break;
+      case "bool":
+        %>
+        <fieldset class="form-group form-textarea">
+          <label for="<%=e.id%>"><%=e.name?e.name.toUpperCase():e.id.toUpperCase()%>:</label>
+          <input id="<%=e.id%>" type="checkbox" name="<%=e.id%>" rows="5" class="form-control" <%if (e.value) {%>checked<%}%>>
+        </fieldset>
+        <%
+        break;
+      case "hidden":
+        %>
+        <input id="<%=e.id%>" type="text" name="<%=e.id%>" style="display:none !important;" value="<%=e.value%>">
         <%
         break;
       case "list":

@@ -1,0 +1,19 @@
+<% channels.map(function(c) {
+  %>
+  <div class="grid">
+    <div class="cell -12of12">
+      <div class="card" style="margin:8px 48px 32px 48px;background:<% if (c.beta) {%>yellow<%} else if (c.stable) {%>green<%} else {%>grey<%} %>">
+        <a href="/admin/sys/<%=sys._id%>/Channels/<%=sys._id%>">
+          <header class="card-header"><%=c.name%></header>
+        </a>
+        <div class="card-content">
+          <div class="inner">
+            <%=c.desc%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+})%>
+<a href="/admin/sys/<%=sys._id%>/Channels/new"><button class="btn btn-primary">Create New</button></a>
