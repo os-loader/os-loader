@@ -1,0 +1,3 @@
+use-agent
+default-cache-ttl 18000
+max-cache-ttl 86400
