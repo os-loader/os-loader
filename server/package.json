@@ -1,6 +1,6 @@
 {
   "name": "os-loader-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A Server to serve os-loader repo info and images",
   "main": "index.js",
   "scripts": {

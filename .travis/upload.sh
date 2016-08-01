@@ -14,6 +14,8 @@ mv $main/.travis/dput $HOME/.dput.cf
 
 ver=0.0.1-$(git rev-list --all --count)
 
+gpg-agent --allow-preset-passphrase
+/usr/lib/gnupg2/gpg-preset-passphrase -P $keypass --preset DB188D99D38892BFC45D02FFFB993D65851C42EF
 echo $keypass | gpg2 --passphrase-fd 0 --allow-secret-key-import --import $main/.travis/upload.key
 cd /tmp/os-loader-builddir/gui
 export EDITOR=$main/.travis/dch.sh

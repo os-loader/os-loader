@@ -1,6 +1,6 @@
 {
   "name": "os-loader",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB",
   "main": "index.js",
   "scripts": {

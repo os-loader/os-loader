@@ -52,6 +52,7 @@ addons:
     - grub2
     - dput
     - gnupg2
+    - gnupg-agent
     - devscripts
 env:
   global:

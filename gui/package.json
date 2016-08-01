@@ -1,6 +1,6 @@
 {
   "name": "os-loader-settings",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A tool for managing the OS Loader USB",
   "main": "main.js",
   "scripts": {
