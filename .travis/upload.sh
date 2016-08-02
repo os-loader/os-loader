@@ -14,6 +14,7 @@ mv $main/.travis/dput $HOME/.dput.cf
 
 ver=0.0.1-$(git rev-list --all --count)
 
+gpg2 --keyserver keyserver.ubuntu.com --recv-keys 4DE177C6
 gpg2 --allow-secret-key-import --import $main/.travis/upload.key
 cd /tmp/os-loader-builddir/gui
 export EDITOR=$main/.travis/dch.sh
