@@ -56,3 +56,9 @@ bower_components
 server/data/repo
 server/data/ipfs-repo
 config.json
+
+# Snap
+parts
+prime
+stage
+os-loader*_*_*.snap

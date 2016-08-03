@@ -1,0 +1,17 @@
+name: os-loader-server
+version: 0.0.1
+summary: OS Loader Image Server
+description: Allows you to serve a repo with links to images, patches and more
+confinement: devmode  # use "strict" to enforce system access only via declared interfaces
+
+parts:
+  main:
+    plugin: make
+    source: .
+#    my-part:  # Replace with a part name of your liking
+        # Get more information about plugins by running
+        # snapcraft help plugins
+        # and more information about the available plugins
+        # by running
+        # snapcraft list-plugins
+#        plugin: nil
