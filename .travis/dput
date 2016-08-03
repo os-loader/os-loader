@@ -1,6 +1,0 @@
-[daily]
-fqdn = ppa.launchpad.net
-method = ftp
-incoming = ~mkg20001/ubuntu/os-loader-daily/
-login = anonymous
-allow_unsigned_uploads = 0
