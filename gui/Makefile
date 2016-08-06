@@ -14,7 +14,7 @@ distbuild: # This is seperate because it deletes/changes some files
 	rm -rf app deb-files node_modules Makefile test
 	cd scripts;find -type f -iname "*.sh" | xargs "bash" "../minify-sh.sh"
 	npm i --production
-	npm i electron-packager
+	npm i mkg20001/electron-packager#patch-1
 	sed -i "s/dd='app'/dd='dist'/g" main.js
 	npm run build
 	mv $(OUTDIR) ../
