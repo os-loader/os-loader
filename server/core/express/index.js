@@ -92,7 +92,10 @@ app.get("/",function(req,res) {
 });
 
 app.get("/About",function(req,res) {
-  res.render("about",{title:"About",p:pjson,about:config.about});
+  System.find({},function(e,oses) {
+    if (e) oses=["(failed to fetch)"]; else oses=oses.map(function(o) {return o.name;});
+    res.render("about",{title:"About",oses:oses,p:pjson,about:config.about});
+  });
 });
 
 app.post('/Register', function(req, res) {
