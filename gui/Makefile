@@ -4,8 +4,18 @@ build:
 	if ! [ -d node_modules ]; then npm i; fi
 	if ! [ -d app/bower_components ]; then bower i; fi
 	rm -rf os-loader-settings* buildtmp deb
-	cp -r ./ ../gui.cp
-	mv ../gui.cp ./buildtmp
+	
+	mkdir -p ./buildtmp
+	#cp -r ./{core,dist,scripts,package.json,w.js,Makefile,minify-sh.sh,main.js} ./buildtmp/
+	cp -r ./core ./buildtmp/
+	cp -r ./dist ./buildtmp/
+	cp -r ./scripts ./buildtmp/
+	cp ./package.json ./buildtmp/
+	cp ./w.js ./buildtmp/
+	cp ./Makefile ./buildtmp/
+	cp ./minify-sh.sh ./buildtmp/
+	cp ./main.js ./buildtmp/
+
 	rm ./buildtmp/core/repo
 	cp -r ../server/core/repo ./buildtmp/core/repo
 	make -C buildtmp distbuild BDIR=$(BDIR)
