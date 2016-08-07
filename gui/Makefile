@@ -3,7 +3,7 @@ OUTDIR="os-loader-settings-linux-x64"
 build:
 	if ! [ -d node_modules ]; then npm i; fi
 	if ! [ -d app/bower_components ]; then bower i; fi
-	rm -rf os-loader-settings* buildtmp
+	rm -rf os-loader-settings* buildtmp deb
 	cp -r ./ ../gui.cp
 	mv ../gui.cp ./buildtmp
 	rm ./buildtmp/core/repo
@@ -23,11 +23,11 @@ watch:
 	sudo nodemon /usr/bin/npm run startdev --ext js,html,sh
 deb: build
 	cp -r deb-files $(BDIR)/gui/
-	cp -r $(OUTDIR) $(BDIR)/gui/src
+	mv $(OUTDIR) $(BDIR)/gui/src
 	make -C $(BDIR)/gui deb
 sign-deb: build
 	rm -rf ./deb
 	mkdir -p ./deb/
 	cp -r deb-files ./deb/gui/
-	cp -r $(OUTDIR) ./deb/gui/src
-	make -C ./deb/gui deb-signed KEYID=$(KEY)
+	mv $(OUTDIR) ./deb/gui/src
+	make -C ./deb/gui deb-signed KEYID=$(KEY) DPUT_TARGET=$(PPA) DAILY=$(DAILY)

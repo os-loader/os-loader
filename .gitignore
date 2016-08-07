@@ -57,6 +57,9 @@ server/data/repo
 server/data/ipfs-repo
 config.json
 
+# Build
+deb
+
 # Snap
 parts
 prime
