@@ -25,3 +25,9 @@ deb: build
 	cp -r deb-files $(BDIR)/gui/
 	cp -r $(OUTDIR) $(BDIR)/gui/src
 	make -C $(BDIR)/gui deb
+sign-deb: build
+	rm -rf ./deb
+	mkdir -p ./deb/
+	cp -r deb-files ./deb/gui/
+	cp -r $(OUTDIR) ./deb/gui/src
+	make -C ./deb/gui deb-signed KEYID=$(KEY)

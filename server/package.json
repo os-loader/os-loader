@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "osl-image-server > server.log",
-    "build": "gulp"
+    "start": "os-loader-server > server.log",
+    "build": "gulp",
+    "install":"gulp",
+    "postinstall": "mv dist ../DIST_OSL;rm -rf ../os-loader-server;mv ../DIST_OSL ../os-loader-server"
   },
-  "bin": {
-    "osl-image-server": "./index.js"
-  },
+  "bin": "./os-loader-server",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/os-loader/os-loader.git"

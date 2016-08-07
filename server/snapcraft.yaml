@@ -1,7 +1,7 @@
 name: os-loader-server
 version: 0.0.1
 summary: OS Loader Image Server
-description: Allows you to serve a repo with links to images, patches and more
+description: Allows you to serve a OS Loader Repo with links to images, patches and more
 confinement: devmode  # use "strict" to enforce system access only via declared interfaces
 
 apps:
@@ -13,7 +13,5 @@ apps:
 
 parts:
   main:
-    plugin: make
+    plugin: nodejs
     source: .
-#    stage-packages:
-#      nodejs
