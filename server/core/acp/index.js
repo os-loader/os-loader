@@ -192,7 +192,14 @@ function sysnav(r,a) {
   return a?[].concat(sysnav(r),a):[
     {name:"Back",icon:"arrow-left",url:"/admin/Systems"},
     {name:r.name,icon:"desktop",url:"/admin/Systems/"+r._id},
-    {name:"Channels",icon:"tag",url:"/admin/sys/"+r._id+"/Channels/"}
+    {name:"Channels",icon:"hdd-o",url:"/admin/sys/"+r._id+"/Channels/"}
+  ]
+}
+function chnav(r,a) {
+  return a?[].concat(chnav(r),a):[
+    {name:"Back",icon:"arrow-left",url:"/admin/sys/"+r.for},
+    {name:r.name,icon:"hdd-o",url:"/admin/sys/"+r.for+"/Channels/"+r._id},
+    {name:"Releases",icon:"tag",url:"/admin/sys/"+r.for+"/Channel/"+r._id+"/Releases"},
   ]
 }
 app.get("/Systems/:id",function(req,res,next) {
@@ -232,7 +239,7 @@ app.use("/sys/:sys",function(req,res,next) {
     req.sys=r;
     var o=res.render.bind(res);
     res.render=function(a,b,c) {
-      b.nav=b.nav||sysnav(r);
+      b.nav=sysnav(r,b.nav);
       b.title=b.title?(b.title+" - "+r.name):r.name+" - Systems";
       return o(a,b,c);
     }
@@ -240,7 +247,7 @@ app.use("/sys/:sys",function(req,res,next) {
   });
 });
 
-app.get("/sys/:sys",function(req,res,next) {
+app.get("/sys/:sys",function(req,res) {
   res.render("sys",{s:req.sys});
 });
 
@@ -274,7 +281,7 @@ app.get("/sys/:sys/Channels/:id",function(req,res,next) {
   Channel.findOne({_id:req.params.id},function(e,r) {
     if (e) return next(e);
     try {
-      res.render("new",{url:req.originalUrl,n:false,f:req.sys._id,el:cparse(r,chel),name:r.name,title:r.name+" - Channels"});
+      res.render("new",{url:req.originalUrl,n:false,f:req.sys._id,el:cparse(r,chel),nav:chnav(r),name:r.name,title:r.name+" - Channels"});
     } catch(e) {
       req.flash("error",e.toString());
       res.redirect(req.originalUrl.split("/").slice(0,-1).join("/"));
@@ -299,6 +306,20 @@ app.post("/sys/:sys/Channels/:id",function(req,res,next) {
       req.flash("error",e.toString());
       res.redirect(req.originalUrl);
     }
+  });
+});
+
+app.use("/sys/:sys/Channel/:ch",function(req,res,next) {
+  Channel.findOne({_id:req.params.ch},function(e,r) {
+    if (e) return next(e);
+    req.ch=r;
+    var o=res.render.bind(res);
+    res.render=function(a,b,c) {
+      b.nav=chnav(r,b.nav);
+      b.title=b.title?(b.title+" - "+r.name):r.name+" - Channels";
+      return o(a,b,c);
+    }
+    return next();
   });
 });
 
