@@ -8,7 +8,7 @@
     "start": "os-loader-server > server.log",
     "build": "gulp",
     "install":"gulp",
-    "postinstall": "mv dist ../DIST_OSL;rm -rf ../os-loader-server;mv ../DIST_OSL ../os-loader-server"
+    "postinstall": "if ! [ -e \"./.ignore-compile\" ]; then mv dist ../DIST_OSL;rm -rf ../os-loader-server;mv ../DIST_OSL ../os-loader-server; fi"
   },
   "bin": "./os-loader-server",
   "repository": {

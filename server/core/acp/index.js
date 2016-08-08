@@ -174,7 +174,7 @@ app.get("/Systems",function(req,res) {
   });
 });
 app.get("/Systems/new",function(req,res) {
-  res.render("new",{url:req.originalUrl,n:true,el:sysel,name:"System",titel:"New System"});
+  res.render("new",{url:req.originalUrl,n:true,el:sysel,name:"System",title:"New System"});
 });
 app.post("/Systems/new",function(req,res,next) {
   try {
@@ -199,7 +199,7 @@ app.get("/Systems/:id",function(req,res,next) {
   System.findOne({_id:req.params.id},function(e,r) {
     if (e) return next(e);
     try {
-      res.render("new",{url:req.originalUrl,n:false,el:cparse(r,sysel),name:r.name,titel:r.name+" - Systems",nav:sysnav(r)});
+      res.render("new",{url:req.originalUrl,n:false,el:cparse(r,sysel),name:r.name,title:r.name+" - Systems",nav:sysnav(r)});
     } catch(e) {
       req.flash("error",e.toString());
       res.redirect("/admin/Systems");
@@ -240,17 +240,21 @@ app.use("/sys/:sys",function(req,res,next) {
   });
 });
 
+app.get("/sys/:sys",function(req,res,next) {
+  res.render("sys",{s:req.sys});
+});
+
 app.get("/sys/:sys/Channels",function(req,res,next) {
   r=req.sys;
   Channel.find({for:r._id},function(e,c) {
     if (e) return next(e);
-    res.render("channels",{title:r.name+" - Channels",channels:c,sys:r});
+    res.render("channels",{title:"Channels",channels:c,sys:r});
   });
 });
 
 app.get("/sys/:sys/Channels/new",function(req,res) {
   r=req.sys;
-  res.render("new",{url:req.originalUrl,n:true,f:r._id,el:chel,name:"Channel",titel:"New Channel"});
+  res.render("new",{url:req.originalUrl,n:true,f:r._id,el:chel,name:"Channel",title:"New Channel"});
 });
 
 app.post("/sys/:sys/Channels/new",function(req,res,next) {
