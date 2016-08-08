@@ -1,6 +1,8 @@
 #The final Makefile
 BDIR="/tmp/os-loader-builddir"
 VERSION=$(shell git rev-parse HEAD)
+ipfs:
+	make -C go-ipfs distbuild BDIR=$(BDIR)
 image: builddir os-gui theme debs
 	sudo make -C image build BDIR=$(BDIR)
 debs:
@@ -14,7 +16,7 @@ builddir:
 	echo "git" > $(BDIR)/CHANNEL
 theme:
 	make -C plymouth-theme BDIR=$(BDIR) cp
-os-gui:
+os-gui: ipfs
 	make -C gui BDIR=$(BDIR) deb
 server:
 	make -C server

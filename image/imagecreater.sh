@@ -270,7 +270,7 @@ path-include=/usr/share/doc/*/copyright
   uitools="plymouth plymouth-label openbox xorg lightdm dmz-cursor-theme feh" # display manager, window manager, etc.
   othertools="bash sudo menu curl wget apt-transport-https" # others
   chinstall $kernelandboot $liveboot $uitools $othertools
-  
+
   chstd "echo $commit > /version"
   chstd 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
   VERSION=node_6.x
