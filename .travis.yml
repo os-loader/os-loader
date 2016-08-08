@@ -14,7 +14,9 @@ before_script:
 - bash .travis/prepare.sh
 sudo: required
 script:
-- make
+- make builddir
+- make image
+- make server
 - sudo -E make tests
 dist: trusty
 deploy:

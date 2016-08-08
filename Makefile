@@ -3,7 +3,7 @@ BDIR="/tmp/os-loader-builddir"
 VERSION=$(shell git rev-parse HEAD)
 ipfs:
 	make -C go-ipfs distbuild BDIR=$(BDIR)
-image: builddir os-gui theme debs
+image: os-gui theme debs
 	sudo make -C image build BDIR=$(BDIR)
 debs:
 	#Collect built .deb files
