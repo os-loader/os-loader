@@ -9,6 +9,7 @@ build:
 	#cp -r ./{core,dist,scripts,package.json,w.js,Makefile,minify-sh.sh,main.js} ./buildtmp/
 	cp -r ./core ./buildtmp/
 	cp -r ./scripts ./buildtmp/
+	cp -r ./node_modules ./buildtmp/
 	cp ./package.json ./buildtmp/
 	cp ./w.js ./buildtmp/
 	cp ./Makefile ./buildtmp/
