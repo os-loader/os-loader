@@ -139,8 +139,8 @@
           if (e) return swal("An Error happend while loading the USB Devices...",e.toString(),"error");
           if (!app.tempB.usb) return;
           app.usbdev=r;
-          if (app.usbdev.length) if (app.step=="Plug-in some USB Sticks..."||app.step=="Looking for USB-Sticks...") app.step="Select an USB";
-          if (!app.usbdev.length) {app.step="Plug-in some USB Sticks...";app.next=false;}
+          if (app.usbdev.length) if (app.step=="Plug-in some USB Devices..."||app.step=="Looking for USB Devices...") app.step="Select an USB";
+          if (!app.usbdev.length) {app.step="Plug-in some USB Devices...";app.next=false;}
           setTimeout(getUSB,1000);
         });
       });
@@ -228,7 +228,7 @@
     page("/install-select",function() {
       app.usbdev=[];
       app.route="install-select";
-      app.step="Looking for USB-Sticks..."
+      app.step="Looking for USB Devices..."
       setFocus(app.route);
       app.tempB.usb=true;
       getUSB();
