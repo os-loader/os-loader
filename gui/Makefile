@@ -9,7 +9,6 @@ build:
 	#cp -r ./{core,dist,scripts,package.json,w.js,Makefile,minify-sh.sh,main.js} ./buildtmp/
 	cp -r ./core ./buildtmp/
 	cp -r ./scripts ./buildtmp/
-	cp -r ./node_modules ./buildtmp/
 	cp ./package.json ./buildtmp/
 	cp ./w.js ./buildtmp/
 	cp ./Makefile ./buildtmp/
@@ -20,7 +19,8 @@ build:
 	cp -r ../server/core/repo ./buildtmp/core/repo
 	make -C buildtmp distbuild BDIR=$(BDIR)
 distbuild: # This is seperate because it deletes/changes some files
-	npm run gulp
+	cd ..;npm run gulp
+	mv ../dist ./
 	rm -rf app deb-files node_modules Makefile test
 	cd scripts;find -type f -iname "*.sh" | xargs "bash" "../minify-sh.sh"
 	npm i --production
