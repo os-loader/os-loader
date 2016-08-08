@@ -1,5 +1,5 @@
 //Admin Control Panel Part
-
+/*jshint loopfunc: true */
 System=require("models/system");
 Channel=require("models/channel");
 Version=require("models/version");
@@ -86,6 +86,7 @@ function bparse(b,c) {
       case "string":
       case "long":
       case "hidden":
+      case "list":
         i=b[p];
         break;
       case "bool":
@@ -134,7 +135,7 @@ function cparse(b,c) {
       e.value=d;
       return e;
     } else {
-      if (!b[e.id]) throw new Error("Parameter "+e.id+" missing!");
+      if (typeof b[e.id] == "undefined") throw new Error("Parameter "+e.id+" missing!");
       e.value=b[e.id];
       return e;
     }
@@ -232,6 +233,7 @@ app.use("/sys/:sys",function(req,res,next) {
     var o=res.render.bind(res);
     res.render=function(a,b,c) {
       b.nav=b.nav||sysnav(r);
+      b.title=b.title?(b.title+" - "+r.name):r.name+" - Systems";
       return o(a,b,c);
     }
     return next();
@@ -268,10 +270,30 @@ app.get("/sys/:sys/Channels/:id",function(req,res,next) {
   Channel.findOne({_id:req.params.id},function(e,r) {
     if (e) return next(e);
     try {
-      res.render("new",{url:req.originalUrl,n:false,f:r._id,el:cparse(r,chel),name:r.name,titel:r.name+" - Channels"});
+      res.render("new",{url:req.originalUrl,n:false,f:req.sys._id,el:cparse(r,chel),name:r.name,title:r.name+" - Channels"});
     } catch(e) {
       req.flash("error",e.toString());
       res.redirect(req.originalUrl.split("/").slice(0,-1).join("/"));
+    }
+  });
+});
+
+app.post("/sys/:sys/Channels/:id",function(req,res,next) {
+  Channel.findOne({_id:req.params.id},function(e,r) {
+    if (e) return next(e);
+    try {
+      var o=bparse(req.body,chel);
+      for (var p in o) {
+        r[p]=o[p];
+      }
+      r.save(function(e) {
+        if (e) return next(e);
+        req.flash("success","Saved!");
+        res.redirect(req.originalUrl);
+      });
+    } catch(e) {
+      req.flash("error",e.toString());
+      res.redirect(req.originalUrl);
     }
   });
 });
