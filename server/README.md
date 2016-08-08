@@ -10,7 +10,12 @@ This server will be used to serve:
 
 First install all dependencies
 ```npm i```
-and start the Server
+and start the Server with
 ```npm start```
 
-__(Soon More...)__
+Now go to ```http://localhost:8190/Register``` and register an Account.
+(The first registered Account is always an Admin Account)
+
+You can now create an Operating System to be hosted on this Repo.
+
+__(More soon in the Wiki...)__

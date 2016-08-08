@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/os-loader/os-loader.svg?branch=master)](https://travis-ci.org/os-loader/os-loader)
 [![TODOs](https://todofy.org/b/os-loader/os-loader)](https://todofy.org/r/os-loader/os-loader)
 
-Multiple Portable and Live Operating Systems isolated from each other on a single HDD/USB
+Install Operating Systems just like Software
 
 ![Screenshot](/OS-Loader.png?raw=true)
 
@@ -29,11 +29,11 @@ You need the following installed to Build the Image:
  - debhelper
  - coreutils
 
- nodeJS apt repository: ```curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -```
+nodeJS apt repository: ```curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -```
 
-Install with: ```sudo apt install make squashfs-tools genisoimage debootstrap schroot cpio gzip tar isolinux debhelper coreutils nodejs```
+Install dependencies: ```sudo apt install make squashfs-tools genisoimage debootstrap schroot cpio gzip tar isolinux debhelper coreutils nodejs```
 
 # Build
 Simply use ```make image``` or ```make server```
 
-The Default Build-dir is ```/tmp/os-loader-builddir```, but you can change it using ```make image BDIR=/customdir``` (include full path)
+The default Build-Dir is ```/tmp/os-loader-builddir```, but you can change it using ```make image BDIR=/customdir``` (include the full path)

@@ -1,6 +1,8 @@
 # os-loader-gui
-This is the GUI used to setup everything.
+This is the GUI for OS Loader
 
-It will run on the Desktop as well as on the media/iso.
+Here you can install and change OS Loader
 
-Written in Election, Polymer, nodeJS and bash
+It runs on the Desktop as well as on the media/iso
+
+Written in Electron, Polymer, nodeJS and bash

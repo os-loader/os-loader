@@ -7,4 +7,4 @@ No Windows is commercial Software.
 
 Yes, the OpenSource version will.
 
-But we plan to add a Enterprise version with Windows Support.
+But we may plan to add a Enterprise Version with Windows Support.
