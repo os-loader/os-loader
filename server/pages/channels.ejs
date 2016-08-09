@@ -8,7 +8,11 @@
         </a>
         <div class="card-content">
           <div class="inner">
-            <%=c.desc%>
+            <%
+            c.desc.split("\n").map(function(d) {
+              %><%=d%><br><%
+            });
+            %>
           </div>
         </div>
       </div>
