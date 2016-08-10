@@ -1,5 +1,5 @@
 
-var VersionSchema = mongoose.Schema({
+var ReleaseSchema = mongoose.Schema({
   for:String,
   date:Date,
   name:String,
@@ -15,4 +15,4 @@ var VersionSchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Version', VersionSchema);
+module.exports = mongoose.model('Release', ReleaseSchema);

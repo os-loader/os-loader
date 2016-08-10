@@ -2,7 +2,7 @@
 /*jshint loopfunc: true */
 System=require("models/system");
 Channel=require("models/channel");
-Version=require("models/version");
+Release=require("models/release");
 
 sysel=[
   {
@@ -67,6 +67,48 @@ chel=[
     type:"object",
   },*/
 ]
+relel=[
+  {
+    id:"for",
+    type:"hidden",
+    name:"Channel ID - DO NOT CHANGE!"
+  },
+  {
+    id:"name",
+    name:"Version (X.X.X)",
+    type:"string"
+  },
+  {
+    id:"codename",
+    type:"string"
+  },
+  {
+    id:"upgradeNext",
+    name:"Auto Upgrade",
+    type:"bool"
+  },
+  {
+    id:"upgradeTo",
+    name:"...to",
+    type:"string"
+  },
+  /*{
+    id:"hooks.install",
+    type:"object",
+  },
+  {
+    id:"hooks.update",
+    type:"object",
+  },
+  {
+    id:"hooks.remove",
+    type:"object",
+  },
+  {
+    id:"hooks.patches",
+    type:"object",
+  },*/
+];
 
 const b=require("core/backend");
 backend=new b(config);
@@ -202,6 +244,12 @@ function chnav(r,a) {
     {name:"Releases",icon:"tag",url:"/admin/sys/"+r.for+"/Channel/"+r._id+"/Releases"},
   ]
 }
+function relnav(r,r2,a) {
+  return a?[].concat(chnav(r,r2),a):[
+    {name:"Back",icon:"arrow-left",url:"/admin/sys/"+r2._id+"/Channel/"+r.for},
+    {name:r.name,icon:"tag",url:"/admin/sys/"+r2._id+"/Channel/"+r.for+"/Release/"+r._id},
+  ]
+}
 app.get("/Systems/:id",function(req,res,next) {
   System.findOne({_id:req.params.id},function(e,r) {
     if (e) return next(e);
@@ -320,6 +368,64 @@ app.use("/sys/:sys/Channel/:ch",function(req,res,next) {
       return o(a,b,c);
     }
     return next();
+  });
+});
+
+app.get("/sys/:sys/Channel/:ch/Releases",function(req,res) {
+  r=req.ch;
+  Release.find({for:r._id},function(e,c) {
+    if (e) return next(e);
+    res.render("releases",{title:"Releases",releases:c,sys:req.sys,ch:r});
+  });
+});
+
+app.get("/sys/:sys/Channel/:ch/Releases/new",function(req,res) {
+  r=req.ch;
+  res.render("new",{url:req.originalUrl,n:true,f:r._id,el:relel,name:"Release",title:"New Release"});
+});
+
+app.post("/sys/:sys/Channel/:ch/Releases/new",function(req,res,next) {
+  try {
+    new Release(bparse(req.body,relel)).save(function(e,s) {
+      if (e) return next(e);
+      req.flash("success","Saved!");
+      res.redirect(req.originalUrl.replace("new",s._id));
+    });
+  } catch(e) {
+    req.flash("error",e.toString());
+    res.redirect(req.originalUrl);
+  }
+});
+
+app.get("/sys/:sys/Channel/:ch/Releases/:id",function(req,res,next) {
+  Release.findOne({_id:req.params.id},function(e,r) {
+    if (e) return next(e);
+    try {
+      res.render("new",{url:req.originalUrl,n:false,f:req.sys._id,el:cparse(r,relel),nav:relnav(r,req.sys),name:r.name,title:r.name+" - Releases"});
+    } catch(e) {
+      req.flash("error",e.toString());
+      res.redirect(req.originalUrl.split("/").slice(0,-1).join("/"));
+    }
+  });
+});
+
+app.post("/sys/:sys/Channel/:ch/Releases/:id",function(req,res,next) {
+  Release.findOne({_id:req.params.id},function(e,r) {
+    if (e) return next(e);
+    try {
+      var o=bparse(req.body,relel);
+      for (var p in o) {
+        r[p]=o[p];
+      }
+      r.save(function(e) {
+        if (e) return next(e);
+        req.flash("success","Saved!");
+        res.redirect(req.originalUrl);
+      });
+    } catch(e) {
+      req.flash("error",e.toString());
+      res.redirect(req.originalUrl);
+    }
   });
 });
 

@@ -1,0 +1,21 @@
+<% releases.map(function(r) {
+  %>
+  <div class="grid">
+    <div class="cell -12of12">
+      <div class="card" style="margin:8px 48px 32px 48px;background:<% if (ch.beta) {%>yellow<%} else if (ch.stable) {%>green<%} else {%>grey<%} %>">
+        <a href="/admin/sys/<%=sys._id%>/Channel/<%=ch._id%>/Releases/<%=r._id%>">
+          <header class="card-header"><%=r.name%></header>
+        </a>
+        <div class="card-content">
+          <div class="inner">
+            Version: <%=r.name%><br>
+            Codename: "<%=r.codename%>"<br>
+            Release Time: N/A
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+})%>
+<a href="/admin/sys/<%=sys._id%>/Channel/<%=ch._id%>/Releases/new"><button class="btn btn-primary">Create New</button></a>
