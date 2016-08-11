@@ -6,7 +6,7 @@ function backend(config) {
   newLogger("backend",self);
   self.info("Backend Starting...");
 
-  //IPSF
+  //IPFS
   self.ipfs=new IPFS(pth.join(maindir,config.repo.ipfs.bin),pth.join(maindir,config.repo.ipfs.config));
   self.ipfs.start();
 

@@ -19,7 +19,10 @@
     <div class="card">
       <header class="card-header">Server Status</header>
       <div class="card-content">
-        <div class="inner">Unkown</div>
+        <div class="inner">
+          Tasks in Queue: <%=status.server.queue%><br>
+          Status: <%=status.server.active?"Executing Tasks...":"Idle"%>
+        </div>
       </div>
     </div>
   </div>
