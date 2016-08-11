@@ -209,6 +209,11 @@ app.use(function(req,res,next) {
 app.get("/",function(req,res) {
   res.render("admin",{title:"Admin Dashboard"});
 });
+
+app.get("/repo",function(req,res) {
+  res.render("repo",{title:"Repo Dashboard",config:backend.repocfg,updating:backend.repo.updating,lu:backend.repo.lastupdate});
+});
+
 app.get("/Systems",function(req,res) {
   System.find({},function(e,r) {
     if (e) return next(e);
@@ -233,7 +238,8 @@ app.post("/Systems/new",function(req,res,next) {
 function sysnav(r,a) {
   return a?[].concat(sysnav(r),a):[
     {name:"Back",icon:"arrow-left",url:"/admin/Systems"},
-    {name:r.name,icon:"desktop",url:"/admin/Systems/"+r._id},
+    {name:r.name,icon:"desktop",url:"/admin/sys/"+r._id},
+    {name:"Edit",icon:"pencil",url:"/admin/Systems/"+r._id},
     {name:"Channels",icon:"hdd-o",url:"/admin/sys/"+r._id+"/Channels/"}
   ]
 }
@@ -401,7 +407,7 @@ app.get("/sys/:sys/Channel/:ch/Releases/:id",function(req,res,next) {
   Release.findOne({_id:req.params.id},function(e,r) {
     if (e) return next(e);
     try {
-      res.render("new",{url:req.originalUrl,n:false,f:req.sys._id,el:cparse(r,relel),nav:relnav(r,req.sys),name:r.name,title:r.name+" - Releases"});
+      res.render("new",{url:req.originalUrl,n:false,f:req.ch._id,el:cparse(r,relel),nav:relnav(r,req.sys),name:r.name,title:r.name+" - Releases"});
     } catch(e) {
       req.flash("error",e.toString());
       res.redirect(req.originalUrl.split("/").slice(0,-1).join("/"));

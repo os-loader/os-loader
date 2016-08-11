@@ -1,9 +1,18 @@
 <div class="grid">
   <div class="cell -4of12 margin">
     <div class="card">
-      <header class="card-header">Repo Status</header>
+      <header class="card-header">Update Repository</header>
       <div class="card-content">
-        <div class="inner">Unkown</div>
+        <div class="inner">
+          <%if (updating) {
+            %>
+              <div class="btn btn-ghost">Updating...</div>
+            <% } else { %>
+              <div class="btn btn-success">Update</div>
+            <%
+          }%><br>
+          Last Update: <%=new Date(lu)%>
+        </div>
       </div>
     </div>
   </div>
@@ -38,16 +47,10 @@
 <div class="grid">
   <div class="cell -12of12">
     <div class="card" style="margin:8px 48px 32px 48px;">
-      <header class="card-header">Help & Resources</header>
+      <header class="card-header">Repo Config</header>
       <div class="card-content">
         <div class="inner">
-          <ul>
-            <li><a href="https://github.com/os-loader/os-loader/wiki">Docs</a></li>
-            <li><a href="https://github.com/os-loader/os-loader/issues">Support</a></li>
-            <li><a href="https://github.com/os-loader/os-loader/issues">Issues</a></li>
-            <li><a href="https://github.com/os-loader/os-loader/blob/master/FAQ.md">FAQ</a></li>
-            <li><a href="https://github.com/os-loader/os-loader/tree/master/server">Source Code</a></li>
-          </ul>
+          Output Directory: <%=maindir+"/"+config.out%>            
         </div>
       </div>
     </div>
