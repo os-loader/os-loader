@@ -5,6 +5,7 @@ init=bunyan.createLogger({name:"init"});
 init.info("Starting Up...");
 
 maindir=__dirname;
+w=require("w.js");
 
 const configDefaults={
   repo:{
@@ -21,6 +22,7 @@ const configDefaults={
 
 mongoose=require("mongoose");
 mongoose.connect("mongodb://localhost:27017/osl-image-server");
+uuid=require("node-uuid").v4;
 fs=require("fs");
 pth=require("path");
 ejs=require("ejs");

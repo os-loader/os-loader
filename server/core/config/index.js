@@ -35,7 +35,7 @@ function config(file,defaults) {
   }
   function write(c) {
     try {
-      jsonfile.writeFileSync(file,data,{spaces:2});
+      jsonfile.writeFileSync(file,data,data.__comment?{}:{spaces:2});
       self.log("Config file saved!");
     } catch(e) {
       self.error(e,"Config file save failed!");

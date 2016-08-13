@@ -4,7 +4,14 @@ function server(config) {
   var online=false;
   var loop=false;
   const tasks=[];
-  const count={uptime:new Date().getTime(),fails:0,sucess:0,total:0};
+  const count=new configFile("state.json",{
+    "__comment":"DO NOT EDIT! - Edit config.json instead",
+    uptime:0,
+    fails:0,
+    sucess:0,
+    total:0
+  });
+  count.uptime=new Date().getTime();
   function queue(name,func,trys,date) {
     if (!online) return online;
     var id=tasks.push({name:name,fc:func,trys:trys||1,date:date||new Date()});
@@ -29,22 +36,24 @@ function server(config) {
       tasks.push(t);
       return doloop();
     }
-    t.fc([t],function(err,res) {
-      if (err) {
-        self.error(err,"Task "+t.name+" failed with error");
-        t.trys--;
-        count.fails++;
-        count.total++;
-        if (t.trys) {
-          self.warn({task:t.name},"Try again");
-          tasks.push(t);
+    process.nextTick(function() { //MUST be async
+      t.fc([t],function(err,res) {
+        if (err) {
+          self.error(err,"Task "+t.name+" failed with error");
+          t.trys--;
+          count.fails++;
+          count.total++;
+          if (t.trys) {
+            self.warn({task:t.name},"Try again");
+            tasks.push(t);
+          }
+        } else {
+          count.sucess++;
+          count.total++;
+          self.info(res?res:t,"Task "+t.name+" finished!");
         }
-      } else {
-        count.sucess++;
-        count.total++;
-        self.info(res?res:t,"Task "+t.name+" finished!");
-      }
-      return doloop();
+        return doloop();
+      });
     });
   }
   function doOnline() {

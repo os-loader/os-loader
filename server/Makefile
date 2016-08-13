@@ -9,13 +9,13 @@ install:
 	cd $(DESTDIR);npm i --production
 	dir $(DESTDIR)
 watch: build
-	nodemon index.js -i config.json -i repo.json | bunyan
+	nodemon index.js -i config.json -i repo.json -i state.json | bunyan
 snap:
 	snapcraft clean
 	snapcraft
 	sudo snap install os-loader-server*.snap --devmode
 reset:
-	rm -f repo.json config.json
+	rm -f repo.json config.json state.json
 	rm -rf data
 	mongo osl-image-server --eval "db.dropDatabase()"
 	@echo ""

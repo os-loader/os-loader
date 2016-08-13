@@ -27,7 +27,7 @@ function repo(tmpdir,outdir,conf) {
     }
     // TODO: sign checksum.json
     fs.writeFileSync(pth.join(tmpdir,"checksum.json"),new Buffer(JSON.stringify(checksum)));
-    execSync("tar cfz "+outdir+"/repo.tar.gz "+tmpdir);
+    execSync("cd "+tmpdir+";tar cvfz "+maindir+"/"+outdir+"/repo.tar.gz .");
     return pth.join(outdir,"repo.tar.gz");
   }
   function add(name,content) {

@@ -9,9 +9,11 @@ function repo(config,server) {
     if (self.update) return true;
     self.update=true;
     server.queue("Repo Update",function(a,done) {
-      done();
-      state.last=new Date();
-      self.update=false;
+      require("core/repo").generate(config.out,{key:"000000"},function(e) {
+        state.last=new Date();
+        self.update=false;
+        done(e);
+      });
     },3,date);
   }
   function status() {
