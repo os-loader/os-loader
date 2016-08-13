@@ -1,3 +1,5 @@
+> I am AFK from 15.08 - 26.08 (DD.MM)
+
 # OS-Loader
 [![Build Status](https://travis-ci.org/os-loader/os-loader.svg?branch=master)](https://travis-ci.org/os-loader/os-loader)
 [![TODOs](https://todofy.org/b/os-loader/os-loader)](https://todofy.org/r/os-loader/os-loader)
