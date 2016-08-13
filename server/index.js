@@ -16,7 +16,9 @@ const configDefaults={
     out:"data/repo"
   },
   about:{
-    maintainer:"Example Maintainer <maintainer@example.com>"
+    maintainer:"Example Maintainer <maintainer@example.com>",
+    name:"Example Repo",
+    desc:"with example content!",
   }
 };
 

@@ -15,7 +15,7 @@ function backend(config) {
   self.server.online();
 
   //Repo
-  self.repo=new REPO(config.repo,self.server);
+  self.repo=new REPO(config.repo,self.server,config.about);
   self.repocfg=config.repo;
 
   //self.ipfs=require("")

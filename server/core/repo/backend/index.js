@@ -1,4 +1,4 @@
-function repo(config,server) {
+function repo(config,server,about) {
   const state=new configFile("repo.json",{
     "__comment":"DO NOT EDIT! - Edit config.json instead",
     last:new Date(0)
@@ -9,7 +9,7 @@ function repo(config,server) {
     if (self.update) return true;
     self.update=true;
     server.queue("Repo Update",function(a,done) {
-      require("core/repo").generate(config.out,{key:"000000"},function(e) {
+      require("core/repo").generate(config.out,{key:"000000",about:about},function(e) {
         state.last=new Date();
         self.update=false;
         done(e);
