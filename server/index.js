@@ -4,6 +4,10 @@ bunyan=require("bunyan");
 init=bunyan.createLogger({name:"init"});
 init.info("Starting Up...");
 
+process.on('uncaughtException', (err) => {
+  init.error(err,"(╯°□°）╯︵ ┻━┻".red.bold);
+});
+
 maindir=__dirname;
 w=require("w.js");
 
@@ -49,6 +53,6 @@ config=new configFile("config.json",configDefaults);
 
 require("core/express");
 
-app.listen(8190)
+app.listen(8190);
 
 init.info("Online @ *:8190...");
