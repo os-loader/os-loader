@@ -3,7 +3,9 @@
     <div class="card">
       <header class="card-header">Repo Status</header>
       <div class="card-content">
-        <div class="inner">Unkown</div>
+        <div class="inner">
+          Status: <%=status.repo.update?"Updating...":status.repo.exists?"Online":"Offline"%>
+        </div>
       </div>
     </div>
   </div>

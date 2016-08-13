@@ -4,14 +4,16 @@
       <header class="card-header">Update Repository</header>
       <div class="card-content">
         <div class="inner">
-          <%if (updating) {
+          <%if (s.update) {
             %>
               <div class="btn btn-ghost">Updating...</div>
             <% } else { %>
-              <div class="btn btn-success">Update</div>
+              <form action="/admin/Repo/update" method="POST">
+                <button class="btn btn-success">Update</button>
+              </form>
             <%
           }%><br>
-          Last Update: <%=new Date(lu)%>
+          Last Update: <%=s.last.getTime()?(s.last):"-"%>
         </div>
       </div>
     </div>
@@ -50,7 +52,7 @@
       <header class="card-header">Repo Config</header>
       <div class="card-content">
         <div class="inner">
-          Output Directory: <%=maindir+"/"+config.out%>            
+          Output Directory: <%=maindir+"/"+config.out%>
         </div>
       </div>
     </div>

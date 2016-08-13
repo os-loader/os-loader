@@ -29,7 +29,7 @@ function server(config) {
       tasks.push(t);
       return doloop();
     }
-    t.fc([],function(err,res) {
+    t.fc([t],function(err,res) {
       if (err) {
         self.error(err,"Task "+t.name+" failed with error");
         t.trys--;

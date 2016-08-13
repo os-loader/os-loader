@@ -211,7 +211,16 @@ app.get("/",function(req,res) {
 });
 
 app.get("/repo",function(req,res) {
-  res.render("repo",{title:"Repo Dashboard",config:backend.repocfg,updating:backend.repo.updating,lu:backend.repo.lastupdate});
+  res.render("repo",{title:"Repo Dashboard",config:backend.repocfg,s:backend.status.repo});
+});
+
+app.get("/repo/update",function(req,res) {
+  res.flash("error","Use the 'Update' button");
+  res.redirect("/admin/Repo");
+});
+
+app.post("/repo/update",function(req,res) {
+  return (backend.repo.updateRepo()?res.flash("error","Update is already running!"):res.flash("success","Update queued!"))?res.redirect("/admin/Repo"):res.redirect("/admin/Repo");
 });
 
 app.get("/Systems",function(req,res) {
