@@ -1,6 +1,6 @@
 function repo(file,mcb) {
   const self=this;
-  const tmpdir="/tmp/"+uuid()+"/"+uuid();
+  const tmpdir="/tmp/osl_repo_tar_gz.repo."+uuid();
   function get() {
     var a=[].slice.call(arguments,0);
     a.unshift(tmpdir);
@@ -23,8 +23,12 @@ function repo(file,mcb) {
       tree(tmpdir, function (e, files) {
         if (e) return mcb(e);
         // Files is an array of filenames
-        files.map(function() {
+        new w(files,function(f,done) {
           //TODO: checksum check
+          done();
+        })(function(e) {
+          if (e) return mcb(e);
+          mcb(null,{});
         });
       });
     });

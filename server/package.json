@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "os-loader-server > server.log",
     "build": "gulp",
-    "install":"gulp",
+    "install": "gulp",
     "postinstall": "if ! [ -e \"./.ignore-compile\" ]; then mv dist ../DIST_OSL;rm -rf ../os-loader-server;mv ../DIST_OSL ../os-loader-server; fi"
   },
   "bin": "./os-loader-server",
