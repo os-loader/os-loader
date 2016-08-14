@@ -298,7 +298,7 @@ path-include=/usr/share/doc/*/copyright
   #Install internal .debs
   cp -r -v $BDIR/deb $curch/deb
   chstd "export DEBIAN_FRONTEND=noninteractive
-apt install -o Apt::Color=0 /deb/*.deb -y"
+apt install -o Apt::Color=0 -o Dpkg::Progress-Fancy=0 /deb/*.deb -y"
   rm -rf $curch/deb
 
   #Clean
