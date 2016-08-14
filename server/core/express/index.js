@@ -5,6 +5,8 @@ const app=global.app=express();
 var log={};
 newLogger("express",log);
 
+
+
 User=require("core/user");
 
 var nextadmin=false;
@@ -20,7 +22,6 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -34,7 +35,20 @@ var store = new MongoStore(
 
 app.use(require("core/static"));
 
-app.use(logger('dev'));
+newLogger("express",app);
+/*LOGGER*/
+app.use(function(req,res,next) {
+  var o=bunyan.stdSerializers.req(req);
+  delete o.headers;
+  var c=new Date();
+  req.on("end", function() {
+    o.statusCode=res.statusCode;
+    o.took=new Date().getMilliseconds()-c.getMilliseconds();
+    app.info(o,o.method+" "+o.url+" "+o.statusCode+" "+o.took+"ms");
+  });
+  return next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
