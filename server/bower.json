@@ -21,6 +21,5 @@
     "tests"
   ],
   "dependencies": {
-    "hackcss": "^0.5.2"
   }
 }

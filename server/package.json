@@ -39,6 +39,7 @@
     "flash": "^1.1.0",
     "go-ipfs": "github:os-loader/npm-go-ipfs",
     "gpg": "^0.4.1",
+    "hack": "^0.7.2",
     "jsonfile": "^2.3.1",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.5.8",
