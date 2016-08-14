@@ -29,7 +29,7 @@ function ipfs(bin,conf) {
       try {
         execSync(bin+" init");
       } catch(e) {
-        this.info("IPFS Instance already running - skipping");
+        this.warn("IPFS Instance already running - skipping");
         run=true;
         p=null;
         return run;

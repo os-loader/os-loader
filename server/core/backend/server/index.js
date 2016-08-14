@@ -9,14 +9,23 @@ function server(config) {
     uptime:0,
     fails:0,
     sucess:0,
-    total:0
+    total:0,
+    lastfail:"-",
+    lastfaildate:0,
   });
+  count.lastfaildate=new Date(count.lastfaildate);
   count.uptime=new Date().getTime();
   function queue(name,func,trys,date) {
     if (!online) return online;
     var id=tasks.push({name:name,fc:func,trys:trys||1,date:date||new Date()});
     if (!loop) doloop();
     return id;
+  }
+  function taskPause(t) {
+    setTimeout(function() {
+      tasks.push(t);
+      if (!loop) doloop();
+    },t.date.getTime()-new Date().getTime());
   }
   function doloop() {
     if (!online) {
@@ -26,20 +35,23 @@ function server(config) {
     loop=true;
     var t=tasks.shift();
     if (!t) {
-      self.info({pause:true},"No new tasks - pause");
+      self.debug({pause:true},"Tasks processed");
       loop=false;
       return;
     }
-    self.info({left:tasks.length+1},"Processing Tasks");
+    self.debug({left:tasks.length+1},"Processing Tasks");
     if (t.date>new Date().getTime()) {
-      self.info("Task "+t.name+" is not for now - move along");
-      tasks.push(t);
+      self.debug("Task '"+t.name+"' is not for now - setTimeout");
+      taskPause(t);
       return doloop();
     }
     process.nextTick(function() { //MUST be async
+      self.info("Executing Task '"+t.name+"'...");
       t.fc([t],function(err,res) {
         if (err) {
-          self.error(err,"Task "+t.name+" failed with error");
+          self.error(err,"Task '"+t.name+"' failed with error");
+          count.lastfail=err.toString();
+          count.lastfaildate=new Date();
           t.trys--;
           count.fails++;
           count.total++;
@@ -50,7 +62,7 @@ function server(config) {
         } else {
           count.sucess++;
           count.total++;
-          self.info(res?res:t,"Task "+t.name+" finished!");
+          self.info(res?res:t,"Task '"+t.name+"' finished!");
         }
         return doloop();
       });

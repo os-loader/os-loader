@@ -4,7 +4,8 @@
       <header class="card-header">Repo Status</header>
       <div class="card-content">
         <div class="inner">
-          Status: <%=status.repo.update?"Updating...":status.repo.exists?"Online":"Offline"%>
+          Status: <%=status.repo.update?"Updating...":status.repo.exists?"Online":"Offline"%><br>
+          Last Update: <%=status.repo.last%>
         </div>
       </div>
     </div>
@@ -30,7 +31,8 @@
           Failures: <%=status.server.count.fails%><br>
           Sucesses: <%=status.server.count.sucess%><br>
           Total: <%=status.server.count.total%><br>
-          Status: <%=status.server.active?"Executing Tasks...":"Idle"%>
+          Status: <%=status.server.active?"Executing Tasks...":"Idle"%><br>
+          Last Failure: <%=status.server.count.lastfail%> @ <%=status.server.count.lastfaildate%>
         </div>
       </div>
     </div>

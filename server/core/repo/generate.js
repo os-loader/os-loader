@@ -8,17 +8,18 @@ function generate(out,conf,cb) {
   self.repo=repo;
   var sys=[];
   self.info({tmp:tmp,out:out},"Generating Repo");
-  self.info("Loading Systems...");
+  self.debug("Loading Systems...");
   System.find({},function(e,r) {
     if (e) return cb(e);
     w(r,function(s,sysCB) {
       self.info("sys",s.name);
       sys.push(s._id);
+      self.debug("Channels for "+s._id+" ...");
       Channel.find({for:s._id},function(e,r) {
         if (e) return sysCB(e);
         s.channels=[];
         new w(r,function(c,chCB) {
-          self.info("ch",c.name);
+          self.debug("ch",c.name);
           s.channels.push(c._id);
           c.id=c._id;
           repo.addFile(s._id+"/"+c._id+".json",c);

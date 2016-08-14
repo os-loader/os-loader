@@ -9,7 +9,7 @@ install:
 	cd $(DESTDIR);npm i --production
 	dir $(DESTDIR)
 watch: build
-	nodemon index.js -i config.json -i repo.json -i state.json | bunyan
+	nodemon index.js -i config.json -i repo.json -i state.json | bunyan -l 0
 snap:
 	snapcraft clean
 	snapcraft
