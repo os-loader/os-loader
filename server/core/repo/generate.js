@@ -12,9 +12,9 @@ function generate(out,conf,cb) {
   System.find({},function(e,r) {
     if (e) return cb(e);
     w(r,function(s,sysCB) {
-      self.info("sys",s.name);
+      self.debug("sys",s.name);
       sys.push(s._id);
-      self.debug("Channels for "+s._id+" ...");
+      self.debug("Channels for "+s.name+" ...");
       Channel.find({for:s._id},function(e,r) {
         if (e) return sysCB(e);
         s.channels=[];
@@ -22,8 +22,19 @@ function generate(out,conf,cb) {
           self.debug("ch",c.name);
           s.channels.push(c._id);
           c.id=c._id;
-          repo.addFile(s._id+"/"+c._id+".json",c);
-          chCB();
+          c.releases=[];
+          self.debug("Releases for "+s.name+" ...");
+          Release.find({for:c._id},function(e,r) {
+            if (e) return chCB(e);
+            new w(r,function(r,relCB) {
+              self.debug("rel",r.name);
+              c.releases.push(r);
+              relCB();
+            })(function(e) {
+              repo.addFile(s._id+"/"+c._id+".json",c);
+              chCB(e);
+            });
+          });
         })(function(e) {
           repo.addFile(s._id+".json",s);
           sysCB(e);

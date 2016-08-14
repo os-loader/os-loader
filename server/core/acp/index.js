@@ -74,8 +74,12 @@ relel=[
     name:"Channel ID - DO NOT CHANGE!"
   },
   {
-    id:"name",
+    id:"version",
     name:"Version (X.X.X)",
+    type:"string"
+  },
+  {
+    id:"name",
     type:"string"
   },
   {

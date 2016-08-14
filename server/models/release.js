@@ -3,6 +3,7 @@ var ReleaseSchema = mongoose.Schema({
   for:String,
   date:Date,
   name:String,
+  version:String,
   codename:String,
   files:Object,
   upgradeNext:Boolean,
