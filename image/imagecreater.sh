@@ -302,13 +302,13 @@ apt install -o Apt::Color=0 -o Dpkg::Progress-Fancy=0 /deb/*.deb -y"
   rm -rf $curch/deb
 
   #Clean
+  log "Clear Cache"
   chstd "apt-get clean"
 
   for d in /usr/share/man/ /var/cache/apt/ /var/cache/man/; do #/var/lib/apt/ /var/lib/dpkg/; do
     log "Delete dir: $(du -hs $curch$d)"
     rm -rf $curch$d
   done
-  log "Clear Cache..."
 
   #Copy everything
   cp $1/boot/vmlinuz* $2/vmlinuz
