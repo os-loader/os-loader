@@ -3,7 +3,7 @@ function stat(reg) {
   reg(this);
   this.config({});
   this.hook("repo.files",function(repo,done) {
-
+    done();
   });
 }
 module.exports=stat;

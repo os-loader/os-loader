@@ -4,6 +4,7 @@ function plugin(path,pl) {
   const hooks={};
   var f;
   newLogger({name:"p:"+pl},self);
+  self.timeout=5000;
 
   self.fancy=function(txt) {
     return "["+pl+"] "+txt;
@@ -16,9 +17,18 @@ function plugin(path,pl) {
   }
   function tryHook(name,data,cb) {
     if (!hooks[name]) return cb();
+    var done=false;
+    setTimeout(function() {
+      if (!done) {
+        self.error(self.fancy("Hook timeout : "+name));
+        cb(true,true);
+      }
+    },self.timeout);
     hooks[name](data,function(e,r) {
-      self.debug("Running hook "+name);
-      cb(true,e,r);
+      self.debug(self.fancy("Hook "+name));
+      if (done) return;
+      done=true;
+      cb(true,false,e,r);
     });
   }
   function config(def) {
@@ -50,10 +60,11 @@ function plugins(path) {
     plid[pl]=p;
   });
   function hook(name,data,cb) {
+    self.debug("Hook "+name)
     new w(pls.slice(0),function(pl,done) {
-      pl.tryHook(name,data,function(exec,e,r) {
+      pl.tryHook(name,data,function(exec,timeout,e,r) {
         if (!exec) return done();
-        e.hook=name;
+        if (e) e.hook=name;
         if (e) pl.error(e,"Hook "+name+" failed");
         done(null,r);
       });
