@@ -4,6 +4,8 @@ bunyan=require("bunyan");
 init=bunyan.createLogger({name:"init"});
 init.info("Starting Up...");
 
+var i_shall_quit=false;
+
 process.on('uncaughtException', (err) => {
   if (i_shall_quit) {
     init.fatal(err,"FATAL".red.bold);
@@ -70,11 +72,12 @@ config=new configFile("config.json",configDefaults);
 
 require("core/express");
 
+plugins=require("core/plugins");
+
 server=app.listen(8190);
 
 init.info("Online @ *:8190...");
 
-i_shall_quit=false;
 function shutdown() {
   i_shall_quit=true;
   init.warn("Caught ^C");
