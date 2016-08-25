@@ -2,9 +2,10 @@
 const REPO=require("./create.js");
 function generate(out,conf,cb) {
   const tmp="/tmp/osl_image_server.repo."+uuid();
+  const outtmp=pth.join(out,"tmp");
   const self=this;
   newLogger("repo",self);
-  const repo=new REPO(tmp,out,conf);
+  const repo=new REPO(tmp,outtmp,conf);
   self.repo=repo;
   var sys=[];
   self.info({tmp:tmp,out:out},"Generating Repo");
@@ -52,7 +53,20 @@ function generate(out,conf,cb) {
       });
       try {
         self.info("Generating final repo.tar.gz");
-        return cb(null,repo.generate())
+        repo.generate(function(e,p) {
+          if (e) return cb(e);
+          hashFile("sha256",p,function(e,h) {
+            if (e) return cb(e);
+            fs.writeFile(p.replace(".tar.gz",".sha256"),h,function(e) {
+              if (e) return cb(e);
+              new w(["repo.tar.gz","repo.sha256"],function(p,cb) {
+                fs.rename(pth.join(outtmp,p),pth.join(out,p),cb);
+              })(function(e) {
+                cb(e,p);
+              });
+            });
+          });
+        });
       } catch(e) {
         return cb(e);
       }

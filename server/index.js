@@ -46,6 +46,19 @@ jsonfile=require("jsonfile");
 mkdirp=require("mkdirp");
 gpg=require("gpg");
 crypto=require("crypto");
+hashFile=function(algo,file,cb) {
+  var shasum = crypto.createHash(algo);
+  try {
+    var s = fs.ReadStream(file);
+    s.on('data', function(d) { shasum.update(d); });
+    s.on('end', function() {
+        var d = shasum.digest('hex');
+        cb(null,d);
+    });
+  } catch(e) {
+    cb(e);
+  }
+}
 
 newLogger=require("core/logger");
 configFile=require("core/config");
