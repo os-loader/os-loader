@@ -1,7 +1,9 @@
-function stat(pl) {
+function stat(reg) {
   /* COPY STATIC FILES TO REPO */
-  pl.hook("repo.files",function(repo,done) {
-    
+  reg(this);
+  this.config({});
+  this.hook("repo.files",function(repo,done) {
+
   });
 }
 module.exports=stat;

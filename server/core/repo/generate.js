@@ -51,25 +51,27 @@ function generate(out,conf,cb) {
         icon:null, // TODO: add icon config
         sources:null // TODO: alternative sources
       });
-      try {
-        self.info("Generating final repo.tar.gz");
-        repo.generate(function(e,p) {
-          if (e) return cb(e);
-          hashFile("sha256",p,function(e,h) {
+      plugins.hook("repo.files",repo,function() {
+        try {
+          self.info("Generating final repo.tar.gz");
+          repo.generate(function(e,p) {
             if (e) return cb(e);
-            fs.writeFile(p.replace(".tar.gz",".sha256"),h,function(e) {
+            hashFile("sha256",p,function(e,h) {
               if (e) return cb(e);
-              new w(["repo.tar.gz","repo.sha256"],function(p,cb) {
-                fs.rename(pth.join(outtmp,p),pth.join(out,p),cb);
-              })(function(e) {
-                cb(e,p);
+              fs.writeFile(p.replace(".tar.gz",".sha256"),h,function(e) {
+                if (e) return cb(e);
+                new w(["repo.tar.gz","repo.sha256"],function(p,cb) {
+                  fs.rename(pth.join(outtmp,p),pth.join(out,p),cb);
+                })(function(e) {
+                  cb(e,p);
+                });
               });
             });
           });
-        });
-      } catch(e) {
-        return cb(e);
-      }
+        } catch(e) {
+          return cb(e);
+        }
+      })
     });
   });
 }

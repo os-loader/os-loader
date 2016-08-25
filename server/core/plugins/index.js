@@ -2,6 +2,7 @@ function plugin(path,pl) {
   const source=pth.join(path,pl);
   const self=this;
   const hooks={};
+  var f;
   newLogger({name:"p:"+pl},self);
 
   self.fancy=function(txt) {
@@ -20,13 +21,20 @@ function plugin(path,pl) {
       cb(true,e,r);
     });
   }
+  function config(def) {
+    self.config=new configFile("p."+pl+".json",def);
+    f.config=self.config;
+  }
+  this.config=config;
   this.tryHook=tryHook;
   this.hook=hook;
 
-  const f=require(source);
-  f.plugin=self;
-  for (var p in self) f[p]=self[p];
-  f(self);
+  var s=require(source);
+  new s(function(el) {
+    f=el;
+    f.plugin=self;
+    for (var p in self) f[p]=self[p];
+  });
   self.info(self.fancy("Enabled"));
 }
 
