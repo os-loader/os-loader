@@ -5,7 +5,8 @@
       <div class="card-content">
         <div class="inner">
           Status: <%=status.repo.update?"Updating...":status.repo.exists?"Online":"Offline"%><br>
-          Last Update: <%=status.repo.last%>
+          Last Update: <%=status.repo.last%><br>
+          Size: <%=humanFileSize(status.repo.size)%>
         </div>
       </div>
     </div>

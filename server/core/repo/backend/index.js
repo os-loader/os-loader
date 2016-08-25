@@ -2,7 +2,8 @@ function repo(config,server,about) {
   const state=new configFile("repo.json",{
     "__comment":"DO NOT EDIT! - Edit config.json instead",
     last:new Date(0),
-    exists:false
+    exists:false,
+    size:0
   });
   const self=this;
   self.update=false;
@@ -15,7 +16,11 @@ function repo(config,server,about) {
         state.last=new Date();
         self.update=false;
         state.exists=!e;
-        done(e);
+        fs.lstat(pth.join(config.out,"repo.tar.gz"),function(e,s) {
+          if (state.exists&&e) state.exists=false;
+          state.size=s.size||0;
+          done();
+        });
       });
     },3,date);
   }
@@ -23,7 +28,8 @@ function repo(config,server,about) {
     return {
       update:self.update,
       last:new Date(state.last),
-      exists:state.exists
+      exists:state.exists,
+      size:state.size
     };
   }
   update((new Date(new Date(state.last).getTime()+(3600*24*1000)).getTime()<new Date().getTime())?null:new Date(new Date(state.last).getTime()+(3600*24*1000)));

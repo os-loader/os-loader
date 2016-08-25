@@ -18,28 +18,14 @@
       </div>
     </div>
   </div>
-  <div class="cell -4of12 margin">
+  <div class="cell -8of12 margin">
     <div class="card">
-      <header class="card-header">IPFS Status</header>
+      <header class="card-header">Repo Status</header>
       <div class="card-content">
         <div class="inner">
-          Running: <%=status.ipfs.running?"Yes":"No"%><br>
-          Type: <%=status.ipfs.external?"External":"Internal"%><br>
-          Peer ID: N/A<br>
-          PID: <%=status.ipfs.pid?status.ipfs.pid:"N/A"%></div>
-      </div>
-    </div>
-  </div>
-  <div class="cell -4of12 margin">
-    <div class="card">
-      <header class="card-header">Server Status</header>
-      <div class="card-content">
-        <div class="inner">
-          Tasks in Queue: <%=status.server.queue%><br>
-          Failures: <%=status.server.count.fails%><br>
-          Sucesses: <%=status.server.count.sucess%><br>
-          Total: <%=status.server.count.total%><br>
-          Status: <%=status.server.active?"Executing Tasks...":"Idle"%>
+          Status: <%=status.repo.update?"Updating...":status.repo.exists?"Online":"Offline"%><br>
+          Last Update: <%=status.repo.last%><br>
+          Size: <%=humanFileSize(status.repo.size)%>
         </div>
       </div>
     </div>
