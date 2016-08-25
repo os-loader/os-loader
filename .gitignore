@@ -37,10 +37,6 @@ coverage
 
 # node-waf configuration
 .lock-wscript
-Use 'ipfs init --help' for information about this command
-[2016-08-25T13:53:39.125Z]  WARN: ipfs/26193 on maciej-pc: IPFS Instance already running - skipping
-[2016-08-25T13:53:39.133Z] DEBUG: config/26193 on maciej-pc: Config file saved! (file=state.json)
-[2016-08-25T13:53:39.134Z] DEBUG: config/26193 on maciej-pc: Config file saved! (file=state.json)
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
