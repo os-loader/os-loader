@@ -3,6 +3,7 @@ function config(file,defaults) {
   const self=this;
   /* jshint ignore:start */
   const el=[];
+  var enoent=false;
   for (var p in defaults) {
     el.push(p);
     (function(p) {
@@ -44,6 +45,12 @@ function config(file,defaults) {
   }
   read(function(err) {
     if (err) {
+      if (err.code=="ENOENT"&&!enoent) {
+        self.warn("Config file dosen't exist, creating");
+        enoent=true;
+        write(true);
+        return false;
+      }
       data=defaults;
       self.error(err,"Config file load failed!");
       write(true);
