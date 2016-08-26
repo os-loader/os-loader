@@ -4,7 +4,7 @@ const configDefaults={
 
 function config() {
   const self=this;
-  var config={};
+  var config=configDefaults;
   /* jshint ignore:start */
   for (var p in configDefaults) {
     (function(p) {
@@ -23,9 +23,7 @@ function config() {
   function initfor(file) {
     config=new configFile(file,configDefaults);
     self.config=config;
-    if (file.startsWith("/tmp/remove.me")) setTimeout(function() {fs.unlinkSync(file);},5000);
   }
-  initfor("/tmp/remove.me.______________________"+Math.random());
   var initd=false;
   function init() {
     if (initd) return false;
