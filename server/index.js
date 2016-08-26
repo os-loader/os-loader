@@ -32,6 +32,7 @@ const configDefaults={
   }
 };
 
+util=require("util");
 mongoose=require("mongoose");
 mongoose.connect("mongodb://localhost:27017/osl-image-server");
 uuid=require("node-uuid").v4;
@@ -52,6 +53,7 @@ jsonfile=require("jsonfile");
 mkdirp=require("mkdirp");
 gpg=require("gpg");
 crypto=require("crypto");
+recursive = require('recursive-readdir');
 hashFile=function(algo,file,cb) {
   var shasum = crypto.createHash(algo);
   try {

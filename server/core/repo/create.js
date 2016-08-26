@@ -13,13 +13,13 @@ function repo(tmpdir,outdir,conf) {
     function lazy(p,done) {
       switch(typeof data[p]) {
         case "string":
-          data[p]=new Buffer(p);
+          data[p]=new Buffer(data[p]);
           break;
         case "number":
-          throw new Error("Cannot add a Number as a file");
-        case "buffer":
+          data[p]=new Buffer(data[p].toString());
           break;
         case "object":
+          if (util.isBuffer(data[p])) break;
           data[p]=new Buffer(JSON.stringify(data[p]));
           break;
       }

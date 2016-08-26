@@ -15,6 +15,10 @@ snap:
 	snapcraft
 	sudo snap install os-loader-server*.snap --devmode
 reset:
+	@echo ""
+	@echo "This will delete the database, configfiles and the data directory"
+	read -p "Are you sure? (Cancel with ^C)" foo
+	@echo ""
 	rm -f repo.json config.json state.json
 	rm -rf data
 	mongo osl-image-server --eval "db.dropDatabase()"

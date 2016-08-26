@@ -10,6 +10,17 @@ function plugin(path,pl) {
     return "["+pl+"] "+txt;
   }
 
+  self.data=pth.join(maindir,"data","plugins",pl);
+  self.dir=function() {
+    var a=[].slice.call(arguments,0);
+    a.unshift(self.data);
+    return pth.join.apply(pth.join,a);
+  }
+  self.mkdir=function() {
+    mkdirp.sync(self.dir.apply(self,arguments));
+  }
+  mkdirp.sync(self.data)
+
   self.debug(self.fancy("Enabling"));
 
   function hook(on,func) {
@@ -24,8 +35,8 @@ function plugin(path,pl) {
         cb(true,true);
       }
     },self.timeout);
+    self.debug(self.fancy("Hook "+name));
     hooks[name](data,function(e,r) {
-      self.debug(self.fancy("Hook "+name));
       if (done) return;
       done=true;
       cb(true,false,e,r);

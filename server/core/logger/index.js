@@ -1,7 +1,7 @@
 function logger(opt,self) {
   var log=bunyan.createLogger(typeof opt =="object"?opt:{name:opt});
   self.logger=log;
-  log.level("debug");
+  log.level(0);
   function ccb(type) {
     self[type]=function logger() {
       log[type].apply(log,arguments);
