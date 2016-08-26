@@ -56,6 +56,8 @@ function config(file,defaults) {
       write(true);
     }
   });
+  this.defaults=defaults;
   this.save=write;
+  this.file=file;
 }
 module.exports=config;

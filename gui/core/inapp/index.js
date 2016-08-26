@@ -126,6 +126,7 @@ function asyncOk() {
   app.hideMenu=false;
   page.redirect(app.baseUrl);
   app.asyncReady=true;
+  if (!install) require("core/mainapp");
 }
 
 app.asyncReady=false;
@@ -137,6 +138,7 @@ function async() {
       if (e) return swal(e.toString(),e.toString(),"error");
         script("mount",[device,d.ID_FS_TYPE],function(e) {
           if (e) return swal(e.toString(),e.toString(),"error");
+          config.init();
           asyncOk();
         });
     });
@@ -217,4 +219,4 @@ function askExit() {
 window.onbeforeunload = (e) => {
   if (!window.rReload) if (!safeClose) { e.returnValue = false;return isos?askExit():doExit(true);}
 };
-module.exports={ee:ee,scriptout:new scriptout(),install:install,active:active,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};
+module.exports={ee:ee,config,scriptout:new scriptout(),install:install,active:active,events:events,osmode:isos,isos:isos,askExit:askExit,action:new actions(),mainapp:mainapp};

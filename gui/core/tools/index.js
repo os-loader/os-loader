@@ -1,4 +1,5 @@
 require("colors");
+newLogger=require("core/logger");
 fs=global.electron?require("original-fs"):require("fs");
 pth=require("path");
 cp=require("child_process");
@@ -12,6 +13,9 @@ udev=require("core/udev");
 parted=require("core/parted");
 script=require("core/script");
 require("core/kernel");
+jsonfile=require("jsonfile");
+configFile=require("core/config");
+config=require("core/config.main");
 Duplex=streams.Duplex;
 bytes=require("bytes");
 bytesTrim=function(str) {
