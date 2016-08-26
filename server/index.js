@@ -4,7 +4,7 @@ bunyan=require("bunyan");
 init=bunyan.createLogger({name:"init"});
 init.info("Starting Up...");
 
-var i_shall_quit=false;
+var i_shall_quit=true;
 
 process.on('uncaughtException', (err) => {
   if (i_shall_quit) {
@@ -93,14 +93,22 @@ plugins=require("core/plugins");
 server=app.listen(8190);
 
 init.info("Online @ *:8190...");
+i_shall_quit=false;
 
-function shutdown() {
+function shutdown(sig) {
   i_shall_quit=true;
-  init.warn("Caught ^C");
+  init.warn("Caught "+sig);
   init.warn("Shutdown...");
-  server.close(function() {
-    process.exit(0);
+  plugins.hook("shutdown",sig,function() {
+    server.close(function() {
+      init.warn("...exit with 0");
+      process.exit(0);
+    });
   });
 }
-process.on('SIGTERM', shutdown);
-process.on('SIGINT', shutdown);
+process.on('SIGTERM', function() {
+  shutdown("SIGTERM")
+});
+process.on('SIGINT', function() {
+  shutdown("SIGINT")
+});
