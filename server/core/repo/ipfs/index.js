@@ -29,10 +29,18 @@ function ipfs(bin,conf) {
       try {
         execSync(bin+" init");
       } catch(e) {
-        this.warn("IPFS Instance already running - skipping");
-        run=true;
-        p=null;
-        return run;
+        var estr=e.toString().split("\n");
+        estr.pop();estr.shift();estr=estr.join("\n");
+        switch(true) {
+          case estr.startsWith("Error: ipfs daemon is running"):
+            this.warn("IPFS Instance already running - skipping");
+            run=true;
+            p=null;
+            return run;
+          default:
+            this.error(new Error(estr),"Unkown IPFS Error");
+            return e;
+        }
       }
     }
     this.info("IPFS Starting...");
