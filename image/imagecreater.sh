@@ -265,7 +265,7 @@ path-include=/usr/share/doc/*/copyright
 
   chstd "apt-get update"
 
-  kernelandboot="memtest86+ grub2 linux-base linux-generic" # linux kernel and bootloader
+  kernelandboot="memtest86+ grub2 linux-base linux-generic virtualbox-guest-dkms" # linux kernel and bootloader
   liveboot="live-boot live-boot-initramfs-tools casper squashfs-tools" # live boot
   uitools="plymouth plymouth-label openbox xorg lightdm dmz-cursor-theme feh" # display manager, window manager, etc.
   othertools="bash sudo menu curl wget apt-transport-https" # others
