@@ -25,13 +25,13 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-- provider: releases
-  file: "/tmp/os-loader-builddir/IMAGE/output/image.iso"
-  api-key:
-    secure: hk4WmwKTj1H9LEgdZYFmru24piTgbXjVTHWUZPyyQ5MVDJHl44yOFOQUolBHhR/AIqgV8UMWcqIRzGGvelMiwpm6jyju8Ia+538jkCAjb3DvH4T2ErhMGdy3kY60Sp9BCBp5hgY2awnFLvNNZppoNabbW/DmwJ3A6WKKGGFiGAHY82uR4GypHr/S6h8ZzAhd0YtPlVpQgI1wjbv40icTtqp1BXyKxuhgCVzQ4K/8gFXxpU4x6VF5w9EmIBd0Q0lx8sH01M7KD6UJI5BfJRT6iA/M8o81Fz1xC2YnoiGpTxqWjYuYWq15Vy7sV5ng4GR6w33X+r8pYcyg+c4Na2EkLLOuLowVmLWHPdQZYWfeNc5QLad2pGpyiwj+SpnwDNCU9N4bAzZ/pQ3Ht47X+No7eaiSf8CT2knpQgZOvf7yQkpeJxIAP3V2xi/Trfc24qrnbsR2JZ4A39vDpkSyEsDqnIsLmZeLlmMj6+DQNhm2EqF7BOce+c5dzA5eplA5LXZZtY3LE9Kj/5LdrMmguyNHPFnnWYziw5+02LbYcbjD506B6ycljwNXmapb+e8cZ0Le07PVot2SBApQseJo6LHy8qQKFVgOJk5zDCaQLCHPT/5YJpzCeJVkTiFrMm+rET/n+FXQuj7tn4bDxX+GeTCq//0isfNoupOUfDttmlGLEA8=
-  skip_cleanup: true
-  on:
-    tags: true
+#- provider: releases
+#  file: "/tmp/os-loader-builddir/IMAGE/output/image.iso"
+#  api-key:
+#    secure: hk4WmwKTj1H9LEgdZYFmru24piTgbXjVTHWUZPyyQ5MVDJHl44yOFOQUolBHhR/AIqgV8UMWcqIRzGGvelMiwpm6jyju8Ia+538jkCAjb3DvH4T2ErhMGdy3kY60Sp9BCBp5hgY2awnFLvNNZppoNabbW/DmwJ3A6WKKGGFiGAHY82uR4GypHr/S6h8ZzAhd0YtPlVpQgI1wjbv40icTtqp1BXyKxuhgCVzQ4K/8gFXxpU4x6VF5w9EmIBd0Q0lx8sH01M7KD6UJI5BfJRT6iA/M8o81Fz1xC2YnoiGpTxqWjYuYWq15Vy7sV5ng4GR6w33X+r8pYcyg+c4Na2EkLLOuLowVmLWHPdQZYWfeNc5QLad2pGpyiwj+SpnwDNCU9N4bAzZ/pQ3Ht47X+No7eaiSf8CT2knpQgZOvf7yQkpeJxIAP3V2xi/Trfc24qrnbsR2JZ4A39vDpkSyEsDqnIsLmZeLlmMj6+DQNhm2EqF7BOce+c5dzA5eplA5LXZZtY3LE9Kj/5LdrMmguyNHPFnnWYziw5+02LbYcbjD506B6ycljwNXmapb+e8cZ0Le07PVot2SBApQseJo6LHy8qQKFVgOJk5zDCaQLCHPT/5YJpzCeJVkTiFrMm+rET/n+FXQuj7tn4bDxX+GeTCq//0isfNoupOUfDttmlGLEA8=
+#  skip_cleanup: true
+#  on:
+#    tags: true
 addons:
   apt:
     packages:
