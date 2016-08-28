@@ -1,0 +1,111 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="list-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+
+      .min {
+        min-height:89px;
+        margin-bottom:25px;
+      }
+      .space {
+        @apply(--layout-flex);
+      }
+
+      .small {
+        max-width:750px;
+      }
+
+      .bg-fit {
+        background-color:var(--list-element-bg,white);
+      }
+
+      .item-bar {
+        background-color:var(--list-element-bg,white);
+        --paper-toolbar-background: var(--list-element-bg,white);
+        --paper-toolbar-color: var(--list-element-color,#333);
+        @apply(--list-element);
+      }
+      .aline > * {
+        margin:0px !important;
+      }
+      .aline {
+        line-height:12px;
+      }
+      .alined {
+        margin:1em;
+        /*margin-top:-2.5em*/;
+      }
+    </style>
+
+    <template is="dom-if" if="{{!expand}}">
+      <div>
+        <paper-toolbar class="item-bar" on-click="toggleExpand">
+          <content select=".el-small"></content>
+          <div class="space"></div>
+          <paper-icon-button icon="hardware:keyboard-arrow-down"></paper-icon-button>
+        </paper-toolbar>
+      </div>
+    </template>
+
+    <template is="dom-if" if="{{expand}}">
+      <paper-material class="bg-fit min" elevation="1">
+        <paper-toolbar class="item-bar" on-click="toggleExpand">
+          <content select=".el-middle"></content>
+          <div class="space"></div>
+          <div on-click="toggleExpand">
+            <content select=".el-right"></content>
+          </div>
+          <paper-icon-button icon="hardware:keyboard-arrow-up"></paper-icon-button>
+        </paper-toolbar>
+        <div class="min alined">
+          <content select=".el-big"></content>
+        </div>
+      </paper-material>
+    </template>
+
+  </template>
+
+  <script>
+      Polymer({
+        is: 'list-element',
+
+        expand:false,
+
+        properties: {
+          element: {
+            type: Object,
+            notify: true,
+            observer:"_ob"
+          },
+          ontoggle: {
+            type: Function,
+            notify: true,
+            observer:"_toggle"
+          }
+        },
+        toggleExpand:function() {
+          this.expand=!this.expand;
+        },
+        _ob:function(e) {
+          if (e.desc) e.desc=e.desc.replace(/\n/g,"<br>");
+        },
+        _toggle:function(e) {
+          this.ontoggle=e;
+          e(this.expand,this);
+        },
+
+        ready: function() {
+          this.expand=false;
+        }
+      });
+  </script>
+</dom-module>

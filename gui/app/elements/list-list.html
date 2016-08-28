@@ -1,0 +1,65 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="list-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+
+      .min {
+        min-height:89px;
+      }
+      .space {
+        @apply(--layout-flex);
+      }
+
+      .small {
+        max-width:750px;
+      }
+
+      .item-bar {
+        background-color:white;
+        --paper-toolbar-background: white;
+        --paper-toolbar-color: #333;
+      }
+      .aline > * {
+        margin:0px !important;
+      }
+      .aline {
+        line-height:12px;
+      }
+    </style>
+
+      <!--<template is="dom-repeat" items="{{items}}">
+        <list-element element="{{item}}"></list-element>
+      </template>!-->
+      <content></content>
+  </template>
+
+  <script>
+      Polymer({
+        is: 'list-list',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+            observer:"_ob"
+          }
+        },
+        _ob:function(e) {
+
+        },
+
+        ready: function() {
+
+        }
+      });
+  </script>
+</dom-module>

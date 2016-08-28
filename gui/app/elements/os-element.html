@@ -1,0 +1,69 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="os-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+
+      .fixed {
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
+        position: relative;
+        vertical-align: middle;
+      }
+    </style>
+
+    <list-element class="colorme" element="{{os}}">
+      <div class="el-right">
+        <!-- button on the right - always visible -->
+        <paper-button>Install</paper-button>
+        <paper-button>Remove</paper-button>
+      </div>
+      <div class="el-small">
+        <!-- inside paper toolbar !-->
+        <img src="{{os.icon}}" width="32px" height="32px" style="margin-right:6px;" class="fixed"></img>
+        <p class="fixed">{{os.name}}</p>
+      </div>
+      <div class="el-middle">
+        <!-- inside paper toolbar - if expanded !-->
+        <img src="{{os.icon}}" width="48px" height="48px" style="margin-right:6px;" class="fixed"></img>
+        <h2 class="fixed main-title">{{os.name}}</h2>
+      </div>
+      <div class="el-big">
+        <!-- under paper toolbar !-->
+        <marked-element style="color:grey;" markdown="{{os.desc}}">
+          <div class="markdown-html"></div>
+        </marked-element>
+        <br>
+      </div>
+    </list-element>
+  </template>
+
+  <script>
+      Polymer({
+        is: 'os-element',
+
+        properties: {
+          os: {
+            type: Object,
+            notify: true,
+            observer:"_ob"
+          }
+        },
+        _ob:function(e) {
+
+        },
+
+        ready: function() {
+
+        }
+      });
+  </script>
+</dom-module>

@@ -29,6 +29,22 @@ window.onerror = function(message, source, lineno, colno, error) {
     swal(message,error,"error")
   }
 };
+
+app.testOS=[
+  {
+    name:"TestOS",
+    desc:"Thats a test\nHello",
+    icon:"https://placehold.it/128/ffa500/ffffff",
+    installed:true
+  },
+  {
+    name:"OS Test",
+    desc:"Thats another test\nWorld!",
+    icon:"https://placehold.it/128/ffa500/ffffff",
+    installed:false
+  },
+];
+
 (function(document) {
   'use strict';
 
