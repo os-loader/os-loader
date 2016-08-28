@@ -32,7 +32,7 @@ distbuild: # This is seperate because it deletes/changes some files
 	mv $(OUTDIR) ../
 watch:
 	(sleep 10s;sudo chown $(USER):$(USER) -R $(HOME)/.config/configstore/)&
-	sudo nodemon /usr/bin/npm run startdev --ext js,html,sh
+	sudo targetdevice=$(targetdevice) nodemon /usr/bin/npm run startdev --ext js,html,sh
 deb: build
 	cp -r deb-files $(BDIR)/gui/
 	mv $(OUTDIR) $(BDIR)/gui/src

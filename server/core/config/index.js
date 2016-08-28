@@ -31,6 +31,7 @@ function config(file,defaults) {
       data=obj;
       return cb();
     } catch(e) {
+      data=defaults;
       return cb(e);
     }
   }
