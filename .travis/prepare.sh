@@ -8,3 +8,5 @@ cd server
   npm i --silent --quiet
   bower i --silent --quiet
 cd ..
+
+sudo dpkg -x isolinux.deb /

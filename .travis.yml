@@ -56,7 +56,6 @@ addons:
     - gnupg2
     - gnupg-agent
     - devscripts
-    - isolinux
 env:
   global:
   - secure: R9AFwuA92Y7KcaaY3eFISztKxB5e5ZK1aEKVekAzblB7LxT9C1KLD/r4rcjMpPfIr9icUo4Cw9JU3DLa75JjxEGfudpAZwa/G1y0TGM/CmfWVQ6lRHWyjOvdt/vQBYwc3gyotHJOMU8mGk8jLVrtPePuuE3joXYObo/BdZ9Ut6vwScbjgfCLqCtoaE1RR04Pxd7+BKcJf/Qro4TgXztfvI0og71OvwgORAPvttyyMjVpQDaL7Bx0KflbdU0KvftPmIVxqljY50toqWRQvJS6ZmjyeKCzO56UPloz+uny2aRjgxJJi22wDU7BxOACaoFuZ2It+UyI8leaezcRaHy13XiuQkNprQFdOhdZUgi7tYYgu4B2CI/pJOi5qz5nyELlF4F7yyszz15EbjNY/c7I0DQXorCG6LHH+kgNEWybzuLCXeXkatgh5eUW/Ki+FSjKno4cNQLwX17sZbT6lBSTob+dOkg6RVyLwhFLHww5dyfV11rF25ZH0pZBj7G7CRM2tsUOD1zjdvMa/zki4olbrIAWgPj31n8dg+XhoUBECk4ChcncNn+/qrKzom/WWTVfd61SKaMo/pYrhNQPIjNljQZyOVilH9JUsPsCvFgNAmtWDeC9+8hABnA1Eq+VMWM3CdNq9xKrLIZqJKaEY4hNHfIAEZTB5DiK3OzEtXom7zc=
