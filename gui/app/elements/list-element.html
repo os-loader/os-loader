@@ -94,6 +94,7 @@
         },
         toggleExpand:function() {
           this.expand=!this.expand;
+          if (this.ontoggle) this.ontoggle(this.expand,this);
         },
         _ob:function(e) {
           if (e.desc) e.desc=e.desc.replace(/\n/g,"<br>");

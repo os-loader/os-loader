@@ -36,10 +36,8 @@
       }
     </style>
 
-      <!--<template is="dom-repeat" items="{{items}}">
-        <list-element element="{{item}}"></list-element>
-      </template>!-->
-      <content></content>
+    <content></content>
+    
   </template>
 
   <script>
@@ -53,12 +51,35 @@
             observer:"_ob"
           }
         },
+        current:null,
         _ob:function(e) {
 
         },
+        _multi:function(v,e) {
+          if (v) {
+            if (this.current) this.current.toggleExpand();
+            this.current=e;
+          } else {
+            this.current=null;
+          }
+        },
 
         ready: function() {
-
+          var self=this;
+          var list=[];
+          setTimeout(function() {
+            [].map.call(self.childNodes,function(c) {
+              if (c.nodeName=="LIST-ELEMENT") list.push(c); else [].map.call(c.childNodes,function(d) {
+                if (d.nodeName=="LIST-ELEMENT") list.push(d);
+              });
+            });
+            var i=0;
+            list.map(function(l) {
+              i++;
+              l.sid=i;
+              l.ontoggle=self._multi.bind(self);
+            });
+          },1000);
         }
       });
   </script>
