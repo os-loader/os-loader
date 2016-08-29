@@ -64,6 +64,7 @@ module_available(){
 
 set_background_image(){
 	# Step #1: Search all available output modes ...
+	return 0; #skip - this causes a crash
 	local output
 	for output in ${GRUB_TERMINAL_OUTPUT}; do
 		if [ "x$output" = "xgfxterm" ]; then
