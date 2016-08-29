@@ -1,7 +1,7 @@
 function https() {
   //https downloads
   function parse(url) {
-    return protocol+"://"+url;
+    return "https://"+url;
   }
   function pipe(url) {
     //Returns a Pipe

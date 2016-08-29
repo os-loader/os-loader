@@ -27,13 +27,10 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 
 var MongoStore = require('connect-mongodb-session')(session);
-var store = new MongoStore(
-  {
-    uri: "mongodb://localhost:27017/osl-image-server",
-    collection: 'sessions'
-  });
-
-app.use(require("core/static"));
+var store = new MongoStore({
+  uri: "mongodb://localhost:27017/osl-image-server",
+  collection: 'sessions'
+});
 
 newLogger("express",app);
 /*LOGGER*/
@@ -48,6 +45,8 @@ app.use(function(req,res,next) {
   });
   return next();
 });
+
+app.use(require("core/static"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

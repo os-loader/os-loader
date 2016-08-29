@@ -6,7 +6,8 @@ function protocols() {
   var map=[];
   function load(p) {
     try {
-      var pr=require("./"+p);
+      var s=require("./"+p);
+      var pr=new s();
       pr.rating=0;
       pr.options=pr.options||{};
       var o=pr.options;

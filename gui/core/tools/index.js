@@ -21,7 +21,7 @@ config=require("core/config.main");
 Duplex=streams.Duplex;
 bytes=require("bytes");
 bytesTrim=function(str) {
-  return str.trim().replace("G","gb").replace("M","mb").replace(",",".");
+  return str.trim().replace("T","tb").replace("G","gb").replace("M","mb").replace(",",".");
 }
 w=require("w");
 uuid=require("node-uuid").v4;
