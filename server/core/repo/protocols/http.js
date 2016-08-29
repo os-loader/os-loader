@@ -3,33 +3,8 @@ function http() {
   function parse(url) {
     return "http://"+url;
   }
-  /*  .on('response', function(resp){
-    var charset = extractCharsetFromStr(resp.headers['content-type']),
-        encoding = resp.headers['content-encoding'],
-        decodedRes;
-
-    // unzip
-    if(encoding == 'gzip' || encoding == 'deflate')
-      decodedRes = resp.pipe(encoding == 'gzip' ? zlib.createGunzip() : zlib.createInflate())
-    else
-      decodedRes = resp
-
-    // charset
-    if(charset != 'utf-8' && iconv.encodingExists(charset)){
-      return decodedRes.pipe(iconv.decodeStream(charset))
-    }
-  })*/
   function pipe(url) {
     //Returns a Pipe
-    /*console.log("HTTP");
-    require("http").get(url, (res) => {
-      console.log("HTTP");
-      console.log(`Got response: ${res.statusCode}`);
-      // consume response body
-      res.resume();
-    }).on('error', (e) => {
-      console.log(`Got error: ${e.message}`);
-    });*/
     return request.get(url);// - broken (works only sometimes)
   }
   function plain(url,cb) {
