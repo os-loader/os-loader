@@ -9,7 +9,7 @@ Install Operating Systems just like Software
 More in Idea.md and FAQ.md
 
 # Images
-Images built by Travis are available [here](https://os-loader.mkg20001.sytes.net/?C=M;O=D) (last recent=newest)
+Images built by Travis are available [here](https://os-loader.mkg20001.sytes.net/daily/?C=M;O=D) (last recent=newest)
 
 # Build Environment
 Currently Ubuntu 16.04 is the recommended Build Environment

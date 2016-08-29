@@ -6,7 +6,7 @@
 set -e
 
 echo "Check for new ISO..."
-list=`curl 'https://os-loader.mkg20001.sytes.net/?C=M;O=D' 2> /dev/null | grep 'href="image.iso.[a-zA-Z0-9.-]*"' -o | grep "image.iso.[a-zA-Z0-9.-]*" -o | xargs`
+list=`curl 'https://os-loader.mkg20001.sytes.net/daily/?C=M;O=D' 2> /dev/null | grep 'href="image.iso.[a-zA-Z0-9.-]*"' -o | grep "image.iso.[a-zA-Z0-9.-]*" -o | xargs`
 name=`echo $list | grep "image.iso.[a-zA-Z0-9.-]*" -o | head -n 1`
 echo "Latest ISO is: $name"
 pt="$HOME/.cache/os-loader/images"
@@ -38,10 +38,10 @@ case "$1" in
 	*)
 		ipt="$pt/$name"
 		if [ -f $ipt ]; then
-			wget -qq https://os-loader.mkg20001.sytes.net/$name -O $ipt --continue
+			wget -qq https://os-loader.mkg20001.sytes.net/daily/$name -O $ipt --continue
 		else
 			echo "Update... ( ~5min )"
-			wget https://os-loader.mkg20001.sytes.net/$name -O $ipt --continue
+			wget https://os-loader.mkg20001.sytes.net/daily/$name -O $ipt --continue
 		fi
 		if [ -h $out ]; then
 			echo "Clean old link $out..."

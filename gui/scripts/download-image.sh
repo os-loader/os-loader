@@ -3,9 +3,13 @@
 . $FNC
 
 progmax 5
-state "Check for new ISO..."
-con=`curl 'https://os-loader.mkg20001.sytes.net/?C=M;O=D' 2> /dev/null  | grep 'href="image.iso.[a-zA-Z0-9.-]*"' -o | head -n 1 | grep "image.iso.[a-zA-Z0-9.-]*" -o`
-name="$con"
+if [ -z $image ]; then
+	state "Check for new ISO..."
+	con=`curl 'https://os-loader.mkg20001.sytes.net/daily/?C=M;O=D' 2> /dev/null  | grep 'href="image.iso.[a-zA-Z0-9.-]*"' -o | head -n 1 | grep "image.iso.[a-zA-Z0-9.-]*" -o`
+	name="$con"
+else
+	con="$image";
+fi
 prog 1
 
 pt="/.cache/os-loader/images"
@@ -50,7 +54,7 @@ ifmd5() {
 download() {
 	prog +
 	state "Update ISO... (~5min)"
-	wget https://os-loader.mkg20001.sytes.net/$name -O $ipt --continue
+	wget https://os-loader.mkg20001.sytes.net/daily/$name -O $ipt --continue
 	$1
 }
 
@@ -75,8 +79,8 @@ check() {
 
 check2() {
 	ifmd5 "link" "rm $ipt"
-	#if we are still here it´s corrupted
-	err 'ISO is corrupted - redownload'
+	#if we are still here it´s broken
+	err 'ISO is broken - redownload'
 	check
 }
 

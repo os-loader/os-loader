@@ -1,10 +1,11 @@
 const configDefaults={
-  firstRun:true
+  firstRun:true,
+  currentImage:""
 };
 
 function config() {
   const self=this;
-  var config=configDefaults;
+  self.config=configDefaults;
   /* jshint ignore:start */
   for (var p in configDefaults) {
     (function(p) {
@@ -21,8 +22,7 @@ function config() {
   }
   /* jshint ignore:end */
   function initfor(file) {
-    config=new configFile(file,configDefaults);
-    self.config=config;
+    self.config=new configFile(file,configDefaults);
   }
   var initd=false;
   function init() {
