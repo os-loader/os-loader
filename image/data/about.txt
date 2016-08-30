@@ -1,16 +1,17 @@
 
-                              70OS Loader
+                                  03OS Loader
 
-78Multiple Portable and Live Operating Systems
-  isolated from each other on a single HDD/USB.
+07Install Operating Systems just like Software
 
-78This Live Image can be used to install OS-Loader on an USB.
+07To install OS Loader on this or another USB choose 03"OS Loader Setup"
 
-78This Live Image contains also a memtest86+ image
-  to test the ram if the image fails to boot.
+07Requirements:
+ - 4GB Ram
+ - 2GB Free Space
+ - 64-bit Computer
 
-74Built on {HOST}
+04Built on {HOST}
   at {DATE}
 
-71Version/Commit: {VER}
-  Channel: {CHANNEL}
+01Version: {VER}
+  on Channel: {CHANNEL}
