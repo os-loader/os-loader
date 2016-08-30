@@ -6,15 +6,19 @@ if (!config.currentImage) {
 // TODO: save current image path - to not redownload on every new image
 }
 
-var client=require("core/repo/client");
+var r=require("core/repo/repos");
+repos=new r();
 
-var repo=new client({
-  sources:{
-    "http":"localhost:8190/repo/repo.tar.gz",
-  }
-});
+if (!config.sources.length) {
+  localRepo=repos.add(repos.newRepo({
+    sources:{
+      "http":"localhost:8190/repo/repo.tar.gz",
+    }
+  }));
+}
+
 setTimeout(function() {
-  repo.update(function(e,d) {
+  repos.update(function(e,d) {
     console.log("updated",e,d);
   });
 },500);

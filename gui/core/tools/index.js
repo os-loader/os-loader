@@ -2,6 +2,7 @@ require("colors");
 newLogger=require("core/logger");
 fs=global.electron?require("original-fs"):require("fs");
 pth=require("path");
+mkdirp=require("mkdirp");
 cp=require("child_process");
 ee=require("events").EventEmitter;
 spawn=cp.spawn;

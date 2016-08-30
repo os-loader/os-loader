@@ -1,6 +1,7 @@
 const configDefaults={
   firstRun:true,
-  currentImage:""
+  currentImage:"",
+  sources:[]
 };
 
 function config() {
