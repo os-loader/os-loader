@@ -53,7 +53,8 @@ set_default_theme(){
 
 module_available(){
 	local module
-	for module in "/usb/boot/grub/grub/i386-pc/${1}.mod" "${1}.mod" */"${1}.mod"; do
+	#"/usb/boot/grub/grub/i386-pc/${1}.mod" 
+	for module in "${1}.mod" */"${1}.mod"; do
 		if [ -f "${module}" ]; then
 			return 0
 		fi
