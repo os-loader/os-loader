@@ -5,37 +5,70 @@ function repo(conf2,name) {
 
   conf.last=new Date(conf.last);
   const self=this;
+  self.isUpdate=false;
   self.conf=conf;
+  self.dir=pth.join(mountdir,"os-loader",conf.dir);
+  mkdirp.sync(self.dir);
   newLogger({name:"repo",id:conf.name},self);
   function load(file,cb) {
     return loader(file,pth.join(mountdir,"repo",conf.dir),function(e,r) {
       if (e) return cb(e);
-      var s=r.about.sources;
-      delete r.about.sources;
-      if (s) {
-        for (var source in s) {
-          if (conf.sources[source]) {
-            if (conf.sources[source]==s[source]) self.debug("Skip",source);
-            if (conf.sources[source]!=s[source]) {
-              self.info("Update",source,conf.sources[source],"=>",s[source]);
+      require("recursive-readdir")(self.dir,function(e,files) {
+        if (e) return cb(e);
+        var fcp=r.files.slice(0);
+        new w(files,function(f,done) {
+          if (fcp.indexOf(f.replace(self.dir+"/",""))==-1) fs.unlink(f,done); else done();
+        })(function(e) {
+          if (e) return cb(e);
+          new w(fcp,function(f,done) {
+            mkdirp(pth.dirname(pth.join(self.dir,f)),function(e) {
+              if (e) return cb(e);
+              try {
+                var wS=fs.createWriteStream(pth.join(self.dir,f));
+                var rS=fs.createReadStream(pth.join(r.tmp,f));
+                wS.on("finish",done);
+                wS.on("error",done);
+                rS.on("error",done);
+                rS.pipe(wS);
+              } catch(e) {
+                done(e);
+              }
+            });
+          })(function(e) {
+            if (e) return cb(e);
+            loadOK();
+          });
+        });
+      });
+
+      function loadOK() {
+        var s=r.about.sources;
+        delete r.about.sources;
+        if (s) {
+          for (var source in s) {
+            if (conf.sources[source]) {
+              if (conf.sources[source]==s[source]) self.debug("Skip",source);
+              if (conf.sources[source]!=s[source]) {
+                self.info("Update",source,conf.sources[source],"=>",s[source]);
+                conf.sources[source]=s[source];
+              }
+            } else {
+              self.info("Add",sources[source]);
               conf.sources[source]=s[source];
             }
-          } else {
-            self.info("Add",sources[source]);
-            conf.sources[source]=s[source];
+          }
+          conf.sourcesmap=[];
+          conf.sourcesmap.push({url:"",protocol:"EOF"});
+          for (var s2 in conf.sources) {
+            conf.sourcesmap.push({url:conf.sources[s2],protocol:s2});
           }
         }
-        conf.sourcesmap=[];
-        conf.sourcesmap.push({url:"",protocol:"EOF"});
-        for (var s2 in conf.sources) {
-          conf.sourcesmap.push({url:conf.sources[s2],protocol:s2});
-        }
+        conf.last=new Date();
+        conf.about=r.about;
+        conf.files=r.files;
+        conf.checksum=r.checksum;
+        cb(e,r);
       }
-      conf.last=new Date();
-      conf.about=r.about;
-      conf.files=r.files;
-      conf.checksum=r.checksum;
-      cb(e,r);
     });
   }
   function gettmp() {

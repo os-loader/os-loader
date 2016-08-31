@@ -233,6 +233,12 @@
               <paper-material class="focus-target" elevation="1">
                 <h2 class="page-title">Repos</h2>
                 <p>OS Loader Repos are Servers where Operating Systems are hosted</p>
+                <br>
+                <list-list>
+                  <template is="dom-repeat" items="{{repos}}">
+                    <repo-element repo="{{item}}"></os-element>
+                  </template>
+                </list-list>
               </paper-material>
             </section>
           </iron-pages>

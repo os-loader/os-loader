@@ -10,10 +10,10 @@ function config(file,defaults) {
       'use strict';
       Object.defineProperty(self, p, {
           get: function() {
-            return data[p];
+            return self.data[p];
           },
           set: function(n) {
-            data[p]=n;
+            self.data[p]=n;
             write();
           }
       });
@@ -21,23 +21,23 @@ function config(file,defaults) {
   }
   /* jshint ignore:end */
   newLogger({name:"config",file:file},self);
-  var data={};
+  self.data={};
   function read(cb) {
     try {
       var obj=jsonfile.readFileSync(file);
       for (var p in defaults) {
         if (!obj[p]) obj[p]=defaults[p];
       }
-      data=obj;
+      self.data=obj;
       return cb();
     } catch(e) {
-      data=defaults;
+      self.data=defaults;
       return cb(e);
     }
   }
   function write(c) {
     try {
-      jsonfile.writeFileSync(file,data,data.__comment?{}:{spaces:2});
+      jsonfile.writeFileSync(file,self.data,self.data.__comment?{}:{spaces:2});
       self.debug("Config file saved!");
     } catch(e) {
       self.error(e,"Config file save failed!");
@@ -52,7 +52,7 @@ function config(file,defaults) {
         write(true);
         return false;
       }
-      data=defaults;
+      self.data=defaults;
       self.error(err,"Config file load failed!");
       write(true);
     }

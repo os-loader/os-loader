@@ -55,7 +55,7 @@ function repo(file,out,mcb) {
           })(function(e,fail) {
             if (fail.length) self.error(fail,"Files skipped");
             if (e) return mcb(e);
-            mcb(null,{files:Files,about:main,checksum:checksum});
+            mcb(null,{files:Files,about:main,checksum:checksum,tmp:tmpdir});
           });
         });
       });

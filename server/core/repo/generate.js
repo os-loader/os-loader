@@ -48,7 +48,7 @@ function generate(out,conf,cb) {
         desc:conf.about.desc,
         os:sys,
         maintainer:conf.about.maintainer,
-        icon:null, // TODO: add icon config
+        icon:conf.about.icon||null, // TODO: add icon config
         sources:null // TODO: alternative sources
       });
       plugins.hook("repo.files",repo,function() {

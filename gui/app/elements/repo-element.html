@@ -1,0 +1,93 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="repo-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+
+      .fixed {
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
+        position: relative;
+        vertical-align: middle;
+      }
+    </style>
+
+    <list-element class="colorme" element="{{repo}}">
+      <div class="el-right">
+        <!-- button on the right - always visible -->
+        <template is="dom-if" if="{{repo.isUpdate}}">
+          <paper-progress indeterminate></paper-progress>
+        </template>
+        <template is="dom-if" if="{{!repo.isUpdate}}">
+          <paper-button on-click="update">Update</paper-button>
+        </template>
+      </div>
+      <div class="el-small">
+        <!-- inside paper toolbar !-->
+        <img src="{{repo.about.icon}}" width="32px" height="32px" style="margin-right:6px;" class="fixed"></img>
+        <template is="dom-if" if="{{repo.isUpdate}}">
+          <paper-icon-button icon="av:replay"></paper-icon-button>
+        </template>
+        <template is="dom-if" if="{{repo.lastErr}}">
+          <template is="dom-if" if="{{!repo.isUpdate}}">
+            <paper-icon-button style="color:red;" icon="warning" on-click="update"></paper-icon-button>
+          </template>
+        </template>
+        <p class="fixed">{{repo.about.name}}</p>
+      </div>
+      <div class="el-middle">
+        <!-- inside paper toolbar - if expanded !-->
+        <img src="{{repo.about.icon}}" width="48px" height="48px" style="margin-right:6px;" class="fixed"></img>
+        <h2 class="fixed main-title">{{repo.about.name}}</h2>
+      </div>
+      <div class="el-big">
+        <!-- under paper toolbar !-->
+        <template is="dom-if" if="{{repo.lastErr}}">
+          <template is="dom-if" if="{{!repo.isUpdate}}">
+            <p style="color:red;"><paper-icon-button icon="warning" on-click="update"></paper-icon-button> {{repo.lastErr}}</p>
+          </template>
+        </template>
+        <template is="dom-if" if="{{repo.isUpdate}}">
+          <i><paper-icon-button icon="av:replay"></paper-icon-button> Updating...</p>
+        </template>
+        <marked-element style="color:grey;" markdown="{{repo.about.desc}}">
+          <div class="markdown-html"></div>
+        </marked-element>
+        <p><i style="color:grey;">{{repo.about.maintainer}}</i></p>
+        <br>
+      </div>
+    </list-element>
+  </template>
+
+  <script>
+      Polymer({
+        is: 'repo-element',
+
+        properties: {
+          repo: {
+            type: Object,
+            notify: true,
+            observer:"_ob"
+          }
+        },
+        _ob:function(e) {
+        },
+
+        ready: function() {
+
+        },
+        update:function() {
+          repos.update(this.repo.name,function() {
+          });
+        }
+      });
+  </script>
+</dom-module>
