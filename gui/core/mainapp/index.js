@@ -9,16 +9,15 @@ if (!config.currentImage) {
 var r=require("core/repo/repos");
 repos=new r();
 
+app.updateAll=function() {
+  repos.update(function() {
+  });
+}
+
 if (!config.sources.length) {
-  localRepo=repos.add(repos.newRepo({
+  repos.add(repos.newRepo({
     sources:{
       "http":"localhost:8190/repo/repo.tar.gz",
     }
   }));
 }
-
-setTimeout(function() {
-  repos.update(function(e,d) {
-    console.log("updated",e,d);
-  });
-},500);

@@ -38,6 +38,8 @@ function repos() {
     var c=new client(conf);
     clients.push(c);
     byId[conf.name]=c;
+    update(conf.name,function() {
+    });
     u();
     return c;
   }

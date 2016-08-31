@@ -232,6 +232,15 @@
             <section data-route="repo">
               <paper-material class="focus-target" elevation="1">
                 <h2 class="page-title">Repos</h2>
+                <paper-toolbar style="margin-top:-88px;" class="item-bar2">
+                  <div class="space"></div>
+                  <template is="dom-if" if="{{repoUpdate}}">
+                    <paper-progress indeterminate></paper-progress>
+                  </template>
+                  <template is="dom-if" if="{{!repoUpdate}}">
+                    <paper-button on-click="updateAll">Update All</paper-button>
+                  </template>
+                </paper-toolbar>
                 <p>OS Loader Repos are Servers where Operating Systems are hosted</p>
                 <br>
                 <list-list>
