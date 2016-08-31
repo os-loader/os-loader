@@ -53,7 +53,7 @@ set_default_theme(){
 
 module_available(){
 	local module
-	#"/usb/boot/grub/grub/i386-pc/${1}.mod" 
+	#"/usb/boot/grub/grub/i386-pc/${1}.mod"
 	for module in "${1}.mod" */"${1}.mod"; do
 		if [ -f "${module}" ]; then
 			return 0
@@ -159,6 +159,7 @@ if [ -f "/usr/share/desktop-base/grub_background.sh" ]; then
 	. "/usr/share/desktop-base/grub_background.sh"
 fi
 
+set_default_theme
 exit 0 #ignore background
 
 # First check whether the user has specified a background image explicitly.
