@@ -64,7 +64,6 @@ module_available(){
 
 set_background_image(){
 	# Step #1: Search all available output modes ...
-	return 0; #skip - this causes a crash
 	local output
 	for output in ${GRUB_TERMINAL_OUTPUT}; do
 		if [ "x$output" = "xgfxterm" ]; then
@@ -158,6 +157,8 @@ EOF
 if [ -f "/usr/share/desktop-base/grub_background.sh" ]; then
 	. "/usr/share/desktop-base/grub_background.sh"
 fi
+
+exit 0 #ignore background
 
 # First check whether the user has specified a background image explicitly.
 # If so, try to use it. Don't try the other possibilities in that case
