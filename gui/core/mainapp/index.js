@@ -17,7 +17,14 @@ app.updateAll=function() {
 if (!config.sources.length) {
   repos.add(repos.newRepo({
     sources:{
-      "http":"localhost:8190/repo/repo.tar.gz",
+      "https":"os-loader.sytes.net/repo/repo.tar.gz",
     }
   }));
 }
+app.addDev=function() {
+  repos.add(repos.newRepo({
+    sources:{
+      "http":"localhost:8190/repo/repo.tar.gz",
+    }
+  }));
+};

@@ -59,7 +59,7 @@ function repos() {
     });
   }
   function newRepo(conf) {
-    var r=repoDefaults;
+    var r=extend({},repoDefaults);
     r.sources=conf.sources;
     r.name=uuid();
     r.keyid=conf.keyid;
