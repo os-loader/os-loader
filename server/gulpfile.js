@@ -33,6 +33,10 @@ gulp.task("models.js",function() {
   return gulp.src("models/**/*.js").pipe($.uglify()).pipe(gulp.dest(dist("models")));
 });
 
+gulp.task("plugins",function() {
+  return gulp.src("plugins/**/*.js").pipe($.uglify()).pipe(gulp.dest(dist("plugins")));
+});
+
 gulp.task("index.js",function() {
   return gulp.src("index.js")/*.pipe($.uglify())*/.pipe($.rename("os-loader-server")).pipe(gulp.dest(dist()));
 });
@@ -55,6 +59,6 @@ gulp.task("hackcss",function() {
 });
 
 gulp.task("default",["clean"],function() {
-  return runSequence(["ejs","views","hackcss","core.js","w.js","models.js","index.js","package.json"]);
+  return runSequence(["ejs","views","hackcss","core.js","w.js","models.js","plugins","index.js","package.json"]);
   //return runSequence(["ejs"],["views"],["hackcss"],["core.js"],["models.js"],["index.js"],["package.json"]);
 });
