@@ -10,10 +10,10 @@ state "Generate Config Files..."
 chroot grub-mkdevicemap
 chroot update-grub #-o "/usb/boot/grub.cfg"
 mkdir -p $usb/grub
-echo "configfile /boot/grub.cfg
+echo "configfile /boot/grub/grub.cfg
 " > $usb/grub.cfg
-echo "configfile /boot/grub.cfg
+echo "configfile /boot/grub/grub.cfg
 " > $usb/grub/grub.cfg
-echo "configfile /boot/grub.cfg
+echo "configfile /boot/grub/grub.cfg
 " > $usb/boot/grub.cfg
 finish

@@ -82,7 +82,7 @@ function repo(conf2,name) {
       protocols.plain(s.protocol,s.url.replace("repo.tar.gz","repo.sha256"),function(err,res) {
         if (err) self.error(err,s.protocol+"@"+s.url+" is offline");
         if (err) return done();
-        if (conf.current!=res||!conf.current||true) {
+        if (conf.current!=res||!conf.current||isdev) {
           setTimeout(function() {
             var p=gettmp()+".tar.gz";
             var w=fs.createWriteStream(p);
