@@ -158,6 +158,14 @@ if [ -f "/usr/share/desktop-base/grub_background.sh" ]; then
 	. "/usr/share/desktop-base/grub_background.sh"
 fi
 
+#Render
+wkhtmltoimage --width 1000 --height 1000 /usr/share/os-loader/bg.svg - | convert - -trim /tmp/os-loader-bg.png
+if set_background_image "/tmp/os-loader-bg.png"; then
+	exit 0
+else
+	log "BG set failed!"
+fi
+
 # First check whether the user has specified a background image explicitly.
 # If so, try to use it. Don't try the other possibilities in that case
 # (#608263).
