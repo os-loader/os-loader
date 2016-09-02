@@ -67,3 +67,7 @@ parts
 prime
 stage
 os-loader*_*_*.snap
+
+#Image
+*.iso
+remaster

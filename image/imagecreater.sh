@@ -267,7 +267,7 @@ path-include=/usr/share/doc/*/copyright
 
   kernelandboot="memtest86+ grub2 linux-base linux-generic virtualbox-guest-dkms" # linux kernel and bootloader
   liveboot="live-boot live-boot-initramfs-tools casper squashfs-tools" # live boot
-  uitools="plymouth plymouth-label openbox xorg lightdm dmz-cursor-theme feh" # display manager, window manager, etc.
+  uitools="plymouth plymouth-label openbox xorg lightdm dmz-cursor-theme feh wkhtmltopdf" # display manager, window manager, etc.
   othertools="bash sudo menu curl wget apt-transport-https" # others
   chinstall $kernelandboot $liveboot $uitools $othertools
 

@@ -53,8 +53,7 @@ set_default_theme(){
 
 module_available(){
 	local module
-	#"/usb/boot/grub/grub/i386-pc/${1}.mod"
-	for module in "${1}.mod" */"${1}.mod"; do
+	for module in "/usb/boot/grub/grub/i386-pc/${1}.mod" "${1}.mod" */"${1}.mod"; do
 		if [ -f "${module}" ]; then
 			return 0
 		fi
@@ -159,9 +158,6 @@ if [ -f "/usr/share/desktop-base/grub_background.sh" ]; then
 	. "/usr/share/desktop-base/grub_background.sh"
 fi
 
-set_default_theme
-exit 0 #ignore background
-
 # First check whether the user has specified a background image explicitly.
 # If so, try to use it. Don't try the other possibilities in that case
 # (#608263).
@@ -185,7 +181,9 @@ fi
 # If we haven't found a background image yet, use the default from desktop-base.
 case $GRUB_DISTRIBUTOR in
 	os-loader)
-		if set_background_image "/usr/share/os-loader/os-loader.png"; then
+		#Render
+		wkhtmltoimage --width 1000 --height 1000 /usr/share/os-loader/bg.svg - | convert - -trim /tmp/os-loader-bg.png
+		if set_background_image "/tmp/os-loader-bg.png"; then
 			exit 0
 		fi
 		;;
