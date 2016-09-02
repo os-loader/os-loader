@@ -272,7 +272,7 @@ path-include=/usr/share/doc/*/copyright
 
   kernelandboot="memtest86+ grub2 linux-base linux-generic $devtools" # linux kernel and bootloader
   liveboot="live-boot live-boot-initramfs-tools casper squashfs-tools" # live boot
-  imagetools="feh wkhtmltopdf imagemagick" # Tools for rendering images and stuff
+  imagetools="feh wkhtmltopdf imagemagick xvfb" # Tools for rendering images and stuff
   uitools="plymouth plymouth-label openbox xorg lightdm dmz-cursor-theme $imagetools" # display manager, window manager, etc.
   othertools="bash sudo menu curl wget apt-transport-https" # others
   chinstall $kernelandboot $liveboot $uitools $othertools

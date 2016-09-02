@@ -159,8 +159,10 @@ if [ -f "/usr/share/desktop-base/grub_background.sh" ]; then
 fi
 
 #Render
-wkhtmltoimage --width 1000 --height 1000 /usr/share/os-loader/bg.svg - | convert - -trim /tmp/os-loader-bg.png
-if set_background_image "/tmp/os-loader-bg.png"; then
+img="/tmp/os-loader-bg.png"
+xvfb-run -a -s "-screen 0 640x480x16" wkhtmltoimage --width 1000 --height 1000 /usr/share/os-loader/bg.svg $img
+convert $img -trim $img
+if set_background_image "$img"; then
 	exit 0
 else
 	log "BG set failed!"
