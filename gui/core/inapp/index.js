@@ -21,8 +21,8 @@ try {
   module.exports={};
   global.needsroot=true;
   swal({
-      title:"Needs Admin Permissions",
-      text:"Run this application again with admin permissions",
+      title:"Requires Admin Permissions to run",
+      text:"Run this application again as root",
       showConfirmButton: false,
       type:"error"
     });

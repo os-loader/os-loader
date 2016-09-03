@@ -5,26 +5,14 @@ build:
 	if ! [ -d app/bower_components ]; then bower i; fi
 	rm -rf os-loader-settings* buildtmp deb
 
-	mkdir -p ./buildtmp
-	#cp -r ./{core,dist,scripts,package.json,w.js,Makefile,minify-sh.sh,main.js} ./buildtmp/
-	cp -r ./core ./buildtmp/
-	cp -r ./scripts ./buildtmp/
-	cp ./package.json ./buildtmp/
-	cp ./w.js ./buildtmp/
-	cp ./Makefile ./buildtmp/
-	cp ./minify-sh.sh ./buildtmp/
-	cp ./main.js ./buildtmp/
+	npm run gulp
+	mv dist buildtmp
 
-	rm ./buildtmp/core/repo
-	cp -r ../server/core/repo ./buildtmp/core/repo
-	rm ./buildtmp/core/config
-	cp -r ../server/core/config ./buildtmp/core/config
 	make -C buildtmp distbuild BDIR=$(BDIR)
 distbuild: # This is seperate because it deletes/changes some files
-	cd ..;npm run gulp
-	mv ../dist ./
-	rm -rf app deb-files node_modules Makefile test
+	rm -rf Makefile
 	cd scripts;find -type f -iname "*.sh" | xargs "bash" "../minify-sh.sh"
+	rm minify-sh.sh
 	npm i --production
 	npm i mkg20001/electron-packager#patch-1
 	sed -i "s/dd='app'/dd='dist'/g" main.js

@@ -7,27 +7,22 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var merge = require('merge-stream');
 var path = require('path');
-var fs = require('fs');
+/*var fs = require('fs');
 var glob = require('glob-all');
 var packageJson = require('./package.json');
-var crypto = require('crypto');
+var crypto = require('crypto');*/
 
-var AUTOPREFIXER_BROWSERS = [
-//  'ie >= 10',
-//  'ie_mob >= 10',
-//  'ff >= 30',
-  'chrome >= 34',
-//  'safari >= 7',
-//  'opera >= 23',
-//  'ios >= 7',
-//  'android >= 4.4',
-//  'bb >= 10'
-];
+var AUTOPREFIXER_BROWSERS = ['chrome >= 34',];
 
-var DIST = 'dist';
+var DIST = 'dist/dist';
+var DIST2 = 'dist';
 
 var dist = function(subpath) {
   return !subpath ? DIST : path.join(DIST, subpath);
+};
+
+var out = function(subpath) {
+  return !subpath ? DIST2 : path.join(DIST2, subpath);
 };
 
 var styleTask = function(stylesPath, srcs) {
@@ -124,52 +119,44 @@ gulp.task('vulcanize', function() {
     .pipe($.size({title: 'vulcanize'}));
 });
 
-// Generate config data for the <sw-precache-cache> element.
-// This include a list of files that should be precached, as well as a (hopefully unique) cache
-// id that ensure that multiple PSK projects don't share the same Cache Storage.
-// This task does not run by default, but if you are interested in using service worker caching
-// in your project, please enable it within the 'default' task.
-// See https://github.com/PolymerElements/polymer-starter-kit#enable-service-worker-support
-// for more context.
-gulp.task('cache-config', function(callback) {
-  var dir = dist();
-  var config = {
-    cacheId: packageJson.name || path.basename(__dirname),
-    disabled: false
-  };
-
-  glob([
-    'index.html',
-    './',
-    'bower_components/webcomponentsjs/webcomponents-lite.min.js',
-    '{elements,scripts,styles}/**/*.*'],
-    {cwd: dir}, function(error, files) {
-    if (error) {
-      callback(error);
-    } else {
-      config.precache = files;
-
-      var md5 = crypto.createHash('md5');
-      md5.update(JSON.stringify(config.precache));
-      config.precacheFingerprint = md5.digest('hex');
-
-      var configPath = path.join(dir, 'cache-config.json');
-      fs.writeFile(configPath, JSON.stringify(config), callback);
-    }
-  });
-});
-
 // Clean output directory
 gulp.task('clean', function() {
-  return del(['.tmp', dist()]);
+  return del(['.tmp', "dist"]);
+});
+
+gulp.task("index.js",function() {
+  return gulp.src(["w.js","main.js"])/*.pipe($.uglify())*/.pipe(gulp.dest(out()));
+});
+
+gulp.task("package.json",function() {
+  return gulp.src("package.json").pipe($.jsonTransform(function(data) {
+    data.devDependencies={"electron-prebuilt":data.devDependencies["electron-prebuilt"]};
+    data.scripts={
+      start:data.scripts.start,
+      build:data.scripts.build
+    }
+    return data;
+  })).pipe(gulp.dest(out()));
+});
+
+gulp.task("core.js",function() {
+  return gulp.src(["core/**/**/*.js"])/*.pipe($.uglify())*/.pipe(gulp.dest(out("core")));
+});
+
+gulp.task("scripts",function() {
+  return gulp.src("scripts/**/*.sh").pipe(gulp.dest(out("scripts")));
+});
+
+gulp.task("other",function() {
+  return gulp.src(["minify-sh.sh","Makefile"]).pipe(gulp.dest(out()));
 });
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function(cb) {
-  // Uncomment 'cache-config' if you are going to use service workers.
   runSequence(
     ['copy', 'styles'],
+    ["index.js","package.json","core.js","scripts","other"],
     'build',
-    'vulcanize', // 'cache-config',
+    'vulcanize',
     cb);
 });
