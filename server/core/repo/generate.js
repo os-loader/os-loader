@@ -9,7 +9,7 @@ function generate(out,conf,cb) {
   self.repo=repo;
   var sys=[];
   self.info({tmp:tmp,out:out},"Generating Repo");
-  self.debug("Loading Systems...");
+  self.debug("Exporting...");
   System.find({},function(e,r) {
     if (e) return cb(e);
     w(r,function(os2,sysCB) {
@@ -22,9 +22,9 @@ function generate(out,conf,cb) {
         type:os2.type,
         channels:[]
       }
-      self.debug("sys",os.name);
+      self.trace("sys",os.name);
       sys.push(os.id);
-      self.debug("Channels for "+os.name+" ...");
+      self.trace("Channels for "+os.name+" ...");
       Channel.find({for:os.id},function(e,r) {
         if (e) return sysCB(e);
         new w(r,function(ch2,chCB) {
@@ -38,9 +38,9 @@ function generate(out,conf,cb) {
             hooks:ch2.hooks,
             releases:[]
           }
-          self.debug("ch",ch.name);
+          self.trace("ch",ch.name);
           os.channels.push(ch.id);
-          self.debug("Releases for "+os.name+" ...");
+          self.trace("Releases for "+os.name+" ...");
           Release.find({for:ch.id},function(e,r) {
             if (e) return chCB(e);
             new w(r,function(rel2,relCB) {
@@ -54,19 +54,17 @@ function generate(out,conf,cb) {
                 upgrade:rel2.upgradeNext?rel2.upgradeNext:rel2.upgradeTo,
                 hooks:rel2.hooks
               }
-              self.debug("rel",rel.name);
+              self.trace("rel",rel.name);
               ch.releases.push(rel);
               relCB();
             })(function(e) {
-              self.debug("Add ch",ch.id);
-              console.log(ch);
+              self.trace("add ch",ch.id);
               repo.addFile(os.id+"/"+ch.id+".json",ch);
               chCB(e);
             });
           });
         })(function(e) {
-          self.debug("Add os",os.id);
-          console.log(os);
+          self.trace("add os",os.id);
           repo.addFile(os.id+".json",os);
           sysCB(e);
         });
