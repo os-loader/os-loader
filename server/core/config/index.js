@@ -4,6 +4,18 @@ function config(file,defaults) {
   /* jshint ignore:start */
   const el=[];
   var enoent=false;
+
+  var lock=false;
+  function preWrite() {
+    if (!lock) {
+      lock=true;
+      process.nextTick(function() {
+        lock=false;
+        write();
+      });
+    }
+  }
+
   for (var p in defaults) {
     el.push(p);
     (function(p) {
@@ -14,7 +26,7 @@ function config(file,defaults) {
           },
           set: function(n) {
             self.data[p]=n;
-            write();
+            preWrite();
           }
       });
     }(p));
@@ -22,6 +34,7 @@ function config(file,defaults) {
   /* jshint ignore:end */
   newLogger({name:"config",file:file},self);
   self.data={};
+
   function read(cb) {
     try {
       var obj=jsonfile.readFileSync(file);
