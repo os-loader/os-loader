@@ -18,13 +18,23 @@
         position: relative;
         vertical-align: middle;
       }
+
+      paper-button iron-icon {
+        padding-right:8px;
+        padding-bottom:2px;
+      }
     </style>
 
     <list-element class="colorme" element="{{os}}">
       <div class="el-right">
-        <!-- button on the right - always visible -->
-        <paper-button>Install</paper-button>
-        <paper-button>Remove</paper-button>
+        <!-- button on the right - if expanded -->
+        <template is="dom-if" if="{{os.installed}}">
+          <paper-button><iron-icon icon="launch"></iron-icon> Boot</paper-button>
+          <paper-button><iron-icon icon="settings"></iron-icon> Settings</paper-button>
+        </template>
+        <template is="dom-if" if="{{!os.installed}}">
+          <paper-button><iron-icon icon="add"></iron-icon> Install</paper-button>
+        </template>
       </div>
       <div class="el-small">
         <!-- inside paper toolbar !-->

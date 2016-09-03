@@ -1,5 +1,5 @@
 var inapp=require("../core/inapp");
-if (needsroot) throw new Error("Needs root permissions");
+if (needsroot) throw new Error("Requires Admin Permissions to run");
 for (var p in inapp) {
   this[p]=inapp[p];
   app[p]=inapp[p];
@@ -28,6 +28,10 @@ window.onerror = function(message, source, lineno, colno, error) {
   } else {
     swal(message,error,"error")
   }
+};
+
+app.db={
+  os:[]
 };
 
 (function(document) {

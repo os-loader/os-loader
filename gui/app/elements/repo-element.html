@@ -18,16 +18,21 @@
         position: relative;
         vertical-align: middle;
       }
+
+      paper-button iron-icon {
+        padding-right:8px;
+        padding-bottom:2px;
+      }
     </style>
 
     <list-element class="colorme" element="{{repo}}">
       <div class="el-right">
-        <!-- button on the right - always visible -->
+        <!-- button on the right - if expanded -->
         <template is="dom-if" if="{{repo.isUpdate}}">
           <paper-progress indeterminate></paper-progress>
         </template>
         <template is="dom-if" if="{{!repo.isUpdate}}">
-          <paper-button on-click="update">Update</paper-button>
+          <paper-button on-click="update"><iron-icon icon="refresh"></iron-icon> Update</paper-button>
         </template>
       </div>
       <div class="el-small">

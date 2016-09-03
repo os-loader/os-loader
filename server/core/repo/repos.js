@@ -118,7 +118,7 @@ function repos() {
       if (e) self.error("DB rebuild failed!",e);
       if (!e) self.debug("db rebuild... ok!");
       self.db=db;
-      app.db=db;
+      app.repo=db;
       dbLock=false;
       var q=dbQueue;
       dbQueue=[];

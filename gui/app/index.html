@@ -203,12 +203,40 @@
             <!-- above: install - under: main app -->
 
             <section data-route="os">
+              <template is="dom-if" if="{{!db.os.length}}">
+                <center class="focus-target" style="color:white;">
+                  <h1 style="font-size:3em;">OS Loader</h1>
+                  <p style="opacity:0.5;font-size:1.5em;">Install some Operating Systems</p>
+                  <paper-button data-page="os-select" on-click="navPage">Install »</paper-button>
+                </center>
+              </template>
+              <template is="dom-if" if="{{db.os.length}}">
+                <paper-material elevation="1">
+                  <h2 class="page-title" class="focus-target">Operating Systems</h2>
+                  <paper-toolbar style="margin-top:-88px;" class="item-bar2">
+                    <div class="space"></div>
+                    <template is="dom-if" if="{{db.os.length}}">
+                      <paper-button data-page="os-select" on-click="navPage"><iron-icon icon="add"></iron-icon> Install</paper-button>
+                    </template>
+                  </paper-toolbar>
+                  <p>Systems installed by OS Loader</p>
+                  <br>
+                  <list-list>
+                    <template is="dom-repeat" items="{{db.os}}">
+                      <os-element os="{{item}}"></os-element>
+                    </template>
+                  </list-list>
+                </paper-material>
+              </template>
+            </section>
+
+            <section data-route="os-select">
               <paper-material class="focus-target" elevation="1">
                 <h2 class="page-title">Operating Systems</h2>
-                <p>Systems installed by OS Loader</p>
+                <p>Select an Operating System and click "Install"</p>
                 <br>
                 <list-list>
-                  <template is="dom-repeat" items="{{db.os}}">
+                  <template is="dom-repeat" items="{{repo.os}}">
                     <os-element os="{{item}}"></os-element>
                   </template>
                 </list-list>
@@ -238,7 +266,7 @@
                     <paper-progress indeterminate></paper-progress>
                   </template>
                   <template is="dom-if" if="{{!repoUpdate}}">
-                    <paper-button on-click="updateAll">Update All</paper-button>
+                    <paper-button on-click="updateAll"><iron-icon icon="refresh"></iron-icon> Update All</paper-button>
                   </template>
                 </paper-toolbar>
                 <p>OS Loader Repos are Servers where Operating Systems are hosted</p>
