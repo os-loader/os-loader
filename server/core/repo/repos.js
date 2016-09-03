@@ -18,7 +18,12 @@ const repoDefaults={
   checksum:{}
 }
 function repos() {
+  const self=this;
+  self.db={};
+  var dbLock=false;
+  var dbQueue=[];
   if (!config.sources) throw new Error("Invalid Config");
+  newLogger("repos",self);
   //const self=this;
   var clients=[];
   const byId={};
@@ -66,7 +71,14 @@ function repos() {
     r.dir="repo_"+r.name;
     return r;
   }
-  function rebuildDB() {
+  function rebuildDB(cb) {
+    if (dbLock) {
+      dbQueue.push(cb);
+      return;
+    }
+
+    dbLock=true;
+    self.debug("db rebuild...");
     var db={
       os:[],
       osID:{},
@@ -101,8 +113,19 @@ function repos() {
           });
         })(done);
       });
-    })(function() {
-
+    })(function(e) {
+      if (e) self.error("DB rebuild failed!",e);
+      if (!e) self.debug("db rebuild... ok!");
+      self.db=db;
+      dbLock=false;
+      var q=dbQueue;
+      dbQueue=[];
+      q.map(function(c) {
+        process.nextTick(function() {
+          rebuildDB(c);
+        });
+      });
+      if (cb) cb(e,db);
     });
   }
   function update(id,cb) {
@@ -119,8 +142,10 @@ function repos() {
       });
     })(function(e,err) {
       u();
-      app.repoUpdate=false;
-      return cb(e,err);
+      rebuildDB(function() {
+        app.repoUpdate=false;
+        return cb(e,err);
+      });
     });
   }
   app.repoUpdate=false;
@@ -130,6 +155,7 @@ function repos() {
     byId[c.name]=cc;
   });
   u();
+  rebuildDB();
   this.rebuildDB=rebuildDB;
   this.update=update;
   this.newRepo=newRepo;
