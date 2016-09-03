@@ -51,6 +51,10 @@ set_default_theme(){
 	esac
 }
 
+log "Skip Background..."
+set_default_theme
+exit 0
+
 module_available(){
 	local module
 	for module in "/usb/boot/grub/grub/i386-pc/${1}.mod" "${1}.mod" */"${1}.mod"; do
