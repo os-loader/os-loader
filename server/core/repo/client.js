@@ -10,6 +10,19 @@ function repo(conf2,name) {
   self.dir=pth.join(mountdir,"os-loader",conf.dir);
   mkdirp.sync(self.dir);
   newLogger({name:"repo",id:conf.name},self);
+
+  function getFile(f,cb) {
+    if (!conf.files.filter(function(ff) {return f==ff;})[0]) return cb(new Error("Not Found"));
+    fs.readFile(pth.join(self.dir,f),cb);
+  }
+  function hasFile(f) {
+    return !!conf.files.filter(function(ff) {return f==ff;})[0];
+  }
+  function getJSON(f,cb) {
+    if (!conf.files.filter(function(ff) {return f==ff;})[0]) return cb(new Error("Not Found"));
+    jsonfile.readFile(pth.join(self.dir,f),cb);
+  }
+
   function load(file,cb) {
     return loader(file,pth.join(mountdir,"repo",conf.dir),function(e,r) {
       if (e) return cb(e);
@@ -126,5 +139,8 @@ function repo(conf2,name) {
     conf.sourcesmap.push({url:conf.sources[s],protocol:s});
   }
   this.update=update;
+  this.getFile=getFile;
+  this.getJSON=getJSON;
+  this.hasFile=hasFile;
 }
 module.exports=repo;

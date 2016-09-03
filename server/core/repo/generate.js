@@ -12,32 +12,62 @@ function generate(out,conf,cb) {
   self.debug("Loading Systems...");
   System.find({},function(e,r) {
     if (e) return cb(e);
-    w(r,function(s,sysCB) {
-      self.debug("sys",s.name);
-      sys.push(s._id);
-      self.debug("Channels for "+s.name+" ...");
-      Channel.find({for:s._id},function(e,r) {
+    w(r,function(os2,sysCB) {
+      var os={
+        id:os2._id,
+        name:os2.name,
+        desc:os2.desc,
+        icon:os2.icon,
+        theme:os2.theme,
+        type:os2.type,
+        channels:[]
+      }
+      self.debug("sys",os.name);
+      sys.push(os.id);
+      self.debug("Channels for "+os.name+" ...");
+      Channel.find({for:os.id},function(e,r) {
         if (e) return sysCB(e);
-        s.channels=[];
-        new w(r,function(c,chCB) {
-          self.debug("ch",c.name);
-          s.channels.push(c._id);
-          c.id=c._id;
-          c.releases=[];
-          self.debug("Releases for "+s.name+" ...");
-          Release.find({for:c._id},function(e,r) {
+        new w(r,function(ch2,chCB) {
+          var ch={
+            id:ch2._id,
+            for:os.id,
+            name:ch2.name,
+            desc:ch2.desc,
+            beta:ch2.beta,
+            stable:ch2.stable,
+            hooks:ch2.hooks,
+            releases:[]
+          }
+          self.debug("ch",ch.name);
+          os.channels.push(ch.id);
+          self.debug("Releases for "+os.name+" ...");
+          Release.find({for:ch.id},function(e,r) {
             if (e) return chCB(e);
-            new w(r,function(r,relCB) {
-              self.debug("rel",r.name);
-              c.releases.push(r);
+            new w(r,function(rel2,relCB) {
+              var rel={
+                for:ch.id,
+                date:rel2.date,
+                name:rel2.name,
+                version:rel2.version,
+                codename:rel2.codename,
+                files:rel2.files,
+                upgrade:rel2.upgradeNext?rel2.upgradeNext:rel2.upgradeTo,
+                hooks:rel2.hooks
+              }
+              self.debug("rel",rel.name);
+              ch.releases.push(rel);
               relCB();
             })(function(e) {
-              repo.addFile(s._id+"/"+c._id+".json",c);
+              self.debug("Add ch",ch.id);
+              console.log(ch);
+              repo.addFile(os.id+"/"+ch.id+".json",ch);
               chCB(e);
             });
           });
         })(function(e) {
-          repo.addFile(s._id+".json",s);
+          self.debug("Add os",os.id);
+          console.log(os);
+          repo.addFile(os.id+".json",os);
           sysCB(e);
         });
       });

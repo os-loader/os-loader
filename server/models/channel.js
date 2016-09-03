@@ -3,7 +3,6 @@ var ChannelSchema = mongoose.Schema({
   for:String,
   name:String,
   desc:String,
-  id:String,
   beta:Boolean,
   stable:Boolean,
   hooks:{

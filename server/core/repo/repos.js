@@ -66,6 +66,45 @@ function repos() {
     r.dir="repo_"+r.name;
     return r;
   }
+  function rebuildDB() {
+    var db={
+      os:[],
+      osID:{},
+      ch:[],
+      chID:{},
+      rel:[],
+      relID:{}
+    };
+    new w(clients.slice(0),function(c,done) {
+      if (!c.hasFile("main.json")) return done(); //skip empty
+      c.getJSON("main.json",function(e,main) {
+        if (e) return done(e);
+        new w(main.os||[],function(o,done) {
+          c.getJSON(o+".json",function(e,os) {
+            if (e) return done(e);
+            os.repo=c;
+            db.os.push(os);
+            db.osID[os.id]=os;
+            new w(os.channels||[],function(cc,done) {
+              c.getJSON(os.id+"/"+cc+".json",function(e,ch) {
+                if (e) return done(e);
+                ch.os=os;
+                db.ch.push(ch);
+                db.chID[ch.id]=ch;
+                ch.releases.map(function(r) {
+                  db.rel.push(r);
+                  db.relID[r.id]=r;
+                });
+                return done();
+              });
+            })(done);
+          });
+        })(done);
+      });
+    })(function() {
+
+    });
+  }
   function update(id,cb) {
     if (!cb&&id) {cb=id;id=null;}
     app.repoUpdate=true;
@@ -91,6 +130,7 @@ function repos() {
     byId[c.name]=cc;
   });
   u();
+  this.rebuildDB=rebuildDB;
   this.update=update;
   this.newRepo=newRepo;
   this.remove=remove;
