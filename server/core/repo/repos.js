@@ -95,6 +95,7 @@ function repos() {
           c.getJSON(o+".json",function(e,os) {
             if (e) return done(e);
             os.repo=c;
+            if (typeof os.icon=="string") os.icon=pth.join(c.dir,os.icon);
             db.os.push(os);
             db.osID[os.id]=os;
             new w(os.channels||[],function(cc,done) {
