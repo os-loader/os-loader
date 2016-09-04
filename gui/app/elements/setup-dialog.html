@@ -44,7 +44,7 @@
       <template is="dom-if" if="{{next}}">
         <p>{{desc}}</p>
         <div class="space"></div>
-        <paper-button on-click="btn" raised>Next »</paper-button>
+        <paper-button on-click="do" raised>Next »</paper-button>
       </template>
       <template is="dom-if" if="{{!next}}">
         <p>{{desc}}</p>
@@ -55,6 +55,15 @@
   </template>
 
   <script>
+  var setupelement=function() {
+    var action;
+    this.s=function(e) {
+      action=e;
+    }
+    this.d=function(a,b,c) {
+      if (action) action(a,b,c); else throw new Error("No action defined");
+    }
+  }
       Polymer({
         is: 'setup-dialog',
 
@@ -74,14 +83,31 @@
           }
         },
         _ob:function(e) {
-          self.action=e;
+          if (!this.called) {
+            this.called=true;
+            var i=new setupelement();
+            this.do=i.d;
+            this._ob=i.s;
+            i.s(e);
+          }
         },
-        btn:function(a,b,c) {
-          if (self.action) self.action(a,b,c); else throw new Error("No action defined");
+        do:function(a,b,c) {
+          if (!this.called) {
+            this.called=true;
+            var i=new setupelement();
+            this.do=i.d;
+            this._ob=i.s;
+            i.d(a,b,c);
+          }
         },
 
         ready: function() {
-          const self=this;
+          if (!this.called) {
+            this.called=true;
+            var i=new setupelement();
+            this.do=i.d;
+            this._ob=i.s;
+          }
         }
       });
   </script>
