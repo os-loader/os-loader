@@ -243,6 +243,48 @@
               </paper-material>
             </section>
 
+            <section data-route="os-install">
+              <paper-material class="focus-target" elevation="1">
+                <h2 class="page-title">Installing {{os.name}}</h2>
+                <setup-dialog desc="{{step}}" next="{{next}}" do="{{installNext}}">
+                  <paper-menu class="app-menu transparent" attr-for-selected="data-id" selected="[[oschannel]]">
+                    <template is="dom-repeat" items="{{os.channels}}">
+                      <paper-toolbar data-id$="{{item.id}}" on-click="select" class="item-bar">
+                        <img style="width:48px;height:48px;margin:16px;" src="{{os.icon}}"></img>
+                        <template is="dom-if" if="{{item.stable}}">
+                          <div class="aline"><h2>{{item.name}}</h2><br><p>{{item.desc}}</p></div>
+                        </template>
+                        <template is="dom-if" if="{{!item.stable}}">
+                          <div class="aline"><h2>{{item.name}} <b style="color:red;">({{item.typename}})</b></h2><br><p>{{item.desc}}</p></div>
+                        </template>
+                      </paper-toolbar>
+                    </template>
+                  </paper-menu>
+                </setup-dialog>
+              </paper-material>
+            </section>
+
+            <section data-route="os-version">
+              <paper-material class="focus-target" elevation="1">
+                <h2 class="page-title">Select Version for {{os.name}}</h2>
+                <setup-dialog desc="{{step}}" next="{{next}}" do="{{installNext}}">
+                  <paper-menu class="app-menu transparent" attr-for-selected="data-id" selected="[[oschannel]]">
+                    <template is="dom-repeat" items="{{channel.releases}}">
+                      <paper-toolbar data-id$="{{item.id}}" on-click="select" class="item-bar">
+                        <img style="width:48px;height:48px;margin:16px;" src="{{os.icon}}"></img>
+                        <template is="dom-if" if="{{item.latest}}">
+                          <div class="aline"><h2>{{item.name}}</h2><br><p>{{item.desc}} <b>Latest</b></p></div>
+                        </template>
+                        <template is="dom-if" if="{{!item.latest}}">
+                          <div class="aline"><h2>{{item.name}}</h2><br><p>{{item.desc}}</p></div>
+                        </template>
+                      </paper-toolbar>
+                    </template>
+                  </paper-menu>
+                </setup-dialog>
+              </paper-material>
+            </section>
+
             <section data-route="live">
               <paper-material class="focus-target" elevation="1">
                 <h2 class="page-title">Live CDs</h2>

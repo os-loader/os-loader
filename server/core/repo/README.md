@@ -45,6 +45,7 @@ Note: the different sources (ipfs,http,https) will be priorized by the values in
     desc:"Might be unstable",
     stable:false, //if true shown also in production mode
     beta:true, //if set shown under beta releases
+    //if neither the beta nor the stable flag is set the channel is shown as daily
     id:"channel", //the channel id/name
     hooks:{
       install:{

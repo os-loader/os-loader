@@ -33,7 +33,7 @@
           <paper-button><iron-icon icon="settings"></iron-icon> Settings</paper-button>
         </template>
         <template is="dom-if" if="{{!os.installed}}">
-          <paper-button><iron-icon icon="add"></iron-icon> Install</paper-button>
+          <paper-button data-page$="os-install/{{os.id}}/main" on-click="navPage"><iron-icon icon="add"></iron-icon> Install</paper-button>
         </template>
       </div>
       <div class="el-small">
@@ -72,8 +72,9 @@
         },
 
         ready: function() {
-
-        }
+          this.navPage=app.navPage
+        },
+        navPage:null
       });
   </script>
 </dom-module>

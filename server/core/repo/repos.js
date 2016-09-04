@@ -98,12 +98,21 @@ function repos() {
             if (typeof os.icon=="string") os.icon=pth.join(c.dir,os.icon);
             db.os.push(os);
             db.osID[os.id]=os;
-            new w(os.channels||[],function(cc,done) {
+            var chlist=os.channels||[];
+            os.channels=[];
+            new w(chlist,function(cc,done) {
               c.getJSON(os.id+"/"+cc+".json",function(e,ch) {
                 if (e) return done(e);
                 ch.os=os;
+                ch.type=ch.stable?"stable":ch.beta?"beta":"daily";
+                ch.typename=ch.stable?"Stable":ch.beta?"Beta":"Daily";
+                os.channels.push(ch);
                 db.ch.push(ch);
                 db.chID[ch.id]=ch;
+                ch.releases=ch.releases.map(function(r) {r.date=new Date(r.date);return r;}).sort(function(a,b) {
+                  return b.getTime()-a.getTime();
+                });
+                if (ch.releases[0]) ch.releases[0].latest=true;
                 ch.releases.map(function(r) {
                   db.rel.push(r);
                   db.relID[r.id]=r;

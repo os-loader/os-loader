@@ -44,7 +44,7 @@
       <template is="dom-if" if="{{next}}">
         <p>{{desc}}</p>
         <div class="space"></div>
-        <paper-button on-click="do" raised>Next »</paper-button>
+        <paper-button on-click="btn" raised>Next »</paper-button>
       </template>
       <template is="dom-if" if="{{!next}}">
         <p>{{desc}}</p>
@@ -69,13 +69,19 @@
           },
           do:{
             type:Function,
-            notify:true
+            notify:true,
+            observer:"_ob"
           }
         },
         _ob:function(e) {
+          self.action=e;
+        },
+        btn:function(a,b,c) {
+          if (self.action) self.action(a,b,c); else throw new Error("No action defined");
         },
 
         ready: function() {
+          const self=this;
         }
       });
   </script>
